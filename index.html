@@ -108,6 +108,20 @@
   }
   .avec-son .son { display: block; }
 
+  /* --- sortir du tipi : revenir à l'accueil --- */
+  .sortir {
+    position: fixed; left: 1.1rem; top: 1.1rem; z-index: 5;
+    padding: .5rem 1.1rem; border-radius: 99px;
+    border: 1px solid rgba(243, 210, 154, .45); background: rgba(18, 6, 4, .4);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    color: #ffe9cc; font: inherit; font-style: italic; font-size: 1.05rem; letter-spacing: .1em;
+    cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease, background .2s;
+  }
+  .sortir:hover { background: rgba(60, 18, 6, .6); }
+  .sortir:focus-visible { outline: 1px solid var(--or); outline-offset: 3px; }
+  .dedans .sortir { opacity: 1; pointer-events: auto; transition: opacity .8s ease 1.5s, background .2s; }
+
   @media (prefers-reduced-motion: reduce) {
     .titre, .titre span + span, .seuil { animation: none; opacity: 1; }
   }
@@ -124,6 +138,7 @@
       <span class="seuil">Toucher pour entrer</span>
     </button>
   </main>
+  <button class="sortir" id="sortir" type="button" aria-label="Sortir du tipi et revenir à l'accueil">← Sortir</button>
   <button class="son" id="son" type="button" aria-label="Couper le son">🔊</button>
 
 <script>
@@ -142,6 +157,7 @@
   const boucle = document.getElementById("boucle");
   const appel = document.getElementById("appel");
   const btnSon = document.getElementById("son");
+  const btnSortir = document.getElementById("sortir");
 
   // vidéo plus légère sur petit écran ou connexion économe
   const leger = window.matchMedia("(max-width: 900px)").matches ||
@@ -172,6 +188,7 @@
   function entrer() {
     if (entre) return;
     entre = true;
+    document.body.classList.add("dedans");
     scene.classList.add("joue");
     intro.currentTime = 0;
     const p = intro.play();
@@ -195,7 +212,20 @@
   });
   intro.addEventListener("ended", allumerFeu);
 
+  // Sortir du tipi : tout s'arrête et on revient à l'image d'accueil
+  function sortir() {
+    if (!entre) return;
+    entre = false;
+    intro.pause(); boucle.pause();
+    Object.values(sons).forEach(a => { a.pause(); a.currentTime = 0; });
+    scene.classList.remove("joue", "feu");
+    document.body.classList.remove("dedans");
+    appel.focus();
+  }
+
   appel.addEventListener("click", entrer);
+  btnSortir.addEventListener("click", sortir);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") sortir(); });
 })();
 </script>
 </body>
