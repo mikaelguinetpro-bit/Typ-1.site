@@ -178,5 +178,7 @@
   "Let the day settle into ashes. Tomorrow, I'll still be here.",
   "In the dark, a small flame is enough to see the way."
  ],
- "code": "en"
+ "code": "en",
+ "rien": "This time the fire found nothing reliable. Try other words.",
+ "limite": "The fire has burned a lot today. Come back tomorrow: it will be waiting for you."
 };

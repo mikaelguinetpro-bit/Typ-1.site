@@ -2,6 +2,15 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/feu-savant
+- Le feu est relié au vrai web : `api/feu.js` demande à Claude (Haiku, recherche web intégrée) de choisir 1, 3 ou 5 pages, plus 2 de réserve pour « Rendre au feu ».
+- Seules les adresses vraiment trouvées pendant la recherche sont gardées ; une adresse inventée est rejetée.
+- La page appelle `api/feu` ; sans serveur, elle montre les exemples comme avant. Les vraies pages ont un titre-lien et leur source ; les braises gardent l'adresse.
+- Deux nouveaux textes dans les 9 langues : « rien trouvé » et « limite du jour ».
+- Tests : `scripts/tester_feu.js` (sans dépenser), et la page testée avec un faux serveur.
+- Pourquoi : Ritukah a choisi Claude pour le feu savant.
+- À faire : Ritukah importe le dépôt dans Vercel, ajoute la clé et active la protection ; premier vrai essai ; puis la question en retour, l'étincelle offerte et la braise du jour.
+
 ## 2026-11-16 — Claude — claude/neuf-langues
 - Le site parle 9 langues (fr, es, en, pt, ru, ar, hi, bn, zh), comme les autres sites : tous les textes sont dans `i18n/<code>.js`, y compris les pages d'exemple et les paroles d'Apaiser.
 - Un choix de langue discret en haut de l'accueil ; sinon la langue du navigateur. L'arabe s'écrit de droite à gauche (boutons et panneau inversés).

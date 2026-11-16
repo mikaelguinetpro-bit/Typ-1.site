@@ -263,6 +263,9 @@
     display: inline-block; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
     color: #8a3a12; border: 1px solid rgba(138, 58, 18, .5); border-radius: 99px; padding: .05rem .6rem; margin-bottom: .5rem;
   }
+  .page h2 a, .braise h3 a { color: inherit; text-decoration: underline; text-decoration-color: rgba(138, 58, 18, .45); text-underline-offset: 3px; }
+  .page h2 a:hover, .braise h3 a:hover { text-decoration-color: #b4400c; }
+  .page h2 a:focus-visible, .braise h3 a:focus-visible { outline: 2px solid #b4400c; outline-offset: 2px; }
   .page h2 { font-size: 1.28rem; font-weight: 500; line-height: 1.15; margin-bottom: .4rem; overflow-wrap: anywhere; }
   .page p { font-size: 1.04rem; line-height: 1.25; }
   .page .meta { font-size: .92rem; color: #7a4a22; margin-bottom: .35rem; }
@@ -498,6 +501,7 @@ function TYP1_demarrer(codeDepart) {
   const boutonsFlamme = [...document.querySelectorAll("#flammes button")];
   let flamme = "chercher";
   let minuterie = [];
+  let tour = 0;          // change à chaque nouvelle demande : une réponse arrivée trop tard est ignorée
 
   let ordreParoles = [], ordreNuit = [];
   let paroleCourante = "";
@@ -548,7 +552,8 @@ function TYP1_demarrer(codeDepart) {
     try { localStorage.setItem(CLE, JSON.stringify(l)); } catch (e) {}
     afficherBraises();
   }
-  const idBraise = d => d.flamme + "|" + d.titre + "|" + d.meta;
+  const idBraise = d => d.url || (d.flamme + "|" + d.titre + "|" + d.meta);
+  const lienSur = url => /^https?:\/\//i.test(url || "");
   const estGardee = d => lireBraises().some(b => idBraise(b) === idBraise(d));
   function basculer(d) {
     const l = lireBraises();
@@ -565,7 +570,9 @@ function TYP1_demarrer(codeDepart) {
       const a = document.createElement("article"); a.className = "braise";
       const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
       if (d.exemple) el("span", "etiquette", T("exemple"));
-      el("h3", "", d.titre); el("p", "meta", d.meta); el("p", "", d.resume);
+      const h = el("h3", "", lienSur(d.url) ? "" : d.titre);
+      if (lienSur(d.url)) { const l = document.createElement("a"); l.href = d.url; l.target = "_blank"; l.rel = "noopener noreferrer"; l.textContent = d.titre; h.append(l); }
+      el("p", "meta", d.meta); if (d.resume) el("p", "", d.resume);
       const b = el("button", "", T("rendre")); b.type = "button";
       b.addEventListener("click", () => {
         ecrireBraises(lireBraises().filter(x => idBraise(x) !== idBraise(d)));
@@ -715,6 +722,7 @@ function TYP1_demarrer(codeDepart) {
   })();
 
   function vider() {
+    tour++;
     minuterie.forEach(clearTimeout); minuterie = [];
     etincelles.annuler();
     zonePages.replaceChildren();
@@ -736,17 +744,29 @@ function TYP1_demarrer(codeDepart) {
     return 5;
   }
 
-  function fabriquerPage(modele, q) {
-    const [titre, meta, resume, pourquoi] = modele.map(x => x.replaceAll("{q}", q));
+  const maj = t => t.charAt(0).toUpperCase() + t.slice(1);
+  // une page d'exemple (texte des fichiers de langue) devient une page comme les autres
+  const pageExemple = (m, q) => {
+    const [titre, meta, resume, pourquoi] = m.map(x => x.replaceAll("{q}", q));
+    return { titre: maj(titre), meta, resume, pourquoi, exemple: true };
+  };
+  function fabriquerPage(p, q) {
     const a = document.createElement("article"); a.className = "page";
     const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
-    el("span", "etiquette", T("exemple"));
-    el("h2", "", titre.charAt(0).toUpperCase() + titre.slice(1));
-    el("p", "meta", meta);
-    el("p", "", resume);
-    el("p", "pourquoi", T("pourquoi") + pourquoi);
+    const vraie = !p.exemple && lienSur(p.url);
+    if (!vraie) el("span", "etiquette", T("exemple"));
+    const h = el("h2", "", vraie ? "" : p.titre);
+    if (vraie) {
+      const lien = document.createElement("a");
+      lien.href = p.url; lien.target = "_blank"; lien.rel = "noopener noreferrer"; lien.textContent = p.titre;
+      h.append(lien);
+    }
+    const meta = vraie ? [p.source, p.meta].filter(Boolean).join(" · ") : p.meta;
+    if (meta) el("p", "meta", meta);
+    if (p.resume) el("p", "", p.resume);
+    if (p.pourquoi) el("p", "pourquoi", T("pourquoi") + p.pourquoi);
     const actions = document.createElement("div"); actions.className = "actions"; a.append(actions);
-    const donnees = { flamme, titre: titre.charAt(0).toUpperCase() + titre.slice(1), meta, resume, exemple: true };
+    const donnees = { flamme, titre: p.titre, meta, resume: p.resume || "", url: vraie ? p.url : "", exemple: !vraie };
     const g = document.createElement("button"); g.type = "button"; g.className = "garder";
     g.majGarder = () => {
       const k = estGardee(donnees);
@@ -768,32 +788,71 @@ function TYP1_demarrer(codeDepart) {
       c.style.setProperty("--y", (d * d * 9) + "px");
     });
   }
-  let reserve = [];
-  function repondre(q) {
+  let reserve = [], modeExemple = true;
+  // Demande au feu savant (api/feu, sur le même serveur que le site). Sans serveur : null.
+  async function demanderAuFeu(q) {
+    if (!/^https?:$/.test(location.protocol)) return null;
+    const ctrl = new AbortController();
+    const minute = setTimeout(() => ctrl.abort(), 90000);
+    try {
+      const r = await fetch("api/feu", {
+        method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ q, flamme, langue: L.code }), signal: ctrl.signal
+      });
+      if (r.status === 429) return { limite: true };
+      if (!r.ok) return null;
+      const d = await r.json();
+      return d && Array.isArray(d.pages) ? d : null;
+    } catch (e) { return null; }
+    finally { clearTimeout(minute); }
+  }
+  function direDuFeu(texte) {
+    const p = document.createElement("p"); p.className = "parole"; p.textContent = texte;
+    zonePages.append(p);
+  }
+  async function repondre(q) {
     vider(); embraser();
+    const monTour = tour;
     const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = T("attente_" + flamme);
     zonePages.append(attente);
-    const n = combien(q);
-    reserve = T("exemples")[flamme].slice();
-    plus_tard(() => {
-      zonePages.replaceChildren();
-      embraser();
-      for (let i = 0; i < n; i++) {
-        const c = fabriquerPage(reserve.shift(), q);
-        c.style.setProperty("--d", (i * 0.22) + "s");
-        zonePages.append(c);
-      }
-      poserEnArc();
-      [...zonePages.querySelectorAll(".page")].forEach((c, i) => etincelles.accompagner(c, i * .22));
-      note.hidden = false;
-    }, 1100);
+    const debut = Date.now();
+    const d = await demanderAuFeu(q);
+    await new Promise(ok => setTimeout(ok, Math.max(0, 1100 - (Date.now() - debut))));
+    if (monTour !== tour || !entre) return;          // le Créateur a changé de flamme, posé une autre question ou est sorti
+    zonePages.replaceChildren();
+    embraser();
+    let pages;
+    if (d && d.limite) { note.hidden = true; return direDuFeu(T("limite")); }
+    if (d) {
+      modeExemple = false; note.hidden = true;
+      if (!d.pages.length) return direDuFeu(T("rien"));
+      pages = d.pages;
+      reserve = Array.isArray(d.reserve) ? d.reserve.slice() : [];
+    } else {
+      modeExemple = true; note.hidden = false;
+      const exemples = T("exemples")[flamme].map(m => pageExemple(m, q));
+      pages = exemples.slice(0, combien(q));
+      reserve = exemples.slice(pages.length);
+    }
+    pages.forEach((p, i) => {
+      const c = fabriquerPage(p, q);
+      c.style.setProperty("--d", (i * 0.22) + "s");
+      zonePages.append(c);
+    });
+    poserEnArc();
+    [...zonePages.querySelectorAll(".page")].forEach((c, i) => etincelles.accompagner(c, i * .22));
   }
   function rendreAuFeu(carte, q) {
     etincelles.cendres(carte.getBoundingClientRect());
     carte.classList.add("rendue");
     embraser();
     plus_tard(() => {
-      if (!reserve.length) reserve = T("exemples")[flamme].slice();
+      if (!reserve.length && modeExemple) reserve = T("exemples")[flamme].map(m => pageExemple(m, q));
+      if (!reserve.length) {                           // le feu n'a plus d'autre page : la carte s'efface
+        carte.remove(); poserEnArc();
+        if (!zonePages.querySelector(".page")) direDuFeu(T("rien"));
+        return;
+      }
       const neuve = fabriquerPage(reserve.shift(), q);
       carte.replaceWith(neuve);
       poserEnArc();

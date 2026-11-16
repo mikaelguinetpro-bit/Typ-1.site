@@ -21,3 +21,14 @@ const SONS = {
 ```
 
 Un petit bouton pour couper le son apparaît alors en haut à droite.
+
+## Le feu savant (la vraie recherche)
+
+`api/feu.js` est une fonction serveur : elle demande à Claude (API d'Anthropic) de chercher sur le web et renvoie 1, 3 ou 5 pages.
+
+Mise en place chez Vercel :
+1. Importer ce dépôt dans Vercel (type de projet : « Other », aucun réglage de construction).
+2. Dans *Settings → Environment Variables*, ajouter `ANTHROPIC_API_KEY` (la clé créée sur platform.claude.com). Facultatif : `FEU_LIMITE_JOUR` (100 par défaut).
+3. Dans *Settings → Deployment Protection*, activer *Vercel Authentication* pour que le site reste privé.
+
+Tester sans appeler la vraie API : `node scripts/tester_feu.js`. Vérifier les traductions : `python3 scripts/verifier_traductions.py`.
