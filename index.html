@@ -287,6 +287,15 @@
     text-shadow: 0 0 26px rgba(30, 6, 0, .9), 0 0 8px rgba(255, 80, 20, .6), 0 2px 3px rgba(30, 6, 0, .9);
     animation: sort-du-feu 1.6s cubic-bezier(.2, .8, .25, 1) backwards;
   }
+  .demande-feu { align-self: center; margin: 0 auto; max-width: 46rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+  .demande-feu .parole { font-size: clamp(1.35rem, 2.8vw, 2.1rem); }
+  .choix { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; animation: sort-du-feu 1.6s .35s cubic-bezier(.2, .8, .25, 1) backwards; }
+  .choix button {
+    font: inherit; font-size: 1.1rem; color: #2a0c02; cursor: pointer; padding: .4rem 1.1rem; border: 0; border-radius: 99px;
+    background: linear-gradient(180deg, #ffe6c2, #ffb36a); box-shadow: 0 0 14px rgba(255, 90, 20, .45);
+  }
+  .choix button.quand-meme { color: #ffe9cc; background: rgba(18, 6, 4, .6); border: 1px solid rgba(243, 210, 154, .45); box-shadow: none; font-style: italic; }
+  .choix button:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
   .attente {
     align-self: center; margin: 0 auto; font-style: italic; font-size: 1.25rem; letter-spacing: .12em; color: #ffe2bd;
     text-shadow: 0 0 14px rgba(30, 6, 0, .9); animation: souffle-texte 1.2s ease-in-out infinite;
@@ -338,12 +347,12 @@
     .flammes button { font-size: .95rem; padding: .3rem .62rem; letter-spacing: .02em; }
     .pages { flex-direction: column; align-items: stretch; justify-content: flex-start; overflow-y: auto; gap: .6rem; padding: 0 .1rem .4rem; }
     .page { flex: none; max-width: none; transform: none; }
-    .page:first-child, .parole, .attente { margin-top: auto; }
-    .parole, .attente { margin-bottom: auto; }
+    .page:first-child, .parole, .attente, .demande-feu { margin-top: auto; }
+    .parole, .attente, .demande-feu { margin-bottom: auto; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .page, .page.rendue, .parole, .attente { animation-duration: .01s; animation-delay: 0s; }
+    .page, .page.rendue, .parole, .attente, .choix { animation-duration: .01s; animation-delay: 0s; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -730,6 +739,7 @@ function TYP1_demarrer(codeDepart) {
     etincelles.annuler();
     zonePages.replaceChildren();
     note.hidden = true;
+    oublierQuestionDuFeu();
   }
   function plus_tard(f, ms) { minuterie.push(setTimeout(f, ms)); }
   function embraser() {
@@ -793,14 +803,14 @@ function TYP1_demarrer(codeDepart) {
   }
   let reserve = [], modeExemple = true;
   // Demande au feu savant (api/feu, sur le même serveur que le site). Sans serveur : null.
-  async function demanderAuFeu(q) {
+  async function demanderAuFeu(q, suite) {
     if (!/^https?:$/.test(location.protocol)) return null;
     const ctrl = new AbortController();
     const minute = setTimeout(() => ctrl.abort(), 90000);
     try {
       const r = await fetch("api/feu", {
         method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ q, flamme, langue: L.code }), signal: ctrl.signal
+        body: JSON.stringify({ q, flamme, langue: L.code, ...(suite || {}) }), signal: ctrl.signal
       });
       if (r.status === 429) return { limite: true };
       if (!r.ok) return null;
@@ -813,19 +823,48 @@ function TYP1_demarrer(codeDepart) {
     const p = document.createElement("p"); p.className = "parole"; p.textContent = texte;
     zonePages.append(p);
   }
-  async function repondre(q) {
+  // Le feu pose une question en retour : il attend la réponse du Créateur (un choix, ou ses propres mots)
+  let questionDuFeu = null;              // { q, texte } tant que le feu attend
+  function oublierQuestionDuFeu() {
+    if (!questionDuFeu) return;
+    questionDuFeu = null;
+    question.placeholder = invite(flamme);
+  }
+  function poserQuestionDuFeu(q, texte, choix, exemple) {
+    const bloc = document.createElement("div"); bloc.className = "demande-feu";
+    const p = document.createElement("p"); p.className = "parole"; p.textContent = texte;
+    const rangee = document.createElement("div"); rangee.className = "choix";
+    const bouton = (txt, cls, action) => {
+      const b = document.createElement("button"); b.type = "button"; b.textContent = txt;
+      if (cls) b.className = cls;
+      b.addEventListener("click", action); rangee.append(b); return b;
+    };
+    choix.forEach(c => bouton(c, "", () => repondre(q, { precision: c, questionFeu: texte })));
+    bouton(T("quand_meme"), "quand-meme", () => repondre(q, { precision: T("quand_meme"), questionFeu: texte }));
+    bloc.append(p, rangee);
+    zonePages.append(bloc);
+    if (exemple) note.hidden = false;
+    questionDuFeu = { q, texte };
+    question.value = ""; question.placeholder = T("repondre_au_feu");
+    question.focus({ preventScroll: true });
+  }
+  async function repondre(q, suite) {
     vider(); embraser();
     const monTour = tour;
     const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = T("attente_" + flamme);
     zonePages.append(attente);
     const debut = Date.now();
-    const d = await demanderAuFeu(q);
+    const d = await demanderAuFeu(q, suite);
     await new Promise(ok => setTimeout(ok, Math.max(0, 1100 - (Date.now() - debut))));
     if (monTour !== tour || !entre) return;          // le Créateur a changé de flamme, posé une autre question ou est sorti
     zonePages.replaceChildren();
     embraser();
     let pages;
     if (d && d.limite) { note.hidden = true; return direDuFeu(T("limite")); }
+    if (d && d.question && !suite) return poserQuestionDuFeu(q, d.question, Array.isArray(d.choix) ? d.choix : [], false);
+    // aperçu sans serveur : une demande d'un seul mot montre comment le feu pose sa question
+    if (!d && !suite && flamme === "chercher" && !/\s/.test(q.trim()))
+      return poserQuestionDuFeu(q, T("question_exemple").replaceAll("{q}", q), T("choix_exemple"), true);
     if (d) {
       modeExemple = false; note.hidden = true;
       if (!d.pages.length) return direDuFeu(T("rien"));
@@ -903,6 +942,11 @@ function TYP1_demarrer(codeDepart) {
     e.preventDefault();
     const q = question.value.trim();
     if (!q || flamme === "apaiser") { question.focus(); return; }
+    if (questionDuFeu) {                 // le Créateur répond au feu avec ses propres mots
+      const { q: q0, texte } = questionDuFeu;
+      question.value = q0;
+      return repondre(q0, { precision: q.slice(0, 120), questionFeu: texte });
+    }
     repondre(q);
   });
   let attenteFoyer = 0;

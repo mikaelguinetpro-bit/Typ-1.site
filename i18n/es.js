@@ -180,5 +180,9 @@
  ],
  "code": "es",
  "rien": "Esta vez el fuego no encontró nada fiable. Prueba con otras palabras.",
- "limite": "El fuego ha ardido mucho hoy. Vuelve mañana: te estará esperando."
+ "limite": "El fuego ha ardido mucho hoy. Vuelve mañana: te estará esperando.",
+ "quand_meme": "Busca de todos modos",
+ "repondre_au_feu": "O responde al fuego con tus palabras…",
+ "question_exemple": "¿Qué quieres saber sobre «{q}», Creador?",
+ "choix_exemple": ["Qué es", "Cómo hacerlo", "Dónde encontrarlo"]
 };

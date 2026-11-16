@@ -29,7 +29,7 @@ function faux(res) { const r = { code: 0, corps: null, headers: {} };
     reserve: [{ titre: "C", url: vraies[2] }, { titre: "D", url: vraies[3] }, { titre: "E", url: vraies[0] }]
   };
   const original = feu.appelerClaude;
-  feu.appelerClaude = (q, f, l) => original(q, f, l, async () => fausseReponse(reponse, vraies));
+  feu.appelerClaude = (q, f, l, x) => original(q, f, l, x, async () => fausseReponse(reponse, vraies));
 
   let r = faux(); await feu({ method: "POST", body: { q: "apprendre le piano", flamme: "apprendre", langue: "es" } }, r);
   assert.equal(r.code, 200);
@@ -43,23 +43,43 @@ function faux(res) { const r = { code: 0, corps: null, headers: {} };
   r = faux(); await feu({ method: "GET" }, r);
   assert.equal(r.code, 405);
 
-  feu.appelerClaude = (q, f, l) => original(q, f, l, async () => ({ ok: true, json: async () => ({ stop_reason: "end_turn", content: [{ type: "text", text: "pas de JSON" }] }) }));
+  feu.appelerClaude = (q, f, l, x) => original(q, f, l, x, async () => ({ ok: true, json: async () => ({ stop_reason: "end_turn", content: [{ type: "text", text: "pas de JSON" }] }) }));
   r = faux(); await feu({ method: "POST", body: { q: "x" } }, r);
   assert.equal(r.code, 200); assert.deepEqual(r.corps, { pages: [], reserve: [] }, "réponse illisible : rien, sans planter");
 
-  feu.appelerClaude = (q, f, l) => original(q, f, l, async () => ({ ok: false, status: 401, text: async () => "clé invalide" }));
+  feu.appelerClaude = (q, f, l, x) => original(q, f, l, x, async () => ({ ok: false, status: 401, text: async () => "clé invalide" }));
   r = faux(); await feu({ method: "POST", body: { q: "x" } }, r);
   assert.equal(r.code, 502, "erreur de l'API : 502");
 
   // pause_turn : la fonction relance et accumule les résultats
   let n = 0;
-  feu.appelerClaude = (q, f, l) => original(q, f, l, async () => {
+  feu.appelerClaude = (q, f, l, x) => original(q, f, l, x, async () => {
     n++;
     if (n === 1) return { ok: true, json: async () => ({ stop_reason: "pause_turn", content: [{ type: "web_search_tool_result", content: [{ url: vraies[0] }] }] }) };
     return fausseReponse({ pages: [{ titre: "A", url: vraies[0] }, { titre: "D", url: vraies[3] }] }, [vraies[3]]);
   });
   r = faux(); await feu({ method: "POST", body: { q: "x" } }, r);
   assert.equal(n, 2); assert.deepEqual(r.corps.pages.map(p => p.titre), ["A", "D"], "résultats gardés d'un tour à l'autre");
+
+  // le feu pose une question en retour quand la demande est floue
+  let vu = null;
+  feu.appelerClaude = (q, f, l, x) => { vu = x; return original(q, f, l, x, async () => ({ ok: true, json: async () => ({ stop_reason: "end_turn",
+    content: [{ type: "text", text: JSON.stringify({ question: "Le jaguar animal ou la voiture ?", choix: ["L'animal", "La voiture", "", "a", "b", "c"] }) }] }) })); };
+  r = faux(); await feu({ method: "POST", body: { q: "jaguar" } }, r);
+  assert.equal(r.corps.question, "Le jaguar animal ou la voiture ?");
+  assert.deepEqual(r.corps.choix, ["L'animal", "La voiture", "a", "b"], "2 à 4 choix, sans vide");
+  assert.deepEqual(r.corps.pages, []);
+  // après la réponse du Créateur, le feu ne repose jamais de question
+  r = faux(); await feu({ method: "POST", body: { q: "jaguar", precision: "L'animal", questionFeu: "Le jaguar animal ou la voiture ?" } }, r);
+  assert.equal(vu.precision, "L'animal");
+  assert.equal(r.corps.question, undefined, "pas de deuxième question");
+  // la consigne envoyée à Claude change bien
+  let corpsEnvoye = null;
+  const capture = async (u, o) => { corpsEnvoye = JSON.parse(o.body); return fausseReponse({ pages: [] }, []); };
+  await original("jaguar", "chercher", "fr", {}, capture);
+  assert.ok(/NE CHERCHE PAS/.test(corpsEnvoye.system), "première fois : le feu peut demander");
+  await original("jaguar", "chercher", "fr", { precision: "L'animal", questionFeu: "?" }, capture);
+  assert.ok(/ne pose plus aucune question/.test(corpsEnvoye.system) && /L'animal/.test(corpsEnvoye.messages[0].content), "après : il cherche avec la précision");
 
   delete process.env.ANTHROPIC_API_KEY;
   r = faux(); await feu({ method: "POST", body: { q: "x" } }, r);
