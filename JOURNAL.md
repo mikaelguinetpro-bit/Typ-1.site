@@ -2,6 +2,13 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/typ1-en-ligne
+- `AGENTS.md` dit maintenant que Typ-1 est en ligne depuis le 16 novembre 2026 sur https://typ-1site.vercel.app. Il est visible de Ritukah seul pour l'instant, et il « fait la sieste » sur BNM1. Avant, le fichier disait « en préparation, pas encore en ligne ».
+- La carte du Sceau suit le même texte que sur BNM1, Nebula et Atlas.
+- L'adresse définitive reste à décider ; aujourd'hui, c'est typ-1site.vercel.app.
+- Sur BNM1 : logo animé de Typ-1 (en bas à gauche, au-dessus de l'Ange) et carte Feu « Fait la sieste » dans le Sceau (Brand-New-Meta-1.com #47).
+- Pourquoi : demandé par Ritukah.
+
 ## 2026-11-16 — Claude — claude/icone-du-site
 - L'icône du site (onglet du navigateur, écran d'accueil du téléphone) : ronde, avec le tipi entier au milieu (bords de l'image fondus dans le ciel).
 - Pourquoi : demandé par Ritukah, l'onglet n'avait pas d'icône.
