@@ -6,6 +6,7 @@
 <title>Typ-1 — Le feu t'attend</title>
 <meta name="description" content="Typ-1 — Feu du Sceau. Créateur, entre dans le tipi : le feu t'attend.">
 <meta name="theme-color" content="#120604">
+<link rel="icon" href="data:,">
 <meta property="og:title" content="Typ-1 — Le feu t'attend">
 <meta property="og:description" content="Créateur, entre dans le tipi.">
 <meta property="og:image" content="assets/typ1_poster.jpg">
@@ -122,6 +123,122 @@
   .sortir:focus-visible { outline: 1px solid var(--or); outline-offset: 3px; }
   .dedans .sortir { opacity: 1; pointer-events: auto; transition: opacity .8s ease 1.5s, background .2s; }
 
+  /* --- le feu répond : le champ, les flammes, les pages qui sortent du feu --- */
+  .cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .foyer {
+    position: fixed; inset: 0; z-index: 3;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 4.4rem 1rem clamp(.9rem, 3.5vh, 2rem);
+    opacity: 0; pointer-events: none; transition: opacity .4s ease;
+  }
+  .pret .foyer { opacity: 1; pointer-events: auto; transition: opacity 1.4s ease; }
+  #boucle { transition: opacity .45s ease, filter .5s ease; }
+  .embrase #boucle { filter: brightness(1.55) saturate(1.15); }
+
+  .pages {
+    flex: 1; min-height: 0; width: min(1240px, 100%);
+    display: flex; justify-content: center; align-items: flex-start; gap: clamp(.6rem, 1.4vw, 1.2rem);
+    padding-top: 2vh;
+  }
+  .page {
+    flex: 1 1 0; max-width: 250px; min-width: 0;
+    padding: 1rem 1.05rem .9rem; border-radius: 5px;
+    background: linear-gradient(170deg, #f8ecd0, #ecd6a8 70%, #e2c48e);
+    color: #3a1a08; text-align: left;
+    box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 26px rgba(255, 90, 20, .35), inset 0 0 22px rgba(160, 90, 20, .22);
+    transform: translateY(var(--y, 0)) rotate(var(--r, 0deg));
+    animation: sort-du-feu 1.25s cubic-bezier(.2, .8, .25, 1) backwards;
+    animation-delay: var(--d, 0s);
+  }
+  .page.rendue { animation: rend-au-feu .7s ease-in forwards; }
+  @keyframes sort-du-feu {
+    from { opacity: 0; transform: translateY(46vh) scale(.15) rotate(0deg); filter: brightness(2.2) sepia(1) saturate(4); }
+    55% { opacity: 1; filter: brightness(1.25) sepia(.4) saturate(1.6); }
+  }
+  @keyframes rend-au-feu {
+    to { opacity: 0; transform: translateY(46vh) scale(.15); filter: brightness(2.2) sepia(1) saturate(4); }
+  }
+  .page .etiquette {
+    display: inline-block; font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
+    color: #8a3a12; border: 1px solid rgba(138, 58, 18, .5); border-radius: 99px; padding: .05rem .6rem; margin-bottom: .5rem;
+  }
+  .page h2 { font-size: 1.28rem; font-weight: 500; line-height: 1.15; margin-bottom: .4rem; overflow-wrap: anywhere; }
+  .page p { font-size: 1.04rem; line-height: 1.25; }
+  .page .meta { font-size: .92rem; color: #7a4a22; margin-bottom: .35rem; }
+  .page .pourquoi { margin-top: .55rem; padding-top: .5rem; border-top: 1px solid rgba(120, 60, 20, .3); font-style: italic; }
+  .page .rendre {
+    margin-top: .7rem; background: none; border: 0; padding: .2rem 0; cursor: pointer;
+    font: inherit; font-style: italic; font-size: .98rem; color: #8a2a08; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .page .rendre:focus-visible, .flammes button:focus-visible, .champ input:focus-visible, .champ button:focus-visible, .encore:focus-visible {
+    outline: 2px solid var(--or); outline-offset: 2px;
+  }
+
+  .parole {
+    align-self: center; max-width: 46rem; margin: 0 auto; padding: 0 .5rem; text-align: center;
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem); line-height: 1.3; color: #fff6e6;
+    text-shadow: 0 0 26px rgba(30, 6, 0, .9), 0 0 8px rgba(255, 80, 20, .6), 0 2px 3px rgba(30, 6, 0, .9);
+    animation: sort-du-feu 1.6s cubic-bezier(.2, .8, .25, 1) backwards;
+  }
+  .attente {
+    align-self: center; margin: 0 auto; font-style: italic; font-size: 1.25rem; letter-spacing: .12em; color: #ffe2bd;
+    text-shadow: 0 0 14px rgba(30, 6, 0, .9); animation: souffle-texte 1.2s ease-in-out infinite;
+  }
+  @keyframes souffle-texte { 50% { opacity: .45; } }
+
+  .note {
+    margin: .6rem 0 .5rem; padding: .3rem .9rem; border-radius: 99px; text-align: center;
+    font-style: italic; font-size: .98rem; color: #ffe2bd; background: rgba(20, 6, 2, .55);
+  }
+  .demande { width: min(640px, 100%); display: flex; flex-direction: column; gap: .6rem; margin-top: auto; }
+  .flammes { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; }
+  .flammes button {
+    font: inherit; font-size: 1.05rem; letter-spacing: .06em; color: #ffe9cc; cursor: pointer;
+    padding: .32rem .95rem; border-radius: 99px;
+    border: 1px solid rgba(243, 210, 154, .35); background: rgba(18, 6, 4, .5);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    transition: background .2s, border-color .2s, box-shadow .2s;
+  }
+  .flammes button::before {
+    content: ""; display: inline-block; width: .5em; height: .5em; margin-right: .55em; border-radius: 50%;
+    background: var(--c); box-shadow: 0 0 9px 2px var(--c); vertical-align: .08em;
+  }
+  .flammes button[aria-checked="true"] { background: rgba(70, 20, 6, .8); border-color: var(--c); box-shadow: 0 0 18px -4px var(--c); color: #fff; }
+  .champ {
+    display: flex; align-items: center; gap: .4rem; padding: .3rem .3rem .3rem 1.2rem; border-radius: 99px;
+    border: 1px solid rgba(243, 210, 154, .55); background: rgba(18, 6, 4, .66);
+    backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 0 30px rgba(255, 60, 10, .25);
+  }
+  .champ input {
+    flex: 1; min-width: 0; background: none; border: 0; outline-offset: 6px; border-radius: 99px;
+    font: inherit; font-size: 1.25rem; color: #fff; padding: .45rem 0;
+  }
+  .champ input::placeholder { color: rgba(255, 233, 204, .7); font-style: italic; }
+  .champ button, .encore {
+    font: inherit; cursor: pointer; color: #2a0c02; border: 0; border-radius: 99px;
+    background: linear-gradient(180deg, #ffd9a0, #ff8a3a); box-shadow: 0 0 16px rgba(255, 90, 20, .55);
+  }
+  .champ button { width: 2.7rem; height: 2.7rem; font-size: 1.3rem; flex: none; }
+  .apaiser { display: flex; flex-direction: column; align-items: center; gap: .6rem; }
+  .encore { padding: .55rem 1.5rem; font-size: 1.15rem; letter-spacing: .05em; }
+  .aide { max-width: 34rem; text-align: center; font-size: 1rem; line-height: 1.3; color: #ffe9cc; background: rgba(20, 6, 2, .55); padding: .4rem 1rem; border-radius: 12px; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 760px) {
+    .foyer { padding-top: 4rem; }
+    .flammes { gap: .3rem; flex-wrap: nowrap; }
+    .flammes button { font-size: .95rem; padding: .3rem .62rem; letter-spacing: .02em; }
+    .pages { flex-direction: column; align-items: stretch; justify-content: flex-start; overflow-y: auto; gap: .6rem; padding: 0 .1rem .4rem; }
+    .page { flex: none; max-width: none; transform: none; }
+    .page:first-child, .parole, .attente { margin-top: auto; }
+    .parole, .attente { margin-bottom: auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page, .page.rendue, .parole, .attente { animation-duration: .01s; animation-delay: 0s; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .titre, .titre span + span, .seuil { animation: none; opacity: 1; }
   }
@@ -138,6 +255,27 @@
       <span class="seuil">Toucher pour entrer</span>
     </button>
   </main>
+  <section class="foyer" id="foyer" aria-label="Parler au feu" inert>
+    <div class="pages" id="pages" aria-live="polite"></div>
+    <p class="note" id="note" hidden>Aperçu : le feu n'est pas encore relié au web. Ces pages sont des exemples.</p>
+    <form class="demande" id="demande" autocomplete="off">
+      <div class="flammes" id="flammes" role="radiogroup" aria-label="Choisir une flamme">
+        <button type="button" role="radio" aria-checked="true" data-flamme="chercher" style="--c:#ff5a1e">Chercher</button>
+        <button type="button" role="radio" aria-checked="false" data-flamme="apprendre" style="--c:#ffc04a">Apprendre</button>
+        <button type="button" role="radio" aria-checked="false" data-flamme="voir" style="--c:#ff9ec4">Voir</button>
+        <button type="button" role="radio" aria-checked="false" data-flamme="apaiser" style="--c:#9fd8ff">Apaiser</button>
+      </div>
+      <div class="champ" id="champ">
+        <label class="cache" for="question">Ta question au feu</label>
+        <input id="question" type="text" maxlength="200" placeholder="Que cherches-tu, Créateur ?" enterkeyhint="search">
+        <button type="submit" aria-label="Offrir ma question au feu">➜</button>
+      </div>
+      <div class="apaiser" id="apaiser" hidden>
+        <button type="button" class="encore" id="encore">Une autre parole</button>
+        <p class="aide">Si tu vas vraiment mal, tu n'es pas seul : en France, le <strong>3114</strong> écoute jour et nuit, gratuitement.</p>
+      </div>
+    </form>
+  </section>
   <button class="sortir" id="sortir" type="button" aria-label="Sortir du tipi et revenir à l'accueil">← Sortir</button>
   <button class="son" id="son" type="button" aria-label="Couper le son">🔊</button>
 
@@ -185,6 +323,190 @@
   });
 
   let entre = false;
+
+  // --- Le feu répond --------------------------------------------------------
+  // Pour l'instant, le feu n'est pas relié au web : les pages sont des exemples,
+  // pour montrer le geste. Seule la flamme « Apaiser » donne déjà de vraies paroles.
+  const foyer = document.getElementById("foyer");
+  const zonePages = document.getElementById("pages");
+  const note = document.getElementById("note");
+  const demande = document.getElementById("demande");
+  const question = document.getElementById("question");
+  const champ = document.getElementById("champ");
+  const blocApaiser = document.getElementById("apaiser");
+  const boutonsFlamme = [...document.querySelectorAll("#flammes button")];
+  let flamme = "chercher";
+  let minuterie = [];
+
+  const FLAMMES = {
+    chercher: { invite: "Que cherches-tu, Créateur ?", attente: "Le feu cherche…" },
+    apprendre: { invite: "Que veux-tu apprendre, Créateur ?", attente: "Le feu rassemble les meilleurs tutoriels…" },
+    voir: { invite: "Que veux-tu voir, Créateur ?", attente: "Le feu regarde les vidéos pour toi…" }
+  };
+
+  // Pages d'exemple ({q} = la question du Créateur)
+  const EXEMPLES = {
+    chercher: [
+      ["L'essentiel sur « {q} »", "Page · lecture de 3 min", "Une page claire, qui répond d'abord et explique ensuite.", "Elle va droit à la réponse, sans publicité."],
+      ["« {q} », expliqué simplement", "Article · auteur nommé", "Un texte court, écrit par quelqu'un qui connaît le sujet.", "Ses sources sont citées, on peut tout vérifier."],
+      ["Le guide complet : {q}", "Guide · lecture de 15 min", "Pour aller au fond des choses, chapitre par chapitre.", "C'est la page la plus complète que le feu ait trouvée."],
+      ["Ceux qui l'ont vécu racontent", "Témoignages", "Des retours d'expérience sur « {q} ».", "Elle apporte la voix de vraies personnes."],
+      ["Un autre regard sur « {q} »", "Point de vue", "Un avis différent, pour ne pas voir qu'un seul côté.", "Le feu aime montrer plus d'un chemin."],
+      ["À la source", "Document d'origine", "Le texte ou l'étude dont parlent toutes les autres pages.", "Mieux vaut boire à la source."],
+      ["Les questions qui viennent ensuite", "Questions et réponses", "Ce que l'on se demande juste après « {q} ».", "Elle t'évite une deuxième recherche."]
+    ],
+    apprendre: [
+      ["Débuter : {q}", "Tutoriel · débutant · 10 min", "Les bases, sans mots compliqués, avec un premier résultat rapide.", "Il part de zéro et ne suppose rien."],
+      ["Pas à pas : {q}", "Tutoriel · 6 étapes · 25 min", "Chaque étape est montrée, avec ce qu'on doit voir à l'écran.", "On peut le suivre sans se perdre."],
+      ["Aller plus loin", "Tutoriel · avancé · 40 min", "Pour ceux qui connaissent déjà les bases de « {q} ».", "Il explique le pourquoi, pas seulement le comment."],
+      ["Les erreurs à éviter", "Conseils · 5 min", "Ce qui fait perdre du temps quand on apprend « {q} ».", "Il t'épargne les pièges les plus courants."],
+      ["Un exercice pour pratiquer", "Exercice corrigé · 20 min", "Un petit projet à faire soi-même, avec la solution.", "On retient mieux en faisant."]
+    ],
+    voir: [
+      ["{q}, montré en vidéo", "Vidéo · 12 min · va à 4 min 12", "La réponse est montrée à l'image, sans long discours.", "Le feu a trouvé le moment exact où elle répond."],
+      ["Comprendre en 5 minutes", "Vidéo · 5 min · dès le début", "Une explication courte et bien illustrée de « {q} ».", "Pas d'introduction interminable."],
+      ["La démonstration complète", "Vidéo · 28 min · chapitres", "Tout est fait devant toi, du début à la fin.", "Les chapitres permettent d'aller où tu veux."],
+      ["Vu par un passionné", "Vidéo · 9 min · va à 1 min 30", "Quelqu'un qui aime le sujet et le transmet bien.", "On sent qu'il sait de quoi il parle."],
+      ["En images, sans paroles", "Vidéo · 3 min", "Juste les gestes, à regarder et à refaire.", "Elle se comprend dans toutes les langues."]
+    ]
+  };
+
+  const PAROLES = [
+    "Assieds-toi près de moi. Ici, tu n'as rien à prouver.",
+    "Ce que tu portes est lourd. Pose-le un instant, je le garde au chaud.",
+    "Tu as tenu jusqu'ici. C'est déjà beaucoup.",
+    "La nuit paraît longue, mais une seule braise suffit à rallumer un feu.",
+    "Respire. Le feu ne se presse pas, et toi non plus.",
+    "Tu as le droit d'être fatigué. Même les flammes se reposent en braises.",
+    "Ce que tu ressens passera, comme passe la fumée. Toi, tu restes.",
+    "Il y a en toi une chaleur que personne ne peut éteindre.",
+    "Tu n'es pas en retard. Tu es en chemin.",
+    "Aujourd'hui, être là suffit.",
+    "Ce qui a brûlé en toi a aussi fait de la lumière.",
+    "Reste le temps qu'il te faut. Le feu ne compte pas les heures."
+  ];
+  let ordreParoles = [], dejaMontrees = [];
+
+  function vider() {
+    minuterie.forEach(clearTimeout); minuterie = [];
+    zonePages.replaceChildren();
+    note.hidden = true;
+  }
+  function plus_tard(f, ms) { minuterie.push(setTimeout(f, ms)); }
+  function embraser() {
+    scene.classList.add("embrase");
+    plus_tard(() => scene.classList.remove("embrase"), 650);
+  }
+
+  // Combien de pages ? Une question précise : 1. Un choix à faire : 3. Une exploration : 5.
+  function combien(q) {
+    if (flamme !== "chercher") return 3;
+    const t = q.toLowerCase();
+    if (/^(quelle heure|combien|quand |qui est|qui a |où est|où se trouve|c'est quoi|quel âge|quelle est la capitale)/.test(t)) return 1;
+    if (/( ou | vs |meilleur|comparer|comparatif|lequel|laquelle|^quel |^quelle |choisir)/.test(t)) return 3;
+    return 5;
+  }
+
+  function fabriquerPage(modele, q) {
+    const [titre, meta, resume, pourquoi] = modele.map(x => x.replaceAll("{q}", q));
+    const a = document.createElement("article"); a.className = "page";
+    const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
+    el("span", "etiquette", "Exemple");
+    el("h2", "", titre.charAt(0).toUpperCase() + titre.slice(1));
+    el("p", "meta", meta);
+    el("p", "", resume);
+    el("p", "pourquoi", "Pourquoi le feu l'a choisie : " + pourquoi.charAt(0).toLowerCase() + pourquoi.slice(1));
+    const b = el("button", "rendre", "Rendre au feu"); b.type = "button";
+    b.addEventListener("click", () => rendreAuFeu(a, q));
+    return a;
+  }
+  function poserEnArc() {
+    const cartes = [...zonePages.querySelectorAll(".page")];
+    cartes.forEach((c, i) => {
+      const d = i - (cartes.length - 1) / 2;
+      c.style.setProperty("--r", (d * 2.4) + "deg");
+      c.style.setProperty("--y", (d * d * 9) + "px");
+    });
+  }
+  let reserve = [];
+  function repondre(q) {
+    vider(); embraser();
+    const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = FLAMMES[flamme].attente;
+    zonePages.append(attente);
+    const n = combien(q);
+    reserve = EXEMPLES[flamme].slice();
+    plus_tard(() => {
+      zonePages.replaceChildren();
+      embraser();
+      for (let i = 0; i < n; i++) {
+        const c = fabriquerPage(reserve.shift(), q);
+        c.style.setProperty("--d", (i * 0.22) + "s");
+        zonePages.append(c);
+      }
+      poserEnArc();
+      note.hidden = false;
+    }, 1100);
+  }
+  function rendreAuFeu(carte, q) {
+    carte.classList.add("rendue");
+    embraser();
+    plus_tard(() => {
+      if (!reserve.length) reserve = EXEMPLES[flamme].slice();
+      const neuve = fabriquerPage(reserve.shift(), q);
+      carte.replaceWith(neuve);
+      poserEnArc();
+      neuve.querySelector(".rendre").focus({ preventScroll: true });
+    }, 700);
+  }
+  function parole() {
+    vider(); embraser();
+    if (!ordreParoles.length) ordreParoles = PAROLES.map((_, i) => i).sort(() => Math.random() - .5);
+    const p = document.createElement("p"); p.className = "parole";
+    p.textContent = PAROLES[ordreParoles.pop()];
+    zonePages.append(p);
+  }
+  function choisirFlamme(nom) {
+    flamme = nom;
+    boutonsFlamme.forEach(b => b.setAttribute("aria-checked", String(b.dataset.flamme === nom)));
+    vider();
+    const apaise = nom === "apaiser";
+    champ.hidden = apaise; blocApaiser.hidden = !apaise;
+    if (apaise) parole();
+    else { question.placeholder = FLAMMES[nom].invite; }
+  }
+  boutonsFlamme.forEach((b, i) => {
+    b.addEventListener("click", () => choisirFlamme(b.dataset.flamme));
+    b.addEventListener("keydown", e => {
+      const pas = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!pas) return;
+      const autre = boutonsFlamme[(i + pas + boutonsFlamme.length) % boutonsFlamme.length];
+      autre.focus(); autre.click();
+    });
+  });
+  document.getElementById("encore").addEventListener("click", parole);
+  demande.addEventListener("submit", e => {
+    e.preventDefault();
+    const q = question.value.trim();
+    if (!q || flamme === "apaiser") { question.focus(); return; }
+    repondre(q);
+  });
+  let attenteFoyer = 0;
+  function ouvrirFoyer() {
+    clearTimeout(attenteFoyer);
+    attenteFoyer = setTimeout(() => {
+      if (!entre) return;
+      document.body.classList.add("pret");
+      foyer.inert = false;
+    }, 1600);
+  }
+  function fermerFoyer() {
+    clearTimeout(attenteFoyer);
+    document.body.classList.remove("pret");
+    foyer.inert = true;
+    vider(); question.value = "";
+    choisirFlamme("chercher");
+  }
+  // ---------------------------------------------------------------------------
   function entrer() {
     if (entre) return;
     entre = true;
@@ -200,6 +522,7 @@
     boucle.currentTime = 0;
     boucle.play().catch(() => {});
     scene.classList.add("feu");
+    ouvrirFoyer();
     if (sons.feu) sons.feu.play().catch(() => {});
   }
 
@@ -219,6 +542,7 @@
     intro.pause(); boucle.pause();
     Object.values(sons).forEach(a => { a.pause(); a.currentTime = 0; });
     scene.classList.remove("joue", "feu");
+    fermerFoyer();
     document.body.classList.remove("dedans");
     appel.focus();
   }
