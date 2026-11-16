@@ -178,5 +178,7 @@
   "Laisse la journée se poser en cendres. Demain, je serai encore là.",
   "Dans le noir, une petite flamme suffit pour voir le chemin."
  ],
- "code": "fr"
+ "code": "fr",
+ "rien": "Le feu n'a rien trouvé de fiable cette fois. Essaie avec d'autres mots.",
+ "limite": "Le feu a beaucoup brûlé aujourd'hui. Reviens demain : il t'attendra."
 };

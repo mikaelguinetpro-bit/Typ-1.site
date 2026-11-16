@@ -178,5 +178,7 @@
   "Deixe o dia virar cinzas. Amanhã, eu ainda estarei aqui.",
   "No escuro, uma pequena chama basta para ver o caminho."
  ],
- "code": "pt"
+ "code": "pt",
+ "rien": "Desta vez o fogo não encontrou nada confiável. Tente com outras palavras.",
+ "limite": "O fogo queimou muito hoje. Volte amanhã: ele vai esperar por você."
 };

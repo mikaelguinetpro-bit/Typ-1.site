@@ -24,7 +24,12 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
   5. **Les braises gardées** : le Créateur garde une page près du feu. Elles restent **sur son appareil seulement**, sans compte. *(fait)*
   6. **La voix du feu** : le feu lit la parole d'Apaiser, avec **une voix installée sur l'appareil seulement** (rien ne part sur Internet). *(fait ; le bouton n'apparaît que si l'appareil a une voix française)*
 - **Apaiser** : le feu ne se fait jamais passer pour un thérapeute, et la ligne d'aide (le 3114 en France) reste toujours visible avec les paroles. Ne pas la retirer.
-- **État actuel** : le feu **n'est pas encore relié au web**. Les pages affichées sont des **exemples**, étiquetées « Exemple », avec une note visible. Ne jamais présenter une page d'exemple comme un vrai résultat. La vraie recherche demandera un serveur et aura un coût par recherche : à décider avec Ritukah.
+- **Le feu savant** (décidé par Ritukah le 16 novembre 2026) : la recherche passe par **Claude** (API d'Anthropic, modèle Haiku, avec sa recherche web intégrée).
+  - Le code est dans `api/feu.js`, une fonction serveur hébergée **chez Vercel, avec le site**. La clé `ANTHROPIC_API_KEY` vit **seulement** dans les réglages de Vercel, jamais dans le dépôt ni dans un message.
+  - **Règle absolue** : une page n'arrive au Créateur que si son adresse vient vraiment des résultats de recherche (`filtrer` dans `api/feu.js`). Une adresse inventée par l'IA est rejetée. Ne jamais retirer ce contrôle.
+  - Le portefeuille est protégé par la **limite de dépenses** réglée dans la console Claude, et par `FEU_LIMITE_JOUR` (100 recherches par jour par défaut).
+  - Sans serveur (aperçu, fichier ouvert sur l'ordinateur), la page montre les **exemples**, étiquetés « Exemple », avec la note visible. Ne jamais présenter un exemple comme un vrai résultat.
+  - Tester sans dépenser : `node scripts/tester_feu.js`.
 - **Les langues** (décidé par Ritukah le 16 novembre 2026) : le site parle **9 langues**, les mêmes que les autres sites : français (langue source), espagnol, anglais, portugais, russe, arabe (de droite à gauche), hindi, bengali, chinois.
   - Tous les textes sont dans `i18n/<code>.js`. **Aucun texte en dur** dans `index.html` : un texte affiché porte `data-i18n` (ou `data-i18n-aria`, `data-i18n-alt`, `data-i18n-html`), ou passe par `T("cle")` dans le script.
   - Un texte ajouté ou changé en français l'est **dans les 9 fichiers, dans la même branche**. Vérifier avec `python3 scripts/verifier_traductions.py` (mêmes clés, même nombre d'exemples et de paroles, `{q}` au même endroit).
@@ -37,7 +42,7 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 
 Ne rien construire sur ces points sans son accord :
 - l'adresse définitive (Typ-1.help) et l'hébergement ;
-- le **serveur** de la vraie recherche (quel outil de recherche web, quelle IA, combien de recherches offertes par jour à chaque Créateur) ;
+- quand le site sera **ouvert à tous** : combien de recherches offrir chaque jour à chaque Créateur (pour l'instant, le site est privé, visible par Ritukah seul) ;
 - **parler au feu avec sa voix** : la reconnaissance vocale du navigateur passe par un service extérieur, il faut l'accord de Ritukah avant de la brancher (le feu qui lit à voix haute, lui, reste sur l'appareil).
 
 ## Les mots du projet

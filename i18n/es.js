@@ -178,5 +178,7 @@
   "Deja que el día se pose en cenizas. Mañana seguiré aquí.",
   "En la oscuridad, una pequeña llama basta para ver el camino."
  ],
- "code": "es"
+ "code": "es",
+ "rien": "Esta vez el fuego no encontró nada fiable. Prueba con otras palabras.",
+ "limite": "El fuego ha ardido mucho hoy. Vuelve mañana: te estará esperando."
 };
