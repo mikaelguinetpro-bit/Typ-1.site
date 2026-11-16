@@ -16,6 +16,13 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
   - chaque page dit **pourquoi le feu l'a choisie** ; le Créateur peut la **rendre au feu** pour en recevoir une autre ;
   - **les flammes** sont des recherches spécialisées. Première version : **Chercher**, **Apprendre** (tutoriels), **Voir** (vidéos), **Apaiser** (le feu offre des paroles qui font du bien). Idées pour plus tard : Lire, Outils, Vérifier, Créer ;
   - pas de publicité, pas de pistage du Créateur ; le feu a le droit de dire qu'il n'a rien trouvé de fiable.
+- **Les six idées gardées par Ritukah** (16 novembre 2026) :
+  1. **Le feu pose une question en retour** quand une demande est floue : une seule question, avant de chercher. *(à faire, demande l'IA)*
+  2. **Offrir une page comme une étincelle** : on l'envoie à quelqu'un, qui la voit arriver en étincelle. *(à faire, demande le serveur)*
+  3. **La braise du jour** : chaque jour, la même belle découverte offerte à tous. *(à faire, demande le serveur ; jamais de fausse découverte)*
+  4. **Le feu change avec l'heure** : doré à l'aube, rouge et intime la nuit ; la nuit, Apaiser parle plus doucement. *(fait)*
+  5. **Les braises gardées** : le Créateur garde une page près du feu. Elles restent **sur son appareil seulement**, sans compte. *(fait)*
+  6. **La voix du feu** : le feu lit la parole d'Apaiser, avec **une voix installée sur l'appareil seulement** (rien ne part sur Internet). *(fait ; le bouton n'apparaît que si l'appareil a une voix française)*
 - **Apaiser** : le feu ne se fait jamais passer pour un thérapeute, et la ligne d'aide (le 3114 en France) reste toujours visible avec les paroles. Ne pas la retirer.
 - **État actuel** : le feu **n'est pas encore relié au web**. Les pages affichées sont des **exemples**, étiquetées « Exemple », avec une note visible. Ne jamais présenter une page d'exemple comme un vrai résultat. La vraie recherche demandera un serveur et aura un coût par recherche : à décider avec Ritukah.
 - **Le son** : prêt à brancher dans le bloc `SONS` de `index.html` (son d'entrée, crépitement du feu). **La voix du feu viendra plus tard**, en surprise.
@@ -26,7 +33,7 @@ Ne rien construire sur ces points sans son accord :
 - l'adresse définitive (Typ-1.help) et l'hébergement ;
 - les **langues** du site (les autres sites en parlent 9 : français, espagnol, anglais, portugais, russe, arabe, hindi, bengali, chinois) ;
 - le **serveur** de la vraie recherche (quel outil de recherche web, quelle IA, combien de recherches offertes par jour à chaque Créateur) ;
-- la **voix** (parler au feu) : la reconnaissance vocale du navigateur passe par un service extérieur, il faut l'accord de Ritukah avant de la brancher.
+- **parler au feu avec sa voix** : la reconnaissance vocale du navigateur passe par un service extérieur, il faut l'accord de Ritukah avant de la brancher (le feu qui lit à voix haute, lui, reste sur l'appareil).
 
 ## Les mots du projet
 

@@ -2,6 +2,14 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/feu-vivant
+- Le feu change avec l'heure du Créateur (aube, jour, soir, nuit) ; la nuit, Apaiser a ses propres paroles (6 phrases, à relire par Ritukah).
+- « Garder près du feu » sur chaque page, et le bouton « Braises » qui les retrouve. Elles restent sur l'appareil (stockage du navigateur), sans compte.
+- « Écouter le feu » dans Apaiser : seulement avec une voix installée sur l'appareil, sinon le bouton n'apparaît pas.
+- Les six idées gardées par Ritukah sont notées dans `AGENTS.md`.
+- Pourquoi : Ritukah a gardé les six idées ; ces trois-là n'ont pas besoin de serveur.
+- À faire : la question en retour, l'étincelle offerte et la braise du jour, avec le serveur.
+
 ## 2026-11-16 — Claude — claude/le-feu-repond
 - Dans le tipi, une fois le feu allumé : un champ pour parler au feu, quatre flammes (Chercher, Apprendre, Voir, Apaiser) et des pages qui sortent du feu (1, 3 ou 5 selon la demande), chacune avec « pourquoi le feu l'a choisie » et « Rendre au feu ».
 - Apaiser donne déjà de vraies paroles (12 phrases, à relire par Ritukah), avec la ligne d'aide du 3114 toujours visible.

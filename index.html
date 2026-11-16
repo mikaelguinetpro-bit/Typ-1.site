@@ -132,8 +132,61 @@
     opacity: 0; pointer-events: none; transition: opacity .4s ease;
   }
   .pret .foyer { opacity: 1; pointer-events: auto; transition: opacity 1.4s ease; }
-  #boucle { transition: opacity .45s ease, filter .5s ease; }
-  .embrase #boucle { filter: brightness(1.55) saturate(1.15); }
+  /* le feu change avec l'heure du Créateur : doré à l'aube, rouge et intime la nuit */
+  body { --heure: brightness(1); }
+  body[data-moment="aube"] { --heure: sepia(.2) saturate(1.05) hue-rotate(8deg) brightness(1.07); }
+  body[data-moment="soir"] { --heure: saturate(1.1) hue-rotate(-3deg); }
+  body[data-moment="nuit"] { --heure: saturate(1.2) hue-rotate(-7deg) brightness(.8); }
+  #boucle { filter: var(--heure); transition: opacity .45s ease, filter 1.2s ease; }
+  .embrase #boucle { filter: var(--heure) brightness(1.55) saturate(1.15); transition: opacity .45s ease, filter .5s ease; }
+
+  /* garder une page près du feu */
+  .page .actions { display: flex; flex-wrap: wrap; gap: .2rem 1rem; margin-top: .55rem; }
+  .page .actions .rendre { margin-top: 0; }
+  .page .garder {
+    background: none; border: 0; padding: .2rem 0; cursor: pointer;
+    font: inherit; font-style: italic; font-size: .98rem; color: #6a3a10; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .page .garder[aria-pressed="true"] { color: #b4400c; text-decoration: none; }
+  .page .garder:focus-visible, .braises-btn:focus-visible, .reserve button:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
+  .braises-btn {
+    position: fixed; right: 1.1rem; top: 1.1rem; z-index: 5;
+    padding: .5rem 1.1rem; border-radius: 99px;
+    border: 1px solid rgba(243, 210, 154, .45); background: rgba(18, 6, 4, .4);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    color: #ffe9cc; font: inherit; font-style: italic; font-size: 1.05rem; letter-spacing: .08em; cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease;
+  }
+  .braises-btn span {
+    display: inline-block; min-width: 1.4em; margin-left: .4em; padding: 0 .35em; border-radius: 99px;
+    background: var(--braise); color: #fff; font-style: normal; font-size: .9em; text-align: center;
+    box-shadow: 0 0 10px rgba(255, 50, 10, .7);
+  }
+  .pret .braises-btn { opacity: 1; pointer-events: auto; transition: opacity 1.4s ease; }
+  .avec-son .braises-btn { right: 4.4rem; }
+  .reserve {
+    position: fixed; top: 0; right: 0; bottom: 0; z-index: 6; width: min(380px, 100%);
+    padding: 1.2rem 1.1rem; overflow-y: auto;
+    background: rgba(24, 8, 4, .93); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-left: 1px solid rgba(243, 210, 154, .3); box-shadow: -10px 0 40px rgba(0, 0, 0, .5);
+    animation: glisse .45s ease;
+  }
+  @keyframes glisse { from { transform: translateX(100%); } }
+  .reserve-tete { display: flex; justify-content: space-between; align-items: center; }
+  .reserve h2 { font-weight: 500; font-size: 1.6rem; letter-spacing: .12em; color: #ffe2bd; }
+  .reserve-tete button { background: none; border: 1px solid rgba(243, 210, 154, .4); border-radius: 50%; width: 2.2rem; height: 2.2rem; color: #ffe9cc; font-size: 1rem; cursor: pointer; }
+  .reserve-note, .reserve-vide { font-style: italic; color: rgba(255, 233, 204, .75); margin: .3rem 0 1rem; }
+  .braise {
+    position: relative; margin-bottom: .7rem; padding: .8rem .9rem; border-radius: 5px;
+    background: linear-gradient(170deg, #f8ecd0, #e8cf9c); color: #3a1a08;
+    box-shadow: 0 0 18px rgba(255, 80, 20, .25);
+  }
+  .braise .etiquette { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #8a3a12; }
+  .braise h3 { font-weight: 500; font-size: 1.15rem; line-height: 1.15; margin: .15rem 0 .2rem; }
+  .braise p { font-size: .98rem; line-height: 1.2; }
+  .braise .meta { color: #7a4a22; font-size: .9rem; }
+  .braise button { margin-top: .4rem; background: none; border: 0; padding: .1rem 0; cursor: pointer; font: inherit; font-style: italic; color: #8a2a08; text-decoration: underline; }
+  .apaiser .rangee { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
 
   .pages {
     flex: 1; min-height: 0; width: min(1240px, 100%);
@@ -271,12 +324,22 @@
         <button type="submit" aria-label="Offrir ma question au feu">➜</button>
       </div>
       <div class="apaiser" id="apaiser" hidden>
-        <button type="button" class="encore" id="encore">Une autre parole</button>
+        <div class="rangee">
+          <button type="button" class="encore" id="encore">Une autre parole</button>
+          <button type="button" class="encore" id="ecouter" hidden>Écouter le feu</button>
+        </div>
         <p class="aide">Si tu vas vraiment mal, tu n'es pas seul : en France, le <strong>3114</strong> écoute jour et nuit, gratuitement.</p>
       </div>
     </form>
   </section>
   <button class="sortir" id="sortir" type="button" aria-label="Sortir du tipi et revenir à l'accueil">← Sortir</button>
+  <button class="braises-btn" id="braisesBtn" type="button" aria-expanded="false" aria-controls="reserve">Braises<span id="compte">0</span></button>
+  <aside class="reserve" id="reserve" aria-label="Tes braises" hidden>
+    <div class="reserve-tete"><h2>Tes braises</h2><button type="button" id="fermerReserve" aria-label="Fermer">✕</button></div>
+    <p class="reserve-note">Les pages gardées près du feu. Elles restent sur cet appareil, nulle part ailleurs.</p>
+    <div id="listeBraises"></div>
+    <p class="reserve-vide" id="vide">Garde une page près du feu : elle t'attendra ici.</p>
+  </aside>
   <button class="son" id="son" type="button" aria-label="Couper le son">🔊</button>
 
 <script>
@@ -385,7 +448,94 @@
     "Ce qui a brûlé en toi a aussi fait de la lumière.",
     "Reste le temps qu'il te faut. Le feu ne compte pas les heures."
   ];
-  let ordreParoles = [], dejaMontrees = [];
+  // La nuit, le feu parle plus doucement
+  const PAROLES_NUIT = [
+    "La nuit est là. Tu n'as plus rien à porter jusqu'au matin.",
+    "Je veille. Toi, tu peux te reposer.",
+    "Les étoiles aussi brillent mieux quand tout est sombre.",
+    "Ce soir, sois doux avec toi, comme tu le serais avec un ami.",
+    "Laisse la journée se poser en cendres. Demain, je serai encore là.",
+    "Dans le noir, une petite flamme suffit pour voir le chemin."
+  ];
+  let ordreParoles = [], ordreNuit = [];
+  let paroleCourante = "";
+
+  // Le feu suit l'heure du Créateur
+  function moment() {
+    const h = new Date().getHours();
+    return h >= 5 && h < 10 ? "aube" : h >= 10 && h < 18 ? "jour" : h >= 18 && h < 22 ? "soir" : "nuit";
+  }
+  const INVITES_HEURE = { aube: "Que cherches-tu ce matin, Créateur ?", nuit: "Que cherches-tu cette nuit, Créateur ?" };
+  function invite(nom) {
+    return nom === "chercher" ? (INVITES_HEURE[document.body.dataset.moment] || FLAMMES.chercher.invite) : FLAMMES[nom].invite;
+  }
+  function majMoment() {
+    document.body.dataset.moment = moment();
+    if (flamme !== "apaiser") question.placeholder = invite(flamme);
+  }
+
+  // La voix du feu : seulement une voix installée sur l'appareil, rien ne part sur Internet
+  const btnEcouter = document.getElementById("ecouter");
+  let voix = null;
+  function chercherVoix() {
+    try {
+      const vs = speechSynthesis.getVoices().filter(v => v.localService && /^fr/i.test(v.lang));
+      voix = vs[0] || null;
+    } catch (e) { voix = null; }
+    btnEcouter.hidden = !voix;
+  }
+  function taire() { try { speechSynthesis.cancel(); } catch (e) {} }
+  if ("speechSynthesis" in window) { chercherVoix(); speechSynthesis.onvoiceschanged = chercherVoix; }
+  btnEcouter.addEventListener("click", () => {
+    if (!voix || !paroleCourante) return;
+    taire();
+    const u = new SpeechSynthesisUtterance(paroleCourante);
+    u.voice = voix; u.lang = voix.lang; u.rate = .82; u.pitch = .85;
+    try { speechSynthesis.speak(u); } catch (e) {}
+  });
+
+  // Les braises : les pages gardées près du feu, sur cet appareil seulement
+  const CLE = "typ1_braises";
+  let memoireBraises = [];
+  function lireBraises() {
+    try { const l = JSON.parse(localStorage.getItem(CLE)); return Array.isArray(l) ? l : memoireBraises; }
+    catch (e) { return memoireBraises; }
+  }
+  function ecrireBraises(l) {
+    memoireBraises = l;
+    try { localStorage.setItem(CLE, JSON.stringify(l)); } catch (e) {}
+    afficherBraises();
+  }
+  const idBraise = d => d.flamme + "|" + d.titre + "|" + d.meta;
+  const estGardee = d => lireBraises().some(b => idBraise(b) === idBraise(d));
+  function basculer(d) {
+    const l = lireBraises();
+    ecrireBraises(estGardee(d) ? l.filter(b => idBraise(b) !== idBraise(d)) : [d, ...l]);
+  }
+  const panneau = document.getElementById("reserve");
+  const btnBraises = document.getElementById("braisesBtn");
+  const liste = document.getElementById("listeBraises");
+  function afficherBraises() {
+    const l = lireBraises();
+    document.getElementById("compte").textContent = l.length;
+    document.getElementById("vide").hidden = l.length > 0;
+    liste.replaceChildren(...l.map(d => {
+      const a = document.createElement("article"); a.className = "braise";
+      const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
+      if (d.exemple) el("span", "etiquette", "Exemple");
+      el("h3", "", d.titre); el("p", "meta", d.meta); el("p", "", d.resume);
+      const b = el("button", "", "Rendre au feu"); b.type = "button";
+      b.addEventListener("click", () => {
+        ecrireBraises(lireBraises().filter(x => idBraise(x) !== idBraise(d)));
+        document.querySelectorAll(".page .garder").forEach(g => g.majGarder && g.majGarder());
+      });
+      return a;
+    }));
+  }
+  function ouvrirReserve() { afficherBraises(); panneau.hidden = false; btnBraises.setAttribute("aria-expanded", "true"); document.getElementById("fermerReserve").focus(); }
+  function fermerReserve() { if (panneau.hidden) return; panneau.hidden = true; btnBraises.setAttribute("aria-expanded", "false"); }
+  btnBraises.addEventListener("click", () => panneau.hidden ? ouvrirReserve() : (fermerReserve(), btnBraises.focus()));
+  document.getElementById("fermerReserve").addEventListener("click", () => { fermerReserve(); btnBraises.focus(); });
 
   function vider() {
     minuterie.forEach(clearTimeout); minuterie = [];
@@ -416,8 +566,19 @@
     el("p", "meta", meta);
     el("p", "", resume);
     el("p", "pourquoi", "Pourquoi le feu l'a choisie : " + pourquoi.charAt(0).toLowerCase() + pourquoi.slice(1));
-    const b = el("button", "rendre", "Rendre au feu"); b.type = "button";
+    const actions = document.createElement("div"); actions.className = "actions"; a.append(actions);
+    const donnees = { flamme, titre: titre.charAt(0).toUpperCase() + titre.slice(1), meta, resume, exemple: true };
+    const g = document.createElement("button"); g.type = "button"; g.className = "garder";
+    g.majGarder = () => {
+      const k = estGardee(donnees);
+      g.textContent = k ? "Gardée près du feu ✓" : "Garder près du feu";
+      g.setAttribute("aria-pressed", String(k));
+    };
+    g.addEventListener("click", () => { basculer(donnees); g.majGarder(); });
+    g.majGarder();
+    const b = document.createElement("button"); b.type = "button"; b.className = "rendre"; b.textContent = "Rendre au feu";
     b.addEventListener("click", () => rendreAuFeu(a, q));
+    actions.append(g, b);
     return a;
   }
   function poserEnArc() {
@@ -460,9 +621,18 @@
   }
   function parole() {
     vider(); embraser();
-    if (!ordreParoles.length) ordreParoles = PAROLES.map((_, i) => i).sort(() => Math.random() - .5);
+    taire();
+    let texte;
+    if (document.body.dataset.moment === "nuit") {
+      if (!ordreNuit.length) ordreNuit = PAROLES_NUIT.map((_, i) => i).sort(() => Math.random() - .5);
+      texte = PAROLES_NUIT[ordreNuit.pop()];
+    } else {
+      if (!ordreParoles.length) ordreParoles = PAROLES.map((_, i) => i).sort(() => Math.random() - .5);
+      texte = PAROLES[ordreParoles.pop()];
+    }
+    paroleCourante = texte;
     const p = document.createElement("p"); p.className = "parole";
-    p.textContent = PAROLES[ordreParoles.pop()];
+    p.textContent = texte;
     zonePages.append(p);
   }
   function choisirFlamme(nom) {
@@ -472,7 +642,7 @@
     const apaise = nom === "apaiser";
     champ.hidden = apaise; blocApaiser.hidden = !apaise;
     if (apaise) parole();
-    else { question.placeholder = FLAMMES[nom].invite; }
+    else { taire(); question.placeholder = invite(nom); }
   }
   boutonsFlamme.forEach((b, i) => {
     b.addEventListener("click", () => choisirFlamme(b.dataset.flamme));
@@ -504,8 +674,11 @@
     document.body.classList.remove("pret");
     foyer.inert = true;
     vider(); question.value = "";
+    fermerReserve(); taire();
     choisirFlamme("chercher");
   }
+  majMoment(); setInterval(majMoment, 10 * 60 * 1000);
+  afficherBraises();
   // ---------------------------------------------------------------------------
   function entrer() {
     if (entre) return;
@@ -549,7 +722,10 @@
 
   appel.addEventListener("click", entrer);
   btnSortir.addEventListener("click", sortir);
-  document.addEventListener("keydown", e => { if (e.key === "Escape") sortir(); });
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (!panneau.hidden) { fermerReserve(); btnBraises.focus(); } else sortir();
+  });
 })();
 </script>
 </body>
