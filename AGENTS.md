@@ -5,7 +5,7 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 
 ## Le projet
 
-**Typ-1.help**, pour Tipi, est l'élément **Feu** du Sceau de l'Empire (décidé par Ritukah le 14 novembre 2026). Il est **en préparation, pas encore en ligne**. Le dépôt GitHub s'appelle `Typ-1.site`.
+**Typ-1.help**, pour Tipi, est l'élément **Feu** du Sceau de l'Empire (décidé par Ritukah le 14 novembre 2026). Il est **en ligne depuis le 16 novembre 2026** sur https://typ-1site.vercel.app, mais **visible de Ritukah seul pour l'instant** : sur BNM1, il « fait la sieste ». Le dépôt GitHub s'appelle `Typ-1.site`.
 
 - **Site** : site statique, à la racine du dépôt.
   - `index.html` : la page d'accueil. L'image du tipi avec « Créateur, entre dans le tipi / le feu t'attend » ; au clic, la vidéo d'entrée se lance, puis le feu brûle en boucle à l'infini.
@@ -42,7 +42,7 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 ## Ce qui reste à décider par Ritukah
 
 Ne rien construire sur ces points sans son accord :
-- l'adresse définitive (Typ-1.help) et l'hébergement ;
+- l'adresse définitive (Typ-1.help ou une autre ; aujourd'hui typ-1site.vercel.app, hébergé chez Vercel) ;
 - quand le site sera **ouvert à tous** : combien de recherches offrir chaque jour à chaque Créateur (pour l'instant, le site est privé, visible par Ritukah seul) ;
 
 ## Les mots du projet
@@ -64,7 +64,7 @@ Ce dépôt fait partie d'un ensemble de sites. Pour rester cohérent avec les au
 
 | Élément | Site | Dépôt GitHub |
 |---|---|---|
-| 🔥 Feu | Typ-1.help — pour Tipi (en préparation, pas encore en ligne) | `Typ-1.site` |
+| 🔥 Feu | Typ-1 — pour Tipi — typ-1site.vercel.app (en ligne depuis le 16 novembre 2026, visible du seul Ritukah pour l'instant : il « fait la sieste ») | `Typ-1.site` |
 | 🌍 Terre | Atlas.Sea — atlassea.me | `Atlas.sea` |
 | 💨 Air | Nebula — www.nebulatkn.foundation | `NebulaTkn.foundation` |
 | 💧 Eau | Hasta La Vista — hasta-la-vista.org | `Hasta-La-Vista` |
