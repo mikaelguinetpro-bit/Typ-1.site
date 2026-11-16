@@ -2,6 +2,13 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/sons-et-voix
+- Les sons choisis par Ritukah : un souffle quand le feu prend dans la vidéo d'entrée, le crépitement en boucle sans couture ensuite, un petit souffle (6 variantes) à chaque embrasement. Web Audio ; le bouton son reste coupé si on l'a coupé.
+- Parler au feu : bouton micro (reconnaissance vocale du navigateur, dans la langue du site) ; la question dite est envoyée au feu, et sert aussi à répondre à sa question.
+- Quatre nouveaux textes dans les 9 langues. Testé dans Chrome (micro simulé), sans erreur.
+- Pourquoi : demandé par Ritukah, qui a donné son accord pour le micro.
+- À faire : confirmer la licence des souffles sur Freesound (mikiko850, n° 848728).
+
 ## 2026-11-16 — Claude — claude/question-du-feu
 - Idée 1 : quand une demande est trop floue (« jaguar »), le feu pose **une seule** question en retour, avant de chercher, avec 2 à 4 réponses à toucher et « Cherche quand même ». Le Créateur peut aussi répondre avec ses propres mots dans le champ.
 - `api/feu.js` : Claude peut répondre `{question, choix}` au lieu de chercher (rarement, seulement si c'est vraiment flou) ; après la réponse du Créateur, il cherche toujours, sans reposer de question.

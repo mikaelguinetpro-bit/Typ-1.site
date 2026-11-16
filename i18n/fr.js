@@ -184,5 +184,9 @@
  "quand_meme": "Cherche quand même",
  "repondre_au_feu": "Ou réponds au feu avec tes mots…",
  "question_exemple": "Que veux-tu savoir sur « {q} », Créateur ?",
- "choix_exemple": ["Ce que c'est", "Comment faire", "Où le trouver"]
+ "choix_exemple": ["Ce que c'est", "Comment faire", "Où le trouver"],
+ "micro_aria": "Parler au feu",
+ "micro_ecoute": "Le feu t'écoute…",
+ "micro_refuse": "Le micro n'est pas autorisé. Autorise-le dans ton navigateur, ou écris ta question au feu.",
+ "micro_info": "Parle au feu : ta voix est transformée en texte par le service de ton navigateur."
 };

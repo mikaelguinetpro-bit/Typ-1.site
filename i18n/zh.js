@@ -184,5 +184,9 @@
  "quand_meme": "还是搜吧",
  "repondre_au_feu": "或者用你自己的话回答火…",
  "question_exemple": "创造者，关于「{q}」你想知道什么？",
- "choix_exemple": ["它是什么", "怎么做", "在哪里找到"]
+ "choix_exemple": ["它是什么", "怎么做", "在哪里找到"],
+ "micro_aria": "对火说话",
+ "micro_ecoute": "火在听你说…",
+ "micro_refuse": "麦克风未获允许。请在浏览器中允许，或者把你的问题写给火。",
+ "micro_info": "对火说话：你的浏览器服务会把你的声音转成文字。"
 };

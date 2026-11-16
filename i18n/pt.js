@@ -184,5 +184,9 @@
  "quand_meme": "Procure assim mesmo",
  "repondre_au_feu": "Ou responda ao fogo com suas palavras…",
  "question_exemple": "O que você quer saber sobre “{q}”, Criador?",
- "choix_exemple": ["O que é", "Como fazer", "Onde encontrar"]
+ "choix_exemple": ["O que é", "Como fazer", "Onde encontrar"],
+ "micro_aria": "Falar com o fogo",
+ "micro_ecoute": "O fogo está te ouvindo…",
+ "micro_refuse": "O microfone não está autorizado. Autorize no seu navegador ou escreva sua pergunta ao fogo.",
+ "micro_info": "Fale com o fogo: o serviço do seu navegador transforma sua voz em texto."
 };

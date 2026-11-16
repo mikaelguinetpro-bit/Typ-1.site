@@ -184,5 +184,9 @@
  "quand_meme": "Busca de todos modos",
  "repondre_au_feu": "O responde al fuego con tus palabras…",
  "question_exemple": "¿Qué quieres saber sobre «{q}», Creador?",
- "choix_exemple": ["Qué es", "Cómo hacerlo", "Dónde encontrarlo"]
+ "choix_exemple": ["Qué es", "Cómo hacerlo", "Dónde encontrarlo"],
+ "micro_aria": "Hablar al fuego",
+ "micro_ecoute": "El fuego te escucha…",
+ "micro_refuse": "El micrófono no está autorizado. Autorízalo en tu navegador o escribe tu pregunta al fuego.",
+ "micro_info": "Habla al fuego: el servicio de tu navegador convierte tu voz en texto."
 };

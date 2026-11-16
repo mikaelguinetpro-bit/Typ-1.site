@@ -36,14 +36,14 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
   - « Créateur » se traduit comme sur Nebula : Creador, Creator, Criador, Создатель, المبدع, निर्माता, সৃষ্টিকর্তা, 创造者. Le feu tutoie le Créateur dans toutes les langues.
   - La ligne d'aide d'Apaiser change selon la langue : le **3114** en français (France), et dans les autres langues le numéro d'urgence local et **findahelpline.com**. Ne jamais la retirer.
   - La langue choisie reste sur l'appareil du Créateur ; sinon le site prend celle de son navigateur, puis le français.
-- **Le son** : prêt à brancher dans le bloc `SONS` de `index.html` (son d'entrée, crépitement du feu). **La voix du feu viendra plus tard**, en surprise.
+- **Le son** (fichiers choisis par Ritukah, 16 novembre 2026) : un souffle quand le feu prend dans la vidéo d'entrée (vers 8,35 s), puis le crépitement en boucle ; un petit souffle chaque fois que le feu s'embrase. Tout passe par Web Audio (boucle sans trou). Le bouton 🔊 coupe tout, et ce choix reste sur l'appareil. Origine et licences : `assets/SOURCES.md`.
+- **Parler au feu** (accord de Ritukah le 16 novembre 2026) : bouton micro dans le champ, seulement si le navigateur sait faire. La voix est transformée en texte **par le service du navigateur** (Google pour Chrome, Apple pour Safari) : le site le dit dans l'info-bulle du bouton. La question dite est envoyée au feu toute seule.
 
 ## Ce qui reste à décider par Ritukah
 
 Ne rien construire sur ces points sans son accord :
 - l'adresse définitive (Typ-1.help ou une autre ; aujourd'hui typ-1site.vercel.app, hébergé chez Vercel) ;
 - quand le site sera **ouvert à tous** : combien de recherches offrir chaque jour à chaque Créateur (pour l'instant, le site est privé, visible par Ritukah seul) ;
-- **parler au feu avec sa voix** : la reconnaissance vocale du navigateur passe par un service extérieur, il faut l'accord de Ritukah avant de la brancher (le feu qui lit à voix haute, lui, reste sur l'appareil).
 
 ## Les mots du projet
 

@@ -108,7 +108,7 @@
   @keyframes souffle { 0%, 100% { box-shadow: 0 0 0 rgba(255, 60, 20, 0); } 50% { box-shadow: 0 0 26px rgba(255, 60, 20, .35); } }
   .seuil { will-change: opacity; }
 
-  /* --- le son : petit bouton discret, n'apparaît que si des sons sont configurés --- */
+  /* --- le son : petit bouton discret, n'apparaît que si le navigateur sait jouer les sons --- */
   .son {
     position: fixed; right: 1.1rem; top: 1.1rem; z-index: 5;
     width: 2.6rem; height: 2.6rem; border-radius: 50%;
@@ -336,6 +336,13 @@
     background: linear-gradient(180deg, #ffd9a0, #ff8a3a); box-shadow: 0 0 16px rgba(255, 90, 20, .55);
   }
   .champ button { width: 2.7rem; height: 2.7rem; font-size: 1.3rem; flex: none; }
+  .champ button.micro {
+    display: grid; place-items: center; color: #ffe9cc; background: rgba(60, 18, 6, .55);
+    border: 1px solid rgba(243, 210, 154, .4); box-shadow: none; transition: background .2s, box-shadow .2s, color .2s;
+  }
+  .champ button.micro svg { width: 1.15rem; height: 1.15rem; }
+  .champ button.micro.ecoute { color: #fff; background: #c2300c; border-color: #ffb36a; animation: ecoute 1.1s ease-in-out infinite; }
+  @keyframes ecoute { 50% { box-shadow: 0 0 22px 4px rgba(255, 70, 20, .75); } }
   .apaiser { display: flex; flex-direction: column; align-items: center; gap: .6rem; }
   .encore { padding: .55rem 1.5rem; font-size: 1.15rem; letter-spacing: .05em; }
   .aide { max-width: 34rem; text-align: center; font-size: 1rem; line-height: 1.3; color: #ffe9cc; background: rgba(20, 6, 2, .55); padding: .4rem 1rem; border-radius: 12px; }
@@ -385,6 +392,7 @@
       <div class="champ" id="champ">
         <label class="cache" for="question" data-i18n="question_label">Ta question au feu</label>
         <input id="question" type="text" maxlength="200" placeholder="Que cherches-tu, Créateur ?" enterkeyhint="search">
+        <button type="button" class="micro" id="micro" aria-label="Parler au feu" aria-pressed="false" data-i18n-aria="micro_aria" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
         <button type="submit" aria-label="Offrir ma question au feu" data-i18n-aria="envoyer_aria">➜</button>
       </div>
       <div class="apaiser" id="apaiser" hidden>
@@ -458,11 +466,12 @@ function TYP1_demarrer(codeDepart) {
   });
 
   // --- Réglages -------------------------------------------------------------
-  // Les sons sont prêts à être branchés : il suffit de déposer les fichiers dans assets/
-  // et d'écrire leur nom ici (laisser vide = pas de son).
+  // Les sons (voir assets/SOURCES.md pour leur origine)
   const SONS = {
-    entree: "",   // ex. "assets/son_etincelle.mp3" — joué au clic, pendant la vidéo d'entrée
-    feu: ""       // ex. "assets/son_feu.mp3"       — crépitement du feu, en boucle à l'infini
+    allumage: "assets/son_souffle_5.mp3",   // le souffle quand le feu prend, dans la vidéo d'entrée
+    moment_allumage: 8.35,                  // à quelle seconde de la vidéo le feu prend
+    feu: "assets/son_feu.mp3",              // crépitement du feu, en boucle à l'infini
+    souffles: [1, 2, 3, 4, 5, 6].map(i => `assets/son_souffle_${i}.mp3`)   // quand le feu s'embrase
   };
   // ---------------------------------------------------------------------------
 
@@ -480,22 +489,70 @@ function TYP1_demarrer(codeDepart) {
   boucle.src = "assets/typ1_feu_boucle.mp4";
   intro.load(); boucle.load();
 
-  const sons = {};
-  for (const [nom, src] of Object.entries(SONS)) {
-    if (!src) continue;
-    const a = new Audio(src);
-    a.preload = "auto";
-    if (nom === "feu") a.loop = true;
-    sons[nom] = a;
-  }
-  const avecSon = Object.keys(sons).length > 0;
-  if (avecSon) document.body.classList.add("avec-son");
+  // Le son passe par Web Audio : la boucle du feu tourne sans le moindre trou, et les volumes se fondent.
+  // Le navigateur n'autorise le son qu'après un geste du Créateur : on le réveille quand il entre.
   let muet = false;
-  btnSon.addEventListener("click", () => {
-    muet = !muet;
-    Object.values(sons).forEach(a => { a.muted = muet; });
+  try { muet = localStorage.getItem("typ1_muet") === "1"; } catch (e) {}
+  const son = (() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    const rien = { reveiller() {}, jouer() {}, souffle() {}, feu() {}, muet() {} };
+    if (!AC) return rien;
+    document.body.classList.add("avec-son");
+    let ctx = null, maitre = null, boucleFeu = null;
+    const tampons = {};
+    const charger = src => tampons[src] || (tampons[src] = fetch(src)
+      .then(r => r.arrayBuffer())
+      .then(b => new Promise((ok, ko) => ctx.decodeAudioData(b, ok, ko))));
+    return {
+      reveiller() {
+        if (!ctx) {
+          try { ctx = new AC(); } catch (e) { return; }
+          maitre = ctx.createGain(); maitre.gain.value = muet ? 0 : 1; maitre.connect(ctx.destination);
+          [SONS.feu, SONS.allumage, ...SONS.souffles].forEach(s => charger(s).catch(() => {}));
+        }
+        if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      },
+      async jouer(src, volume = 1) {
+        if (!ctx) return;
+        try {
+          const t = await charger(src);
+          const s = ctx.createBufferSource(), g = ctx.createGain();
+          s.buffer = t; g.gain.value = volume;
+          s.connect(g); g.connect(maitre); s.start();
+        } catch (e) {}
+      },
+      souffle(volume = .3) { this.jouer(SONS.souffles[Math.floor(Math.random() * SONS.souffles.length)], volume); },
+      async feu(allume) {
+        if (!ctx) return;
+        if (allume) {
+          if (boucleFeu) return;
+          const j = {}; boucleFeu = j;
+          try {
+            const t = await charger(SONS.feu);
+            if (boucleFeu !== j) return;
+            const s = ctx.createBufferSource(), g = ctx.createGain();
+            s.buffer = t; s.loop = true; s.loopStart = .05; s.loopEnd = t.duration - .05;   // saute le petit silence des mp3
+            g.gain.setValueAtTime(0, ctx.currentTime); g.gain.linearRampToValueAtTime(.8, ctx.currentTime + 2.5);
+            s.connect(g); g.connect(maitre); s.start(0, .05);
+            j.s = s; j.g = g;
+          } catch (e) { if (boucleFeu === j) boucleFeu = null; }
+        } else if (boucleFeu) {
+          const j = boucleFeu; boucleFeu = null;
+          if (j.g) { j.g.gain.cancelScheduledValues(ctx.currentTime); j.g.gain.setTargetAtTime(0, ctx.currentTime, .25); j.s.stop(ctx.currentTime + 1.5); }
+        }
+      },
+      muet(m) { if (ctx) maitre.gain.setTargetAtTime(m ? 0 : 1, ctx.currentTime, .05); }
+    };
+  })();
+  function majBoutonSon() {
     btnSon.textContent = muet ? "🔇" : "🔊";
     btnSon.setAttribute("aria-label", T(muet ? "son_remettre" : "son_couper"));
+  }
+  majBoutonSon();
+  btnSon.addEventListener("click", () => {
+    muet = !muet;
+    try { localStorage.setItem("typ1_muet", muet ? "1" : "0"); } catch (e) {}
+    son.muet(muet); majBoutonSon();
   });
 
   let entre = false;
@@ -745,6 +802,7 @@ function TYP1_demarrer(codeDepart) {
   function embraser() {
     scene.classList.add("embrase");
     etincelles.gerbe();
+    son.souffle();
     plus_tard(() => scene.classList.remove("embrase"), 650);
   }
 
@@ -937,6 +995,51 @@ function TYP1_demarrer(codeDepart) {
       autre.focus(); autre.click();
     });
   });
+  // --- Parler au feu avec sa voix ----------------------------------------------
+  // La reconnaissance vocale du navigateur (accord de Ritukah, 16 novembre 2026).
+  // La voix est transformée en texte par le service du navigateur (Google pour Chrome, Apple pour Safari).
+  const Reco = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const btnMicro = document.getElementById("micro");
+  const LOCALES = { fr: "fr-FR", es: "es-ES", en: "en-US", pt: "pt-BR", ru: "ru-RU", ar: "ar-SA", hi: "hi-IN", bn: "bn-IN", zh: "zh-CN" };
+  let reco = null, ecoute = false;
+  function majMicro() { btnMicro.title = T("micro_info"); }
+  function arreterEcoute() { if (reco && ecoute) { try { reco.abort(); } catch (e) {} } }
+  function envoyerDemande() {
+    if (demande.requestSubmit) demande.requestSubmit();
+    else demande.dispatchEvent(new Event("submit", { cancelable: true }));
+  }
+  function ecouter() {
+    taire();
+    reco = new Reco();
+    reco.lang = LOCALES[L.code] || "fr-FR";
+    reco.interimResults = true; reco.maxAlternatives = 1;
+    let fini = "";
+    reco.onstart = () => {
+      ecoute = true; btnMicro.classList.add("ecoute"); btnMicro.setAttribute("aria-pressed", "true");
+      question.value = ""; question.placeholder = T("micro_ecoute");
+    };
+    reco.onresult = e => {
+      let texte = "";
+      for (const r of e.results) texte += r[0].transcript;
+      question.value = texte.trim().slice(0, 200);
+      etincelles.respire();
+      if (e.results[e.results.length - 1].isFinal) fini = question.value;
+    };
+    reco.onerror = e => {
+      if (e.error === "not-allowed" || e.error === "service-not-allowed") { vider(); direDuFeu(T("micro_refuse")); }
+    };
+    reco.onend = () => {
+      ecoute = false; btnMicro.classList.remove("ecoute"); btnMicro.setAttribute("aria-pressed", "false");
+      question.placeholder = questionDuFeu ? T("repondre_au_feu") : invite(flamme);
+      if (fini && entre && flamme !== "apaiser") envoyerDemande();   // le feu reçoit la question dite à voix haute
+    };
+    try { reco.start(); } catch (e) {}
+  }
+  if (Reco) {
+    btnMicro.hidden = false; majMicro();
+    btnMicro.addEventListener("click", () => { if (ecoute) reco.stop(); else ecouter(); });
+  }
+
   document.getElementById("encore").addEventListener("click", parole);
   demande.addEventListener("submit", e => {
     e.preventDefault();
@@ -964,7 +1067,7 @@ function TYP1_demarrer(codeDepart) {
     foyer.inert = true;
     vider(); question.value = "";
     etincelles.vider();
-    fermerReserve(); taire();
+    fermerReserve(); taire(); arreterEcoute();
     choisirFlamme("chercher");
   }
   question.addEventListener("input", () => etincelles.respire());
@@ -973,7 +1076,7 @@ function TYP1_demarrer(codeDepart) {
     appliquerTextes();
     choixLangue.value = L.code;
     ordreParoles = []; ordreNuit = [];
-    btnSon.setAttribute("aria-label", T(muet ? "son_remettre" : "son_couper"));
+    majBoutonSon(); majMicro();
     if ("speechSynthesis" in window) chercherVoix();
     majMoment();
     afficherBraises();
@@ -989,8 +1092,10 @@ function TYP1_demarrer(codeDepart) {
     intro.currentTime = 0;
     const p = intro.play();
     if (p && p.catch) p.catch(() => allumerFeu());   // si la vidéo refuse de jouer, on passe au feu
-    if (sons.entree) sons.entree.play().catch(() => {});
+    son.reveiller();
+    allumageJoue = false;
   }
+  let allumageJoue = false;
 
   function allumerFeu() {
     boucle.currentTime = 0;
@@ -998,12 +1103,16 @@ function TYP1_demarrer(codeDepart) {
     scene.classList.add("feu");
     etincelles.demarrer();
     ouvrirFoyer();
-    if (sons.feu) sons.feu.play().catch(() => {});
+    son.feu(true);
   }
 
   // On lance la boucle un tout petit peu avant la fin de la vidéo d'entrée,
   // pour que le fondu entre les deux soit invisible.
   intro.addEventListener("timeupdate", () => {
+    if (!allumageJoue && intro.currentTime >= SONS.moment_allumage) {   // le feu prend : son souffle, puis il crépite
+      allumageJoue = true;
+      son.jouer(SONS.allumage, .9); son.feu(true);
+    }
     if (!scene.classList.contains("feu") && intro.duration && intro.currentTime > intro.duration - 0.35) {
       allumerFeu();
     }
@@ -1015,7 +1124,7 @@ function TYP1_demarrer(codeDepart) {
     if (!entre) return;
     entre = false;
     intro.pause(); boucle.pause();
-    Object.values(sons).forEach(a => { a.pause(); a.currentTime = 0; });
+    son.feu(false);
     scene.classList.remove("joue", "feu");
     fermerFoyer();
     document.body.classList.remove("dedans");
