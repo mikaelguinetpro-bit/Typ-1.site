@@ -184,5 +184,9 @@
  "quand_meme": "Search anyway",
  "repondre_au_feu": "Or answer the fire in your own words…",
  "question_exemple": "What do you want to know about “{q}”, Creator?",
- "choix_exemple": ["What it is", "How to do it", "Where to find it"]
+ "choix_exemple": ["What it is", "How to do it", "Where to find it"],
+ "micro_aria": "Speak to the fire",
+ "micro_ecoute": "The fire is listening…",
+ "micro_refuse": "The microphone isn't allowed. Allow it in your browser, or write your question to the fire.",
+ "micro_info": "Speak to the fire: your browser's service turns your voice into text."
 };
