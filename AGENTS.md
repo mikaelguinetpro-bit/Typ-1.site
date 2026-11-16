@@ -25,13 +25,18 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
   6. **La voix du feu** : le feu lit la parole d'Apaiser, avec **une voix installée sur l'appareil seulement** (rien ne part sur Internet). *(fait ; le bouton n'apparaît que si l'appareil a une voix française)*
 - **Apaiser** : le feu ne se fait jamais passer pour un thérapeute, et la ligne d'aide (le 3114 en France) reste toujours visible avec les paroles. Ne pas la retirer.
 - **État actuel** : le feu **n'est pas encore relié au web**. Les pages affichées sont des **exemples**, étiquetées « Exemple », avec une note visible. Ne jamais présenter une page d'exemple comme un vrai résultat. La vraie recherche demandera un serveur et aura un coût par recherche : à décider avec Ritukah.
+- **Les langues** (décidé par Ritukah le 16 novembre 2026) : le site parle **9 langues**, les mêmes que les autres sites : français (langue source), espagnol, anglais, portugais, russe, arabe (de droite à gauche), hindi, bengali, chinois.
+  - Tous les textes sont dans `i18n/<code>.js`. **Aucun texte en dur** dans `index.html` : un texte affiché porte `data-i18n` (ou `data-i18n-aria`, `data-i18n-alt`, `data-i18n-html`), ou passe par `T("cle")` dans le script.
+  - Un texte ajouté ou changé en français l'est **dans les 9 fichiers, dans la même branche**. Vérifier avec `python3 scripts/verifier_traductions.py` (mêmes clés, même nombre d'exemples et de paroles, `{q}` au même endroit).
+  - « Créateur » se traduit comme sur Nebula : Creador, Creator, Criador, Создатель, المبدع, निर्माता, সৃষ্টিকর্তা, 创造者. Le feu tutoie le Créateur dans toutes les langues.
+  - La ligne d'aide d'Apaiser change selon la langue : le **3114** en français (France), et dans les autres langues le numéro d'urgence local et **findahelpline.com**. Ne jamais la retirer.
+  - La langue choisie reste sur l'appareil du Créateur ; sinon le site prend celle de son navigateur, puis le français.
 - **Le son** : prêt à brancher dans le bloc `SONS` de `index.html` (son d'entrée, crépitement du feu). **La voix du feu viendra plus tard**, en surprise.
 
 ## Ce qui reste à décider par Ritukah
 
 Ne rien construire sur ces points sans son accord :
 - l'adresse définitive (Typ-1.help) et l'hébergement ;
-- les **langues** du site (les autres sites en parlent 9 : français, espagnol, anglais, portugais, russe, arabe, hindi, bengali, chinois) ;
 - le **serveur** de la vraie recherche (quel outil de recherche web, quelle IA, combien de recherches offertes par jour à chaque Créateur) ;
 - **parler au feu avec sa voix** : la reconnaissance vocale du navigateur passe par un service extérieur, il faut l'accord de Ritukah avant de la brancher (le feu qui lit à voix haute, lui, reste sur l'appareil).
 

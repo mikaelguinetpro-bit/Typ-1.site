@@ -20,6 +20,12 @@
   @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap;
     src: url("assets/polices/cormorant-garamond-latin-ext-500-normal.woff2") format("woff2");
     unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap;
+    src: url("assets/polices/cormorant-garamond-cyrillic-500-normal.woff2") format("woff2");
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
+  @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap;
+    src: url("assets/polices/cormorant-garamond-cyrillic-400-italic.woff2") format("woff2");
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116; }
   @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap;
     src: url("assets/polices/cormorant-garamond-latin-400-italic.woff2") format("woff2");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
@@ -160,7 +166,7 @@
     color: #ffe9cc; font: inherit; font-style: italic; font-size: 1.05rem; letter-spacing: .08em; cursor: pointer;
     opacity: 0; pointer-events: none; transition: opacity .3s ease;
   }
-  .braises-btn span {
+  .braises-btn #compte {
     display: inline-block; min-width: 1.4em; margin-left: .4em; padding: 0 .35em; border-radius: 99px;
     background: var(--braise); color: #fff; font-style: normal; font-size: .9em; text-align: center;
     box-shadow: 0 0 10px rgba(255, 50, 10, .7);
@@ -190,6 +196,45 @@
   .braise .meta { color: #7a4a22; font-size: .9rem; }
   .braise button { margin-top: .4rem; background: none; border: 0; padding: .1rem 0; cursor: pointer; font: inherit; font-style: italic; color: #8a2a08; text-decoration: underline; }
   .apaiser .rangee { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+  .aide a { color: #ffd9a8; }
+
+  /* --- la langue du site --- */
+  .langue {
+    position: fixed; right: 1.1rem; top: 1.1rem; z-index: 5;
+    -webkit-appearance: none; appearance: none;
+    padding: .42rem 2.1rem .42rem 1.05rem; border-radius: 99px;
+    border: 1px solid rgba(243, 210, 154, .45);
+    background: rgba(18, 6, 4, .45) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23ffe9cc' stroke-width='1.4'/%3E%3C/svg%3E") no-repeat right .85rem center / .65rem;
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    color: #ffe9cc; font: inherit; font-size: 1.02rem; cursor: pointer;
+    opacity: 0; animation: monte 1.6s ease 2.8s forwards; transition: opacity .4s ease;
+  }
+  .langue option { color: #2a0c02; background: #f8ecd0; }
+  .langue:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
+  .avec-son .langue { right: 4.4rem; }
+  .dedans .langue { opacity: 0 !important; pointer-events: none; animation: none; }
+
+  /* --- l'arabe s'écrit de droite à gauche --- */
+  [dir="rtl"] .sortir { left: auto; right: 1.1rem; }
+  [dir="rtl"] .son { right: auto; left: 1.1rem; }
+  [dir="rtl"] .braises-btn, [dir="rtl"] .langue { right: auto; left: 1.1rem; }
+  [dir="rtl"] .avec-son .braises-btn, [dir="rtl"] .avec-son .langue { left: 4.4rem; }
+  [dir="rtl"] .langue { padding: .42rem 1.05rem .42rem 2.1rem; background-position: left .85rem center; }
+  [dir="rtl"] .page, [dir="rtl"] .braise { text-align: right; }
+  [dir="rtl"] .champ { padding: .3rem 1.2rem .3rem .3rem; }
+  [dir="rtl"] .champ button { transform: scaleX(-1); }
+  [dir="rtl"] .reserve { right: auto; left: 0; border-left: 0; border-right: 1px solid rgba(243, 210, 154, .3); animation-name: glisse-rtl; }
+  @keyframes glisse-rtl { from { transform: translateX(-100%); } }
+  [dir="rtl"] .seuil::before { margin-right: 0; margin-left: .7em; }
+  [dir="rtl"] .flammes button::before { margin-right: 0; margin-left: .55em; }
+
+  /* --- les écritures que Cormorant n'a pas : polices de l'appareil, sans grand espacement --- */
+  html:is([lang="ar"], [lang="hi"], [lang="bn"], [lang="zh"]) .titre { letter-spacing: .06em; line-height: 1.5; }
+  html:is([lang="ar"], [lang="hi"], [lang="bn"], [lang="zh"]) .titre span + span { letter-spacing: .14em; }
+  html[lang="ar"] .titre, html[lang="ar"] .titre span + span, html[lang="ar"] .seuil, html[lang="ar"] .flammes button { letter-spacing: 0; }
+  /* ces écritures n'ont pas de vrai italique : le navigateur les pencherait de travers */
+  html:is([lang="ar"], [lang="hi"], [lang="bn"], [lang="zh"]) :is(.seuil, .sortir, .braises-btn, .note, .attente, .pourquoi, .garder, .rendre, .reserve-note, .reserve-vide, .braise button, .champ input::placeholder) { font-style: normal; }
+  html:is([lang="hi"], [lang="bn"]) .page h2, html:is([lang="hi"], [lang="bn"]) .page p, html:is([lang="hi"], [lang="bn"]) .parole { line-height: 1.45; }
 
   .pages {
     flex: 1; min-height: 0; width: min(1240px, 100%);
@@ -302,52 +347,101 @@
 </head>
 <body>
   <main class="scene" id="scene">
-    <img id="accueil" src="assets/typ1_poster.jpg" alt="Un tipi blanc et bleu sur un promontoire, sous un ciel doré">
+    <img id="accueil" src="assets/typ1_poster.jpg" alt="Un tipi blanc et bleu sur un promontoire, sous un ciel doré" data-i18n-alt="alt_accueil">
     <video id="intro" playsinline muted preload="auto" aria-hidden="true"></video>
     <video id="boucle" playsinline muted loop preload="auto" aria-hidden="true"></video>
     <canvas id="etincelles" aria-hidden="true"></canvas>
 
-    <button class="appel" id="appel" type="button" aria-label="Entrer dans le tipi">
-      <h1 class="titre"><span>Créateur, entre dans le tipi</span><span>le feu t'attend</span></h1>
-      <span class="seuil">Toucher pour entrer</span>
+    <button class="appel" id="appel" type="button" aria-label="Entrer dans le tipi" data-i18n-aria="appel_aria">
+      <h1 class="titre"><span data-i18n="titre_1">Créateur, entre dans le tipi</span><span data-i18n="titre_2">le feu t'attend</span></h1>
+      <span class="seuil" data-i18n="seuil">Toucher pour entrer</span>
     </button>
   </main>
-  <section class="foyer" id="foyer" aria-label="Parler au feu" inert>
+  <section class="foyer" id="foyer" aria-label="Parler au feu" data-i18n-aria="foyer_aria" inert>
     <div class="pages" id="pages" aria-live="polite"></div>
-    <p class="note" id="note" hidden>Aperçu : le feu n'est pas encore relié au web. Ces pages sont des exemples.</p>
+    <p class="note" id="note" data-i18n="note" hidden>Aperçu : le feu n'est pas encore relié au web. Ces pages sont des exemples.</p>
     <form class="demande" id="demande" autocomplete="off">
-      <div class="flammes" id="flammes" role="radiogroup" aria-label="Choisir une flamme">
-        <button type="button" role="radio" aria-checked="true" data-flamme="chercher" style="--c:#ff5a1e">Chercher</button>
-        <button type="button" role="radio" aria-checked="false" data-flamme="apprendre" style="--c:#ffc04a">Apprendre</button>
-        <button type="button" role="radio" aria-checked="false" data-flamme="voir" style="--c:#ff9ec4">Voir</button>
-        <button type="button" role="radio" aria-checked="false" data-flamme="apaiser" style="--c:#9fd8ff">Apaiser</button>
+      <div class="flammes" id="flammes" role="radiogroup" aria-label="Choisir une flamme" data-i18n-aria="flammes_aria">
+        <button type="button" role="radio" aria-checked="true" data-flamme="chercher" data-i18n="f_chercher" style="--c:#ff5a1e">Chercher</button>
+        <button type="button" role="radio" aria-checked="false" data-flamme="apprendre" data-i18n="f_apprendre" style="--c:#ffc04a">Apprendre</button>
+        <button type="button" role="radio" aria-checked="false" data-flamme="voir" data-i18n="f_voir" style="--c:#ff9ec4">Voir</button>
+        <button type="button" role="radio" aria-checked="false" data-flamme="apaiser" data-i18n="f_apaiser" style="--c:#9fd8ff">Apaiser</button>
       </div>
       <div class="champ" id="champ">
-        <label class="cache" for="question">Ta question au feu</label>
+        <label class="cache" for="question" data-i18n="question_label">Ta question au feu</label>
         <input id="question" type="text" maxlength="200" placeholder="Que cherches-tu, Créateur ?" enterkeyhint="search">
-        <button type="submit" aria-label="Offrir ma question au feu">➜</button>
+        <button type="submit" aria-label="Offrir ma question au feu" data-i18n-aria="envoyer_aria">➜</button>
       </div>
       <div class="apaiser" id="apaiser" hidden>
         <div class="rangee">
-          <button type="button" class="encore" id="encore">Une autre parole</button>
-          <button type="button" class="encore" id="ecouter" hidden>Écouter le feu</button>
+          <button type="button" class="encore" id="encore" data-i18n="encore">Une autre parole</button>
+          <button type="button" class="encore" id="ecouter" data-i18n="ecouter" hidden>Écouter le feu</button>
         </div>
-        <p class="aide">Si tu vas vraiment mal, tu n'es pas seul : en France, le <strong>3114</strong> écoute jour et nuit, gratuitement.</p>
+        <p class="aide" data-i18n-html="aide_html">Si tu vas vraiment mal, tu n'es pas seul : en France, le <strong>3114</strong> écoute jour et nuit, gratuitement.</p>
       </div>
     </form>
   </section>
-  <button class="sortir" id="sortir" type="button" aria-label="Sortir du tipi et revenir à l'accueil">← Sortir</button>
-  <button class="braises-btn" id="braisesBtn" type="button" aria-expanded="false" aria-controls="reserve">Braises<span id="compte">0</span></button>
-  <aside class="reserve" id="reserve" aria-label="Tes braises" hidden>
-    <div class="reserve-tete"><h2>Tes braises</h2><button type="button" id="fermerReserve" aria-label="Fermer">✕</button></div>
-    <p class="reserve-note">Les pages gardées près du feu. Elles restent sur cet appareil, nulle part ailleurs.</p>
+  <button class="sortir" id="sortir" type="button" aria-label="Sortir du tipi et revenir à l'accueil" data-i18n="sortir" data-i18n-aria="sortir_aria">← Sortir</button>
+  <select class="langue" id="langue" aria-label="Langue du site" data-i18n-aria="langue_aria"></select>
+  <button class="braises-btn" id="braisesBtn" type="button" aria-expanded="false" aria-controls="reserve"><span data-i18n="braises">Braises</span><span id="compte">0</span></button>
+  <aside class="reserve" id="reserve" aria-label="Tes braises" data-i18n-aria="reserve_titre" hidden>
+    <div class="reserve-tete"><h2 data-i18n="reserve_titre">Tes braises</h2><button type="button" id="fermerReserve" aria-label="Fermer" data-i18n-aria="fermer">✕</button></div>
+    <p class="reserve-note" data-i18n="reserve_note">Les pages gardées près du feu. Elles restent sur cet appareil, nulle part ailleurs.</p>
     <div id="listeBraises"></div>
-    <p class="reserve-vide" id="vide">Garde une page près du feu : elle t'attendra ici.</p>
+    <p class="reserve-vide" id="vide" data-i18n="reserve_vide">Garde une page près du feu : elle t'attendra ici.</p>
   </aside>
-  <button class="son" id="son" type="button" aria-label="Couper le son">🔊</button>
+  <button class="son" id="son" type="button" aria-label="Couper le son" data-i18n-aria="son_couper">🔊</button>
 
+<script src="i18n/fr.js"></script>
 <script>
-(() => {
+  // --- Les langues du site (les textes sont dans i18n/<code>.js) ---------------
+  const TYP1_CODES = ["fr", "es", "en", "pt", "ru", "ar", "hi", "bn", "zh"];
+  const TYP1_NOMS = { fr: "Français", es: "Español", en: "English", pt: "Português", ru: "Русский", ar: "العربية", hi: "हिन्दी", bn: "বাংলা", zh: "中文" };
+  function TYP1_charger(code, suite) {
+    if (window.TYP1_LANGUES[code]) return suite();
+    const s = document.createElement("script");
+    s.src = "i18n/" + code + ".js";
+    s.onload = s.onerror = () => suite();
+    document.head.append(s);
+  }
+  // la langue choisie par le Créateur, sinon celle de son navigateur, sinon le français
+  function TYP1_langueDepart() {
+    try { const c = localStorage.getItem("typ1_langue"); if (TYP1_CODES.includes(c)) return c; } catch (e) {}
+    for (const l of (navigator.languages || [navigator.language || "fr"])) {
+      const c = String(l).slice(0, 2).toLowerCase();
+      if (TYP1_CODES.includes(c)) return c;
+    }
+    return "fr";
+  }
+</script>
+<script>
+function TYP1_demarrer(codeDepart) {
+  // --- La langue ---------------------------------------------------------------
+  let L = window.TYP1_LANGUES[codeDepart] || window.TYP1_LANGUES.fr;
+  const T = k => (L[k] !== undefined ? L[k] : window.TYP1_LANGUES.fr[k]);
+  function appliquerTextes() {
+    document.documentElement.lang = L.code;
+    document.documentElement.dir = L.dir || "ltr";
+    document.title = T("titre_page");
+    document.querySelectorAll("[data-i18n]").forEach(e => { e.textContent = T(e.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-html]").forEach(e => { e.innerHTML = T(e.dataset.i18nHtml); });   // textes de nos propres fichiers uniquement
+    document.querySelectorAll("[data-i18n-aria]").forEach(e => e.setAttribute("aria-label", T(e.dataset.i18nAria)));
+    document.querySelectorAll("[data-i18n-alt]").forEach(e => { e.alt = T(e.dataset.i18nAlt); });
+  }
+  appliquerTextes();
+  const choixLangue = document.getElementById("langue");
+  TYP1_CODES.forEach(c => {
+    const o = document.createElement("option");
+    o.value = c; o.lang = c; o.textContent = TYP1_NOMS[c];
+    choixLangue.append(o);
+  });
+  choixLangue.value = L.code;
+  choixLangue.addEventListener("change", () => {
+    const c = choixLangue.value;
+    try { localStorage.setItem("typ1_langue", c); } catch (e) {}
+    TYP1_charger(c, () => { L = window.TYP1_LANGUES[c] || window.TYP1_LANGUES.fr; changerLangue(); });
+  });
+
   // --- Réglages -------------------------------------------------------------
   // Les sons sont prêts à être branchés : il suffit de déposer les fichiers dans assets/
   // et d'écrire leur nom ici (laisser vide = pas de son).
@@ -386,7 +480,7 @@
     muet = !muet;
     Object.values(sons).forEach(a => { a.muted = muet; });
     btnSon.textContent = muet ? "🔇" : "🔊";
-    btnSon.setAttribute("aria-label", muet ? "Remettre le son" : "Couper le son");
+    btnSon.setAttribute("aria-label", T(muet ? "son_remettre" : "son_couper"));
   });
 
   let entre = false;
@@ -405,62 +499,6 @@
   let flamme = "chercher";
   let minuterie = [];
 
-  const FLAMMES = {
-    chercher: { invite: "Que cherches-tu, Créateur ?", attente: "Le feu cherche…" },
-    apprendre: { invite: "Que veux-tu apprendre, Créateur ?", attente: "Le feu rassemble les meilleurs tutoriels…" },
-    voir: { invite: "Que veux-tu voir, Créateur ?", attente: "Le feu regarde les vidéos pour toi…" }
-  };
-
-  // Pages d'exemple ({q} = la question du Créateur)
-  const EXEMPLES = {
-    chercher: [
-      ["L'essentiel sur « {q} »", "Page · lecture de 3 min", "Une page claire, qui répond d'abord et explique ensuite.", "Elle va droit à la réponse, sans publicité."],
-      ["« {q} », expliqué simplement", "Article · auteur nommé", "Un texte court, écrit par quelqu'un qui connaît le sujet.", "Ses sources sont citées, on peut tout vérifier."],
-      ["Le guide complet : {q}", "Guide · lecture de 15 min", "Pour aller au fond des choses, chapitre par chapitre.", "C'est la page la plus complète que le feu ait trouvée."],
-      ["Ceux qui l'ont vécu racontent", "Témoignages", "Des retours d'expérience sur « {q} ».", "Elle apporte la voix de vraies personnes."],
-      ["Un autre regard sur « {q} »", "Point de vue", "Un avis différent, pour ne pas voir qu'un seul côté.", "Le feu aime montrer plus d'un chemin."],
-      ["À la source", "Document d'origine", "Le texte ou l'étude dont parlent toutes les autres pages.", "Mieux vaut boire à la source."],
-      ["Les questions qui viennent ensuite", "Questions et réponses", "Ce que l'on se demande juste après « {q} ».", "Elle t'évite une deuxième recherche."]
-    ],
-    apprendre: [
-      ["Débuter : {q}", "Tutoriel · débutant · 10 min", "Les bases, sans mots compliqués, avec un premier résultat rapide.", "Il part de zéro et ne suppose rien."],
-      ["Pas à pas : {q}", "Tutoriel · 6 étapes · 25 min", "Chaque étape est montrée, avec ce qu'on doit voir à l'écran.", "On peut le suivre sans se perdre."],
-      ["Aller plus loin", "Tutoriel · avancé · 40 min", "Pour ceux qui connaissent déjà les bases de « {q} ».", "Il explique le pourquoi, pas seulement le comment."],
-      ["Les erreurs à éviter", "Conseils · 5 min", "Ce qui fait perdre du temps quand on apprend « {q} ».", "Il t'épargne les pièges les plus courants."],
-      ["Un exercice pour pratiquer", "Exercice corrigé · 20 min", "Un petit projet à faire soi-même, avec la solution.", "On retient mieux en faisant."]
-    ],
-    voir: [
-      ["{q}, montré en vidéo", "Vidéo · 12 min · va à 4 min 12", "La réponse est montrée à l'image, sans long discours.", "Le feu a trouvé le moment exact où elle répond."],
-      ["Comprendre en 5 minutes", "Vidéo · 5 min · dès le début", "Une explication courte et bien illustrée de « {q} ».", "Pas d'introduction interminable."],
-      ["La démonstration complète", "Vidéo · 28 min · chapitres", "Tout est fait devant toi, du début à la fin.", "Les chapitres permettent d'aller où tu veux."],
-      ["Vu par un passionné", "Vidéo · 9 min · va à 1 min 30", "Quelqu'un qui aime le sujet et le transmet bien.", "On sent qu'il sait de quoi il parle."],
-      ["En images, sans paroles", "Vidéo · 3 min", "Juste les gestes, à regarder et à refaire.", "Elle se comprend dans toutes les langues."]
-    ]
-  };
-
-  const PAROLES = [
-    "Assieds-toi près de moi. Ici, tu n'as rien à prouver.",
-    "Ce que tu portes est lourd. Pose-le un instant, je le garde au chaud.",
-    "Tu as tenu jusqu'ici. C'est déjà beaucoup.",
-    "La nuit paraît longue, mais une seule braise suffit à rallumer un feu.",
-    "Respire. Le feu ne se presse pas, et toi non plus.",
-    "Tu as le droit d'être fatigué. Même les flammes se reposent en braises.",
-    "Ce que tu ressens passera, comme passe la fumée. Toi, tu restes.",
-    "Il y a en toi une chaleur que personne ne peut éteindre.",
-    "Tu n'es pas en retard. Tu es en chemin.",
-    "Aujourd'hui, être là suffit.",
-    "Ce qui a brûlé en toi a aussi fait de la lumière.",
-    "Reste le temps qu'il te faut. Le feu ne compte pas les heures."
-  ];
-  // La nuit, le feu parle plus doucement
-  const PAROLES_NUIT = [
-    "La nuit est là. Tu n'as plus rien à porter jusqu'au matin.",
-    "Je veille. Toi, tu peux te reposer.",
-    "Les étoiles aussi brillent mieux quand tout est sombre.",
-    "Ce soir, sois doux avec toi, comme tu le serais avec un ami.",
-    "Laisse la journée se poser en cendres. Demain, je serai encore là.",
-    "Dans le noir, une petite flamme suffit pour voir le chemin."
-  ];
   let ordreParoles = [], ordreNuit = [];
   let paroleCourante = "";
 
@@ -469,9 +507,9 @@
     const h = new Date().getHours();
     return h >= 5 && h < 10 ? "aube" : h >= 10 && h < 18 ? "jour" : h >= 18 && h < 22 ? "soir" : "nuit";
   }
-  const INVITES_HEURE = { aube: "Que cherches-tu ce matin, Créateur ?", nuit: "Que cherches-tu cette nuit, Créateur ?" };
   function invite(nom) {
-    return nom === "chercher" ? (INVITES_HEURE[document.body.dataset.moment] || FLAMMES.chercher.invite) : FLAMMES[nom].invite;
+    const m = document.body.dataset.moment;
+    return T("invite_" + (nom === "chercher" && (m === "aube" || m === "nuit") ? m : nom));
   }
   function majMoment() {
     document.body.dataset.moment = moment();
@@ -483,7 +521,7 @@
   let voix = null;
   function chercherVoix() {
     try {
-      const vs = speechSynthesis.getVoices().filter(v => v.localService && /^fr/i.test(v.lang));
+      const vs = speechSynthesis.getVoices().filter(v => v.localService && v.lang.toLowerCase().startsWith(T("voix")));
       voix = vs[0] || null;
     } catch (e) { voix = null; }
     btnEcouter.hidden = !voix;
@@ -526,9 +564,9 @@
     liste.replaceChildren(...l.map(d => {
       const a = document.createElement("article"); a.className = "braise";
       const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
-      if (d.exemple) el("span", "etiquette", "Exemple");
+      if (d.exemple) el("span", "etiquette", T("exemple"));
       el("h3", "", d.titre); el("p", "meta", d.meta); el("p", "", d.resume);
-      const b = el("button", "", "Rendre au feu"); b.type = "button";
+      const b = el("button", "", T("rendre")); b.type = "button";
       b.addEventListener("click", () => {
         ecrireBraises(lireBraises().filter(x => idBraise(x) !== idBraise(d)));
         document.querySelectorAll(".page .garder").forEach(g => g.majGarder && g.majGarder());
@@ -692,9 +730,9 @@
   // Combien de pages ? Une question précise : 1. Un choix à faire : 3. Une exploration : 5.
   function combien(q) {
     if (flamme !== "chercher") return 3;
-    const t = q.toLowerCase();
-    if (/^(quelle heure|combien|quand |qui est|qui a |où est|où se trouve|c'est quoi|quel âge|quelle est la capitale)/.test(t)) return 1;
-    if (/( ou | vs |meilleur|comparer|comparatif|lequel|laquelle|^quel |^quelle |choisir)/.test(t)) return 3;
+    const t = q.toLowerCase().trim();
+    if (new RegExp(T("precis"), "u").test(t)) return 1;
+    if (new RegExp(T("choix"), "u").test(t)) return 3;
     return 5;
   }
 
@@ -702,22 +740,22 @@
     const [titre, meta, resume, pourquoi] = modele.map(x => x.replaceAll("{q}", q));
     const a = document.createElement("article"); a.className = "page";
     const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
-    el("span", "etiquette", "Exemple");
+    el("span", "etiquette", T("exemple"));
     el("h2", "", titre.charAt(0).toUpperCase() + titre.slice(1));
     el("p", "meta", meta);
     el("p", "", resume);
-    el("p", "pourquoi", "Pourquoi le feu l'a choisie : " + pourquoi.charAt(0).toLowerCase() + pourquoi.slice(1));
+    el("p", "pourquoi", T("pourquoi") + pourquoi);
     const actions = document.createElement("div"); actions.className = "actions"; a.append(actions);
     const donnees = { flamme, titre: titre.charAt(0).toUpperCase() + titre.slice(1), meta, resume, exemple: true };
     const g = document.createElement("button"); g.type = "button"; g.className = "garder";
     g.majGarder = () => {
       const k = estGardee(donnees);
-      g.textContent = k ? "Gardée près du feu ✓" : "Garder près du feu";
+      g.textContent = T(k ? "gardee" : "garder");
       g.setAttribute("aria-pressed", String(k));
     };
     g.addEventListener("click", () => { basculer(donnees); g.majGarder(); });
     g.majGarder();
-    const b = document.createElement("button"); b.type = "button"; b.className = "rendre"; b.textContent = "Rendre au feu";
+    const b = document.createElement("button"); b.type = "button"; b.className = "rendre"; b.textContent = T("rendre");
     b.addEventListener("click", () => rendreAuFeu(a, q));
     actions.append(g, b);
     return a;
@@ -733,10 +771,10 @@
   let reserve = [];
   function repondre(q) {
     vider(); embraser();
-    const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = FLAMMES[flamme].attente;
+    const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = T("attente_" + flamme);
     zonePages.append(attente);
     const n = combien(q);
-    reserve = EXEMPLES[flamme].slice();
+    reserve = T("exemples")[flamme].slice();
     plus_tard(() => {
       zonePages.replaceChildren();
       embraser();
@@ -755,7 +793,7 @@
     carte.classList.add("rendue");
     embraser();
     plus_tard(() => {
-      if (!reserve.length) reserve = EXEMPLES[flamme].slice();
+      if (!reserve.length) reserve = T("exemples")[flamme].slice();
       const neuve = fabriquerPage(reserve.shift(), q);
       carte.replaceWith(neuve);
       poserEnArc();
@@ -768,11 +806,11 @@
     taire();
     let texte;
     if (document.body.dataset.moment === "nuit") {
-      if (!ordreNuit.length) ordreNuit = PAROLES_NUIT.map((_, i) => i).sort(() => Math.random() - .5);
-      texte = PAROLES_NUIT[ordreNuit.pop()];
+      if (!ordreNuit.length) ordreNuit = T("paroles_nuit").map((_, i) => i).sort(() => Math.random() - .5);
+      texte = T("paroles_nuit")[ordreNuit.pop()];
     } else {
-      if (!ordreParoles.length) ordreParoles = PAROLES.map((_, i) => i).sort(() => Math.random() - .5);
-      texte = PAROLES[ordreParoles.pop()];
+      if (!ordreParoles.length) ordreParoles = T("paroles").map((_, i) => i).sort(() => Math.random() - .5);
+      texte = T("paroles")[ordreParoles.pop()];
     }
     paroleCourante = texte;
     const p = document.createElement("p"); p.className = "parole";
@@ -791,7 +829,8 @@
   boutonsFlamme.forEach((b, i) => {
     b.addEventListener("click", () => choisirFlamme(b.dataset.flamme));
     b.addEventListener("keydown", e => {
-      const pas = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      let pas = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (document.documentElement.dir === "rtl") pas = -pas;
       if (!pas) return;
       const autre = boutonsFlamme[(i + pas + boutonsFlamme.length) % boutonsFlamme.length];
       autre.focus(); autre.click();
@@ -823,6 +862,16 @@
     choisirFlamme("chercher");
   }
   question.addEventListener("input", () => etincelles.respire());
+  // Le Créateur change de langue : tout le feu parle sa langue, tout de suite
+  function changerLangue() {
+    appliquerTextes();
+    choixLangue.value = L.code;
+    ordreParoles = []; ordreNuit = [];
+    btnSon.setAttribute("aria-label", T(muet ? "son_remettre" : "son_couper"));
+    if ("speechSynthesis" in window) chercherVoix();
+    majMoment();
+    afficherBraises();
+  }
   majMoment(); setInterval(majMoment, 10 * 60 * 1000);
   afficherBraises();
   // ---------------------------------------------------------------------------
@@ -873,7 +922,8 @@
     if (e.key !== "Escape") return;
     if (!panneau.hidden) { fermerReserve(); btnBraises.focus(); } else sortir();
   });
-})();
+}
+TYP1_charger(TYP1_langueDepart(), () => TYP1_demarrer(TYP1_langueDepart()));
 </script>
 </body>
 </html>
