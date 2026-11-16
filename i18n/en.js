@@ -180,5 +180,9 @@
  ],
  "code": "en",
  "rien": "This time the fire found nothing reliable. Try other words.",
- "limite": "The fire has burned a lot today. Come back tomorrow: it will be waiting for you."
+ "limite": "The fire has burned a lot today. Come back tomorrow: it will be waiting for you.",
+ "quand_meme": "Search anyway",
+ "repondre_au_feu": "Or answer the fire in your own words…",
+ "question_exemple": "What do you want to know about “{q}”, Creator?",
+ "choix_exemple": ["What it is", "How to do it", "Where to find it"]
 };

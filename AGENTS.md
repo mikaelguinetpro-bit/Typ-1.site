@@ -17,7 +17,7 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
   - **les flammes** sont des recherches spécialisées. Première version : **Chercher**, **Apprendre** (tutoriels), **Voir** (vidéos), **Apaiser** (le feu offre des paroles qui font du bien). Idées pour plus tard : Lire, Outils, Vérifier, Créer ;
   - pas de publicité, pas de pistage du Créateur ; le feu a le droit de dire qu'il n'a rien trouvé de fiable.
 - **Les six idées gardées par Ritukah** (16 novembre 2026) :
-  1. **Le feu pose une question en retour** quand une demande est floue : une seule question, avant de chercher. *(à faire, demande l'IA)*
+  1. **Le feu pose une question en retour** quand une demande est floue : une seule question, avant de chercher, avec 2 à 4 réponses à toucher (ou ses propres mots), et toujours « Cherche quand même ». Le feu ne pose jamais une deuxième question à la suite. *(fait ; sans serveur, l'aperçu la montre pour une demande d'un seul mot)*
   2. **Offrir une page comme une étincelle** : on l'envoie à quelqu'un, qui la voit arriver en étincelle. *(à faire, demande le serveur)*
   3. **La braise du jour** : chaque jour, la même belle découverte offerte à tous. *(à faire, demande le serveur ; jamais de fausse découverte)*
   4. **Le feu change avec l'heure** : doré à l'aube, rouge et intime la nuit ; la nuit, Apaiser parle plus doucement. *(fait)*

@@ -2,6 +2,13 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/question-du-feu
+- Idée 1 : quand une demande est trop floue (« jaguar »), le feu pose **une seule** question en retour, avant de chercher, avec 2 à 4 réponses à toucher et « Cherche quand même ». Le Créateur peut aussi répondre avec ses propres mots dans le champ.
+- `api/feu.js` : Claude peut répondre `{question, choix}` au lieu de chercher (rarement, seulement si c'est vraiment flou) ; après la réponse du Créateur, il cherche toujours, sans reposer de question.
+- Sans serveur, l'aperçu montre la question pour une demande d'un seul mot, avec l'étiquette « Aperçu ».
+- Quatre nouveaux textes dans les 9 langues ; tests du feu complétés ; page testée (ordinateur, téléphone, arabe, sans serveur).
+- Pourquoi : idée gardée par Ritukah.
+- À faire : l'étincelle offerte, puis la braise du jour.
 ## 2026-11-16 — Claude — claude/typ1-en-ligne
 - `AGENTS.md` dit maintenant que Typ-1 est en ligne depuis le 16 novembre 2026 sur https://typ-1site.vercel.app. Il est visible de Ritukah seul pour l'instant, et il « fait la sieste » sur BNM1. Avant, le fichier disait « en préparation, pas encore en ligne ».
 - La carte du Sceau suit le même texte que sur BNM1, Nebula et Atlas.

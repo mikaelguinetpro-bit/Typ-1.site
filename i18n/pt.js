@@ -180,5 +180,9 @@
  ],
  "code": "pt",
  "rien": "Desta vez o fogo não encontrou nada confiável. Tente com outras palavras.",
- "limite": "O fogo queimou muito hoje. Volte amanhã: ele vai esperar por você."
+ "limite": "O fogo queimou muito hoje. Volte amanhã: ele vai esperar por você.",
+ "quand_meme": "Procure assim mesmo",
+ "repondre_au_feu": "Ou responda ao fogo com suas palavras…",
+ "question_exemple": "O que você quer saber sobre “{q}”, Criador?",
+ "choix_exemple": ["O que é", "Como fazer", "Onde encontrar"]
 };

@@ -180,5 +180,9 @@
  ],
  "code": "fr",
  "rien": "Le feu n'a rien trouvé de fiable cette fois. Essaie avec d'autres mots.",
- "limite": "Le feu a beaucoup brûlé aujourd'hui. Reviens demain : il t'attendra."
+ "limite": "Le feu a beaucoup brûlé aujourd'hui. Reviens demain : il t'attendra.",
+ "quand_meme": "Cherche quand même",
+ "repondre_au_feu": "Ou réponds au feu avec tes mots…",
+ "question_exemple": "Que veux-tu savoir sur « {q} », Créateur ?",
+ "choix_exemple": ["Ce que c'est", "Comment faire", "Où le trouver"]
 };
