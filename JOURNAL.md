@@ -3,7 +3,7 @@
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
 ## 2026-11-16 — Claude — claude/icone-du-site
-- L'icône du site (onglet du navigateur, écran d'accueil du téléphone) : l'image d'accueil recadrée en carré, le tipi au milieu.
+- L'icône du site (onglet du navigateur, écran d'accueil du téléphone) : ronde, avec le tipi entier au milieu (bords de l'image fondus dans le ciel).
 - Pourquoi : demandé par Ritukah, l'onglet n'avait pas d'icône.
 
 ## 2026-11-16 — Claude — claude/feu-savant
