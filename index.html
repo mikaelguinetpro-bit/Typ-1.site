@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Typ-1 — Le feu t'attend</title>
+<meta name="description" content="Typ-1 — Feu du Sceau. Créateur, entre dans le tipi : le feu t'attend.">
+<meta name="theme-color" content="#120604">
+<meta property="og:title" content="Typ-1 — Le feu t'attend">
+<meta property="og:description" content="Créateur, entre dans le tipi.">
+<meta property="og:image" content="assets/typ1_poster.jpg">
+<link rel="preload" as="image" href="assets/typ1_poster.jpg">
+<link rel="preload" as="font" type="font/woff2" href="assets/polices/cormorant-garamond-latin-500-normal.woff2" crossorigin>
+<style>
+  /* Cormorant Garamond, hébergée sur le site (licence SIL OFL, assets/polices/OFL.txt) */
+  @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap;
+    src: url("assets/polices/cormorant-garamond-latin-500-normal.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Cormorant Garamond"; font-style: normal; font-weight: 500; font-display: swap;
+    src: url("assets/polices/cormorant-garamond-latin-ext-500-normal.woff2") format("woff2");
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap;
+    src: url("assets/polices/cormorant-garamond-latin-400-italic.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: "Cormorant Garamond"; font-style: italic; font-weight: 400; font-display: swap;
+    src: url("assets/polices/cormorant-garamond-latin-ext-400-italic.woff2") format("woff2");
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+  :root {
+    --braise: #ff2a0a;
+    --or: #f3d29a;
+    --nuit: #120604;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--nuit); overflow: hidden; }
+  body { font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif; color: #fff; }
+
+  /* --- la scène : image d'accueil, vidéo d'entrée, feu en boucle, superposés --- */
+  .scene { position: fixed; inset: 0; }
+  .scene img, .scene video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: 50% 50%;
+    transition: opacity .45s ease;
+  }
+  #intro, #boucle { opacity: 0; }
+  .joue #intro { opacity: 1; }
+  .feu #boucle { opacity: 1; }
+  .feu #intro { opacity: 0; }
+
+  /* --- l'appel au Créateur --- */
+  .appel {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+    padding-top: clamp(2.2rem, 9vh, 6rem);
+    isolation: isolate;
+    background: none; border: 0; color: inherit; font: inherit; cursor: pointer;
+    text-align: center;
+    transition: opacity 1s ease .2s;
+  }
+  /* un voile chaud en haut de l'image pour que le texte se lise sur le ciel clair */
+  .appel::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 48%;
+    background: linear-gradient(to bottom, rgba(46, 14, 4, .62), rgba(46, 14, 4, .28) 55%, rgba(46, 14, 4, 0));
+    pointer-events: none; z-index: -1;
+  }
+  .appel:focus-visible .seuil { outline: 1px solid var(--or); outline-offset: .6rem; }
+  .joue .appel, .feu .appel { opacity: 0; pointer-events: none; }
+
+  .titre {
+    font-weight: 500; text-transform: uppercase;
+    font-size: clamp(1.35rem, 3.6vw, 2.9rem);
+    letter-spacing: .32em; line-height: 1.25;
+    color: #fff;
+    text-shadow: 0 0 22px rgba(40, 10, 0, .75), 0 0 6px rgba(255, 60, 20, .45), 0 1px 2px rgba(30, 8, 0, .8);
+    opacity: 0; animation: monte 1.8s ease .3s forwards;
+    padding: 0 1rem;
+  }
+  .titre span { display: block; }
+  .titre span + span {
+    font-size: .62em; letter-spacing: .5em; margin-top: .7em;
+    color: #ffd9a8;
+    opacity: 0; animation: monte 1.8s ease 1.3s forwards;
+  }
+  .seuil {
+    position: fixed; left: 0; right: 0; margin: 0 auto; width: fit-content; bottom: clamp(1.8rem, 7vh, 4rem);
+    font-style: italic; font-size: clamp(1rem, 1.6vw, 1.3rem); letter-spacing: .14em;
+    color: rgba(255, 245, 230, .9);
+    padding: .55rem 1.4rem; border-radius: 99px; white-space: nowrap;
+    background: rgba(20, 6, 2, .45);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    opacity: 0; animation: monte 1.6s ease 2.4s forwards, souffle 3.2s ease-in-out 4s infinite;
+  }
+  .seuil::before {
+    content: ""; display: inline-block; width: .5em; height: .5em; margin-right: .7em;
+    border-radius: 50%; background: var(--braise); vertical-align: .08em;
+    box-shadow: 0 0 10px 3px rgba(255, 50, 10, .75);
+  }
+  @keyframes monte { from { opacity: 0; transform: translateY(.6rem); } to { opacity: 1; transform: none; } }
+  @keyframes souffle { 0%, 100% { box-shadow: 0 0 0 rgba(255, 60, 20, 0); } 50% { box-shadow: 0 0 26px rgba(255, 60, 20, .35); } }
+  .seuil { will-change: opacity; }
+
+  /* --- le son : petit bouton discret, n'apparaît que si des sons sont configurés --- */
+  .son {
+    position: fixed; right: 1.1rem; top: 1.1rem; z-index: 5;
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    border: 1px solid rgba(243, 210, 154, .45); background: rgba(18, 6, 4, .35);
+    color: var(--or); font: inherit; font-size: 1.1rem; cursor: pointer;
+    display: none;
+  }
+  .avec-son .son { display: block; }
+
+  /* --- sortir du tipi : revenir à l'accueil --- */
+  .sortir {
+    position: fixed; left: 1.1rem; top: 1.1rem; z-index: 5;
+    padding: .5rem 1.1rem; border-radius: 99px;
+    border: 1px solid rgba(243, 210, 154, .45); background: rgba(18, 6, 4, .4);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+    color: #ffe9cc; font: inherit; font-style: italic; font-size: 1.05rem; letter-spacing: .1em;
+    cursor: pointer;
+    opacity: 0; pointer-events: none; transition: opacity .3s ease, background .2s;
+  }
+  .sortir:hover { background: rgba(60, 18, 6, .6); }
+  .sortir:focus-visible { outline: 1px solid var(--or); outline-offset: 3px; }
+  .dedans .sortir { opacity: 1; pointer-events: auto; transition: opacity .8s ease 1.5s, background .2s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .titre, .titre span + span, .seuil { animation: none; opacity: 1; }
+  }
+</style>
+</head>
+<body>
+  <main class="scene" id="scene">
+    <img id="accueil" src="assets/typ1_poster.jpg" alt="Un tipi blanc et bleu sur un promontoire, sous un ciel doré">
+    <video id="intro" playsinline muted preload="auto" aria-hidden="true"></video>
+    <video id="boucle" playsinline muted loop preload="auto" aria-hidden="true"></video>
+
+    <button class="appel" id="appel" type="button" aria-label="Entrer dans le tipi">
+      <h1 class="titre"><span>Créateur, entre dans le tipi</span><span>le feu t'attend</span></h1>
+      <span class="seuil">Toucher pour entrer</span>
+    </button>
+  </main>
+  <button class="sortir" id="sortir" type="button" aria-label="Sortir du tipi et revenir à l'accueil">← Sortir</button>
+  <button class="son" id="son" type="button" aria-label="Couper le son">🔊</button>
+
+<script>
+(() => {
+  // --- Réglages -------------------------------------------------------------
+  // Les sons sont prêts à être branchés : il suffit de déposer les fichiers dans assets/
+  // et d'écrire leur nom ici (laisser vide = pas de son).
+  const SONS = {
+    entree: "",   // ex. "assets/son_etincelle.mp3" — joué au clic, pendant la vidéo d'entrée
+    feu: ""       // ex. "assets/son_feu.mp3"       — crépitement du feu, en boucle à l'infini
+  };
+  // ---------------------------------------------------------------------------
+
+  const scene = document.getElementById("scene");
+  const intro = document.getElementById("intro");
+  const boucle = document.getElementById("boucle");
+  const appel = document.getElementById("appel");
+  const btnSon = document.getElementById("son");
+  const btnSortir = document.getElementById("sortir");
+
+  // vidéo plus légère sur petit écran ou connexion économe
+  const leger = window.matchMedia("(max-width: 900px)").matches ||
+                (navigator.connection && navigator.connection.saveData);
+  intro.src = leger ? "assets/typ1_intro_720.mp4" : "assets/typ1_intro_1080.mp4";
+  boucle.src = "assets/typ1_feu_boucle.mp4";
+  intro.load(); boucle.load();
+
+  const sons = {};
+  for (const [nom, src] of Object.entries(SONS)) {
+    if (!src) continue;
+    const a = new Audio(src);
+    a.preload = "auto";
+    if (nom === "feu") a.loop = true;
+    sons[nom] = a;
+  }
+  const avecSon = Object.keys(sons).length > 0;
+  if (avecSon) document.body.classList.add("avec-son");
+  let muet = false;
+  btnSon.addEventListener("click", () => {
+    muet = !muet;
+    Object.values(sons).forEach(a => { a.muted = muet; });
+    btnSon.textContent = muet ? "🔇" : "🔊";
+    btnSon.setAttribute("aria-label", muet ? "Remettre le son" : "Couper le son");
+  });
+
+  let entre = false;
+  function entrer() {
+    if (entre) return;
+    entre = true;
+    document.body.classList.add("dedans");
+    scene.classList.add("joue");
+    intro.currentTime = 0;
+    const p = intro.play();
+    if (p && p.catch) p.catch(() => allumerFeu());   // si la vidéo refuse de jouer, on passe au feu
+    if (sons.entree) sons.entree.play().catch(() => {});
+  }
+
+  function allumerFeu() {
+    boucle.currentTime = 0;
+    boucle.play().catch(() => {});
+    scene.classList.add("feu");
+    if (sons.feu) sons.feu.play().catch(() => {});
+  }
+
+  // On lance la boucle un tout petit peu avant la fin de la vidéo d'entrée,
+  // pour que le fondu entre les deux soit invisible.
+  intro.addEventListener("timeupdate", () => {
+    if (!scene.classList.contains("feu") && intro.duration && intro.currentTime > intro.duration - 0.35) {
+      allumerFeu();
+    }
+  });
+  intro.addEventListener("ended", allumerFeu);
+
+  // Sortir du tipi : tout s'arrête et on revient à l'image d'accueil
+  function sortir() {
+    if (!entre) return;
+    entre = false;
+    intro.pause(); boucle.pause();
+    Object.values(sons).forEach(a => { a.pause(); a.currentTime = 0; });
+    scene.classList.remove("joue", "feu");
+    document.body.classList.remove("dedans");
+    appel.focus();
+  }
+
+  appel.addEventListener("click", entrer);
+  btnSortir.addEventListener("click", sortir);
+  document.addEventListener("keydown", e => { if (e.key === "Escape") sortir(); });
+})();
+</script>
+</body>
+</html>
