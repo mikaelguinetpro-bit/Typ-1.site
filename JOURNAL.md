@@ -2,6 +2,14 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/feu-qui-respire
+- Le feu respire quand le Créateur écrit : il s'avive un peu à chaque lettre, avec quelques étincelles.
+- Des étincelles montent toujours du feu ; une gerbe jaillit quand on offre une question ; des étincelles accompagnent chaque page qui sort du feu.
+- Une page rendue au feu tombe en cendres, qui retournent dans les flammes.
+- Tout est dessiné sur une toile par-dessus la vidéo (61 images par seconde à l'essai). Rien ne bouge si le Créateur a demandé de réduire les animations.
+- Pourquoi : rendre le feu plus vivant à l'écran (choix de Ritukah), et faire oublier que la boucle du feu ne dure qu'une seconde.
+- À faire : le serveur de recherche.
+
 ## 2026-11-16 — Claude — claude/feu-vivant
 - Le feu change avec l'heure du Créateur (aube, jour, soir, nuit) ; la nuit, Apaiser a ses propres paroles (6 phrases, à relire par Ritukah).
 - « Garder près du feu » sur chaque page, et le bouton « Braises » qui les retrouve. Elles restent sur l'appareil (stockage du navigateur), sans compte.
