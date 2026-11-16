@@ -2,6 +2,10 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/icone-du-site
+- L'icône du site (onglet du navigateur, écran d'accueil du téléphone) : l'image d'accueil recadrée en carré, le tipi au milieu.
+- Pourquoi : demandé par Ritukah, l'onglet n'avait pas d'icône.
+
 ## 2026-11-16 — Claude — claude/feu-savant
 - Le feu est relié au vrai web : `api/feu.js` demande à Claude (Haiku, recherche web intégrée) de choisir 1, 3 ou 5 pages, plus 2 de réserve pour « Rendre au feu ».
 - Seules les adresses vraiment trouvées pendant la recherche sont gardées ; une adresse inventée est rejetée.
