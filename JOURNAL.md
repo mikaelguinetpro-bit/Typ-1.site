@@ -2,6 +2,15 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/neuf-langues
+- Le site parle 9 langues (fr, es, en, pt, ru, ar, hi, bn, zh), comme les autres sites : tous les textes sont dans `i18n/<code>.js`, y compris les pages d'exemple et les paroles d'Apaiser.
+- Un choix de langue discret en haut de l'accueil ; sinon la langue du navigateur. L'arabe s'écrit de droite à gauche (boutons et panneau inversés).
+- Police Cormorant en cyrillique pour le russe ; arabe, hindi, bengali et chinois avec les polices de l'appareil.
+- Ligne d'aide d'Apaiser adaptée : 3114 en français, numéro d'urgence local et findahelpline.com ailleurs.
+- `scripts/verifier_traductions.py` vérifie que les 9 fichiers ont les mêmes clés.
+- Pourquoi : demandé par Ritukah (« comme d'habitude »).
+- À faire : faire relire les traductions par des personnes qui parlent ces langues, surtout les paroles d'Apaiser.
+
 ## 2026-11-16 — Claude — claude/feu-qui-respire
 - Le feu respire quand le Créateur écrit : il s'avive un peu à chaque lettre, avec quelques étincelles.
 - Des étincelles montent toujours du feu ; une gerbe jaillit quand on offre une question ; des étincelles accompagnent chaque page qui sort du feu.

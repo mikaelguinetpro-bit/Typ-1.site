@@ -6,4 +6,4 @@
 | Feu de la vidéo (simulation) | JangaFX EmberGen, « Small Camp Fire » (jangafx.com) | CC0 (domaine public) |
 | Textures de la vidéo (toile, bois, pierres, sol, herbe) | ambientCG (ambientcg.com) | CC0 |
 | Texture des braises de la vidéo | AITextured, « glowing ember PBR » (aitextured.com) | licence commerciale gratuite (FCL) |
-| `polices/` (Cormorant Garamond) | The Cormorant Project | SIL Open Font License 1.1 (`polices/OFL.txt`) |
+| `polices/` (Cormorant Garamond, latin et cyrillique) | The Cormorant Project | SIL Open Font License 1.1 (`polices/OFL.txt`) |
