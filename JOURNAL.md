@@ -2,6 +2,14 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-16 — Claude — claude/le-feu-repond
+- Dans le tipi, une fois le feu allumé : un champ pour parler au feu, quatre flammes (Chercher, Apprendre, Voir, Apaiser) et des pages qui sortent du feu (1, 3 ou 5 selon la demande), chacune avec « pourquoi le feu l'a choisie » et « Rendre au feu ».
+- Apaiser donne déjà de vraies paroles (12 phrases, à relire par Ritukah), avec la ligne d'aide du 3114 toujours visible.
+- Le feu n'est pas encore relié au web : les pages sont des exemples, étiquetées et annoncées comme tels.
+- Le concept et ses règles sont notés dans `AGENTS.md`.
+- Pourquoi : première étape du concept expliqué par Ritukah, pour juger le geste avant de construire le serveur.
+- À faire : le serveur de recherche (outil web + IA, limite par jour), la voix, les autres flammes.
+
 ## 2026-11-16 — Claude — claude/accueil-tipi
 - Page d'accueil `index.html` : l'image du tipi avec « Créateur, entre dans le tipi / le feu t'attend » ; au clic, la vidéo d'entrée (12 s), puis le feu en boucle à l'infini. Version vidéo légère sur téléphone.
 - Bouton « ← Sortir » (en haut à gauche, ou touche Échap) : arrête la vidéo et le feu et revient à l'accueil (demandé par Ritukah).

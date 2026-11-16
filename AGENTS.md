@@ -11,6 +11,13 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
   - `index.html` : la page d'accueil. L'image du tipi avec « Créateur, entre dans le tipi / le feu t'attend » ; au clic, la vidéo d'entrée se lance, puis le feu brûle en boucle à l'infini.
   - `assets/` : les vidéos (`typ1_intro_1080.mp4` pour les grands écrans, `typ1_intro_720.mp4` pour les téléphones, `typ1_feu_boucle.mp4` pour le feu sans fin), l'image d'accueil (`typ1_poster.jpg`) et, plus tard, les sons.
 - **L'animation d'entrée** (12 s, 24 images par seconde) a été fabriquée dans Blender et calculée sur RunPod. Son mouvement est **validé par Ritukah** : l'étincelle, la caméra, les traînées, le tipi qui grandit, la braise, la naissance du feu, et la pause de 1,2 s au début. Ne pas le changer sans son accord. Les fichiers Blender ne sont pas dans ce dépôt ; l'historique de leur fabrication est dans le document de projet `typ1-animation-resume.md`.
+- **Le concept** (décidé par Ritukah le 16 novembre 2026) : une fois dans le tipi, **le Créateur parle au feu**, au clavier ou à la voix, et **des pages sortent du feu**. C'est une recherche sur le web faite par l'IA, plus précise qu'un moteur classique :
+  - le nombre de pages **s'adapte à la demande** : 1 (question précise), 3 (un choix à faire) ou 5 (une exploration) ;
+  - chaque page dit **pourquoi le feu l'a choisie** ; le Créateur peut la **rendre au feu** pour en recevoir une autre ;
+  - **les flammes** sont des recherches spécialisées. Première version : **Chercher**, **Apprendre** (tutoriels), **Voir** (vidéos), **Apaiser** (le feu offre des paroles qui font du bien). Idées pour plus tard : Lire, Outils, Vérifier, Créer ;
+  - pas de publicité, pas de pistage du Créateur ; le feu a le droit de dire qu'il n'a rien trouvé de fiable.
+- **Apaiser** : le feu ne se fait jamais passer pour un thérapeute, et la ligne d'aide (le 3114 en France) reste toujours visible avec les paroles. Ne pas la retirer.
+- **État actuel** : le feu **n'est pas encore relié au web**. Les pages affichées sont des **exemples**, étiquetées « Exemple », avec une note visible. Ne jamais présenter une page d'exemple comme un vrai résultat. La vraie recherche demandera un serveur et aura un coût par recherche : à décider avec Ritukah.
 - **Le son** : prêt à brancher dans le bloc `SONS` de `index.html` (son d'entrée, crépitement du feu). **La voix du feu viendra plus tard**, en surprise.
 
 ## Ce qui reste à décider par Ritukah
@@ -18,7 +25,8 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 Ne rien construire sur ces points sans son accord :
 - l'adresse définitive (Typ-1.help) et l'hébergement ;
 - les **langues** du site (les autres sites en parlent 9 : français, espagnol, anglais, portugais, russe, arabe, hindi, bengali, chinois) ;
-- ce qui se passe **après** l'entrée dans le tipi (les pages suivantes, ce que le feu dit au Créateur).
+- le **serveur** de la vraie recherche (quel outil de recherche web, quelle IA, combien de recherches offertes par jour à chaque Créateur) ;
+- la **voix** (parler au feu) : la reconnaissance vocale du navigateur passe par un service extérieur, il faut l'accord de Ritukah avant de la brancher.
 
 ## Les mots du projet
 
