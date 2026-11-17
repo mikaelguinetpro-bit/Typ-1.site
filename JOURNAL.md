@@ -2,6 +2,13 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-17 — Claude — claude/surprends-moi
+- Deux petits boutons sous le champ : « Surprends-moi » et « Braise du jour » (cachés quand on choisit Apaiser).
+- Surprends-moi : 3 pages, une drôle, une utile, une belle, avec une étiquette de couleur. Le serveur tire un thème au hasard pour chacune (72 thèmes), Claude cherche de vraies pages ; une page rendue au feu est remplacée par une de rechange.
+- Braise du jour : une seule page exceptionnelle, même thème pour tous, plus grande et plus lumineuse. Une seule recherche par jour et par langue (gardée par Vercel et par l'appareil).
+- Aperçus d'exemple dans les 9 langues quand il n'y a pas de serveur ; tests du feu complétés ; testé ordinateur, téléphone, arabe, sans serveur.
+- Pourquoi : idée de Ritukah ; braise du jour demandée « exceptionnellement belle, drôle ou utile ».
+
 ## 2026-11-17 — Claude — claude/installer-discret
 - Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
 - La croix réduit la pastille au petit logo rond (au lieu de la cacher 30 jours) ; un clic sur le logo la rouvre. Le choix reste sur l'appareil.

@@ -194,5 +194,14 @@
  "installer_bouton": "Install",
  "installer_ios": "On iPhone, tap Share at the bottom of Safari, then “Add to Home Screen”: the fire will open full screen.",
  "fermer_aria": "Close",
- "reduire_aria": "Minimize"
+ "reduire_aria": "Minimize",
+ "surprise": "Surprise me",
+ "braise_jour": "Ember of the day",
+ "attente_surprise": "The fire is digging through its embers…",
+ "attente_braise": "The fire is looking for the ember of the day…",
+ "genre_drole": "Funny",
+ "genre_utile": "Useful",
+ "genre_belle": "Beautiful",
+ "exemples_surprise": [["drole", "The museum of failed inventions", "Site · online visit", "Hundreds of objects that should never have existed, from the two-person umbrella to the talking toaster.", "because laughing at our mistakes is already inventing."], ["utile", "Repair your own things", "Guide · step by step", "Illustrated tutorials to bring a phone, a lamp or a zipper back to life.", "because a repaired object keeps its story."], ["belle", "Earth seen from the Space Station", "Images · live", "Clouds, auroras and cities at night, filmed 400 km above you.", "because from up there, Earth has no borders."]],
+ "exemples_braise": [["belle", "The map of the world's winds", "Animated map · live", "The winds of the whole planet drawn as moving lines, updated every three hours.", "because you can watch the whole Earth breathe."]]
 };

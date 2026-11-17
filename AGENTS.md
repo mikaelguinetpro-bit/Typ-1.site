@@ -19,7 +19,8 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 - **Les six idées gardées par Ritukah** (16 novembre 2026) :
   1. **Le feu pose une question en retour** quand une demande est floue : une seule question, avant de chercher, avec 2 à 4 réponses à toucher (ou ses propres mots), et toujours « Cherche quand même ». Le feu ne pose jamais une deuxième question à la suite. *(fait ; sans serveur, l'aperçu la montre pour une demande d'un seul mot)*
   2. **Offrir une page comme une étincelle** : on l'envoie à quelqu'un, qui la voit arriver en étincelle. *(à faire, demande le serveur)*
-  3. **La braise du jour** : chaque jour, la même belle découverte offerte à tous. *(à faire, demande le serveur ; jamais de fausse découverte)*
+  3. **La braise du jour** : chaque jour, une page **exceptionnellement** belle, drôle ou utile (exigence de Ritukah), même thème pour tous. *(fait : `GET /api/feu?braise=AAAA-MM-JJ&langue=xx`, gardée par le réseau de Vercel jusqu'au lendemain, donc une seule recherche par jour et par langue ; l'appareil la garde aussi ; elle change à minuit, heure de Paris)*
+  - **« Surprends-moi »** (idée de Ritukah, 17 novembre 2026) : 3 pages, une **drôle**, une **utile**, une **belle**, avec leur étiquette. Le serveur tire un thème au hasard pour chacune dans `THEMES` (`api/feu.js`), Claude cherche une vraie page. Tout public, jamais de page inventée. Pour varier les surprises, on peut agrandir les listes de thèmes.
   4. **Le feu change avec l'heure** : doré à l'aube, rouge et intime la nuit ; la nuit, Apaiser parle plus doucement. *(fait)*
   5. **Les braises gardées** : le Créateur garde une page près du feu. Elles restent **sur son appareil seulement**, sans compte. *(fait)*
   6. **La voix du feu** : le feu lit la parole d'Apaiser, avec **une voix installée sur l'appareil seulement** (rien ne part sur Internet). *(fait ; le bouton n'apparaît que si l'appareil a une voix française)*

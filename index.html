@@ -353,6 +353,24 @@
     background: var(--c); box-shadow: 0 0 9px 2px var(--c); vertical-align: .08em;
   }
   .flammes button[aria-checked="true"] { background: rgba(70, 20, 6, .8); border-color: var(--c); box-shadow: 0 0 18px -4px var(--c); color: #fff; }
+  /* --- « Surprends-moi » et la braise du jour : deux petits boutons sous le champ --- */
+  .hasard { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+  .hasard[hidden] { display: none; }
+  .hasard button {
+    font: inherit; font-size: 1rem; font-style: italic; letter-spacing: .03em; color: #ffe9cc; cursor: pointer;
+    padding: .28rem .95rem; border-radius: 99px; border: 1px dashed rgba(243, 210, 154, .5); background: rgba(18, 6, 4, .45);
+    backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); transition: background .2s, box-shadow .2s, border-color .2s;
+  }
+  .hasard button:hover { background: rgba(70, 20, 6, .75); border-color: #ffb36a; box-shadow: 0 0 16px -3px #ff7a2a; }
+  .hasard button:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
+  .hasard .icone { font-style: normal; margin-right: .4em; color: #ffb36a; }
+  [dir="rtl"] .hasard .icone { margin-right: 0; margin-left: .4em; }
+  .page .genre {
+    display: inline-block; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 .3rem .5rem 0;
+    color: #fff4e2; border-radius: 99px; padding: .08rem .6rem; background: var(--g, #b4400c);
+  }
+  .page .genre.drole { --g: #c7471a; } .page .genre.utile { --g: #7a5a12; } .page .genre.belle { --g: #8a3a6a; } .page .genre.jour { --g: #a8280a; }
+  .page.braise-du-jour { max-width: 340px; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 46px rgba(255, 120, 30, .6), inset 0 0 22px rgba(160, 90, 20, .22); }
   .champ {
     display: flex; align-items: center; gap: .4rem; padding: .3rem .3rem .3rem 1.2rem; border-radius: 99px;
     border: 1px solid rgba(243, 210, 154, .55); background: rgba(18, 6, 4, .66);
@@ -434,6 +452,10 @@
         <input id="question" type="text" maxlength="200" placeholder="Que cherches-tu, Créateur ?" enterkeyhint="search">
         <button type="button" class="micro" id="micro" aria-label="Parler au feu" aria-pressed="false" data-i18n-aria="micro_aria" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
         <button type="submit" aria-label="Offrir ma question au feu" data-i18n-aria="envoyer_aria">➜</button>
+      </div>
+      <div class="hasard" id="hasard">
+        <button type="button" id="surprise"><span class="icone" aria-hidden="true">✦</span><span data-i18n="surprise">Surprends-moi</span></button>
+        <button type="button" id="braiseJour"><span class="icone" aria-hidden="true">●</span><span data-i18n="braise_jour">Braise du jour</span></button>
       </div>
       <div class="apaiser" id="apaiser" hidden>
         <div class="rangee">
@@ -607,6 +629,7 @@ function TYP1_demarrer(codeDepart) {
   const question = document.getElementById("question");
   const champ = document.getElementById("champ");
   const blocApaiser = document.getElementById("apaiser");
+  const blocHasard = document.getElementById("hasard");
   const boutonsFlamme = [...document.querySelectorAll("#flammes button")];
   let flamme = "chercher";
   let minuterie = [];
@@ -866,6 +889,8 @@ function TYP1_demarrer(codeDepart) {
     const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
     const vraie = !p.exemple && lienSur(p.url);
     if (!vraie) el("span", "etiquette", T("exemple"));
+    if (p.braiseJour) { a.classList.add("braise-du-jour"); el("span", "genre jour", T("braise_jour") + (p.dateJour ? " · " + p.dateJour : "")); }
+    else if (["drole", "utile", "belle"].includes(p.genre)) el("span", "genre " + p.genre, T("genre_" + p.genre));
     const h = el("h2", "", vraie ? "" : p.titre);
     if (vraie) {
       const lien = document.createElement("a");
@@ -946,7 +971,69 @@ function TYP1_demarrer(codeDepart) {
     question.value = ""; question.placeholder = T("repondre_au_feu");
     question.focus({ preventScroll: true });
   }
+  // --- « Surprends-moi » (3 pages : drôle, utile, belle) et la braise du jour (1 page, la même pour tous) ---
+  let modeDecouverte = "";               // "surprise" ou "braise" quand les pages viennent d'un de ces boutons
+  const exemplesDecouverte = mode => T("exemples_" + mode).map(([genre, ...m]) => ({ ...pageExemple(m, ""), genre, braiseJour: mode === "braise" }));
+  const jourParis = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date());
+  async function braiseDuJour() {
+    const jour = jourParis(), cle = "typ1_braise_jour";
+    try {                                // déjà reçue aujourd'hui, dans cette langue : pas besoin de redemander
+      const c = JSON.parse(localStorage.getItem(cle) || "null");
+      if (c && c.jour === jour && c.langue === L.code && c.page) return { pages: [c.page], reserve: [] };
+    } catch (e) {}
+    if (!/^https?:$/.test(location.protocol)) return null;
+    const ctrl = new AbortController();
+    const minute = setTimeout(() => ctrl.abort(), 90000);
+    try {
+      const r = await fetch(`api/feu?braise=${jour}&langue=${L.code}`, { signal: ctrl.signal });
+      if (r.status === 429) return { limite: true };
+      if (!r.ok) return null;
+      const d = await r.json();
+      if (!d || !Array.isArray(d.pages)) return null;
+      if (d.pages.length) try { localStorage.setItem(cle, JSON.stringify({ jour, langue: L.code, page: d.pages[0] })); } catch (e) {}
+      return d;
+    } catch (e) { return null; }
+    finally { clearTimeout(minute); }
+  }
+  async function decouvrir(mode) {
+    question.value = "";
+    vider(); embraser();
+    const monTour = tour;
+    const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = T("attente_" + mode);
+    zonePages.append(attente);
+    const debut = Date.now();
+    const d = mode === "braise" ? await braiseDuJour() : await demanderAuFeu("", { mode: "surprise" });
+    await new Promise(ok => setTimeout(ok, Math.max(0, 1300 - (Date.now() - debut))));
+    if (monTour !== tour || !entre) return;
+    zonePages.replaceChildren();
+    embraser();
+    if (d && d.limite) { note.hidden = true; return direDuFeu(T("limite")); }
+    let pages;
+    if (d) {
+      modeExemple = false; note.hidden = true;
+      if (!d.pages.length) return direDuFeu(T("rien"));
+      pages = d.pages;
+      reserve = Array.isArray(d.reserve) ? d.reserve.slice() : [];
+    } else {
+      modeExemple = true; note.hidden = false;
+      pages = exemplesDecouverte(mode); reserve = [];
+    }
+    modeDecouverte = mode;
+    const date = new Intl.DateTimeFormat(L.code, { day: "numeric", month: "long", timeZone: "Europe/Paris" }).format(new Date());
+    if (mode === "braise") pages = pages.map(p => ({ ...p, braiseJour: true, dateJour: date }));
+    pages.forEach((p, i) => {
+      const c = fabriquerPage(p, "");
+      c.style.setProperty("--d", (i * 0.3) + "s");
+      zonePages.append(c);
+    });
+    poserEnArc();
+    [...zonePages.querySelectorAll(".page")].forEach((c, i) => etincelles.accompagner(c, i * .3));
+  }
+  document.getElementById("surprise").addEventListener("click", () => decouvrir("surprise"));
+  document.getElementById("braiseJour").addEventListener("click", () => decouvrir("braise"));
+
   async function repondre(q, suite) {
+    modeDecouverte = "";
     vider(); embraser();
     const monTour = tour;
     const attente = document.createElement("p"); attente.className = "attente"; attente.textContent = T("attente_" + flamme);
@@ -987,7 +1074,7 @@ function TYP1_demarrer(codeDepart) {
     carte.classList.add("rendue");
     embraser();
     plus_tard(() => {
-      if (!reserve.length && modeExemple) reserve = T("exemples")[flamme].map(m => pageExemple(m, q));
+      if (!reserve.length && modeExemple) reserve = modeDecouverte ? exemplesDecouverte(modeDecouverte) : T("exemples")[flamme].map(m => pageExemple(m, q));
       if (!reserve.length) {                           // le feu n'a plus d'autre page : la carte s'efface
         carte.remove(); poserEnArc();
         if (!zonePages.querySelector(".page")) direDuFeu(T("rien"));
@@ -1021,7 +1108,7 @@ function TYP1_demarrer(codeDepart) {
     boutonsFlamme.forEach(b => b.setAttribute("aria-checked", String(b.dataset.flamme === nom)));
     vider();
     const apaise = nom === "apaiser";
-    champ.hidden = apaise; blocApaiser.hidden = !apaise;
+    champ.hidden = apaise; blocHasard.hidden = apaise; blocApaiser.hidden = !apaise;
     if (apaise) parole();
     else { taire(); question.placeholder = invite(nom); }
   }
