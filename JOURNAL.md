@@ -4,7 +4,7 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
 
 ## 2026-11-17 — Claude — claude/installable
 - Typ-1 s'installe comme une application, comme Nebula, Atlas.sea et BNM1 : manifeste, icônes 512 et « masquables » (le rond du tipi sur la nuit chaude), service worker.
-- Bandeau « Garde le feu sur ton écran d'accueil » sur l'image d'accueil (en haut, pour ne pas cacher « Toucher pour entrer ») ; sur iPhone, il explique le geste dans Safari. Traduit dans les 9 langues.
+- Une petite pastille « Installer » en bas à droite de l'image d'accueil, discrète : installer reste un choix, elle ne cache ni le titre ni « Toucher pour entrer » (demandé par Ritukah). Sur iPhone, la toucher explique le geste dans Safari. Traduit dans les 9 langues.
 - Sans réseau, le tipi s'ouvre quand même (la recherche du feu, elle, a besoin du réseau).
 - Testé dans Chrome : manifeste sans erreur, service worker actif, hors ligne, bandeau, iPhone, refus gardé.
 - Pourquoi : demandé par Ritukah.
