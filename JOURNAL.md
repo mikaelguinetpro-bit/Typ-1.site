@@ -2,6 +2,10 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-17 — Claude — claude/installer-discret
+- Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
+- Pourquoi : demandé par Ritukah (« on dirait qu'on est obligé »). La #13 était déjà fusionnée, d'où cette branche.
+
 ## 2026-11-17 — Claude — claude/installable
 - Typ-1 s'installe comme une application, comme Nebula, Atlas.sea et BNM1 : manifeste, icônes 512 et « masquables » (le rond du tipi sur la nuit chaude), service worker.
 - Une petite pastille « Installer » en bas à droite de l'image d'accueil, discrète : installer reste un choix, elle ne cache ni le titre ni « Toucher pour entrer » (demandé par Ritukah). Sur iPhone, la toucher explique le geste dans Safari. Traduit dans les 9 langues.
