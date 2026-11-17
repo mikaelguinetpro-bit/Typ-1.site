@@ -188,5 +188,10 @@
  "micro_aria": "对火说话",
  "micro_ecoute": "火在听你说…",
  "micro_refuse": "麦克风未获允许。请在浏览器中允许，或者把你的问题写给火。",
- "micro_info": "对火说话：你的浏览器服务会把你的声音转成文字。"
+ "micro_info": "对火说话：你的浏览器服务会把你的声音转成文字。",
+ "installer_aria": "安装 Typ-1",
+ "installer_texte": "把火留在你的主屏幕上：一个图标，全屏打开。",
+ "installer_bouton": "安装",
+ "installer_ios": "在 iPhone 上，轻点 Safari 底部的“分享”，再选“添加到主屏幕”：火会全屏打开。",
+ "fermer_aria": "关闭"
 };

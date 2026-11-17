@@ -188,5 +188,10 @@
  "micro_aria": "Parler au feu",
  "micro_ecoute": "Le feu t'écoute…",
  "micro_refuse": "Le micro n'est pas autorisé. Autorise-le dans ton navigateur, ou écris ta question au feu.",
- "micro_info": "Parle au feu : ta voix est transformée en texte par le service de ton navigateur."
+ "micro_info": "Parle au feu : ta voix est transformée en texte par le service de ton navigateur.",
+ "installer_aria": "Installer Typ-1",
+ "installer_texte": "Garde le feu sur ton écran d'accueil : une icône, en plein écran.",
+ "installer_bouton": "Installer",
+ "installer_ios": "Sur iPhone, touche Partager en bas de Safari, puis « Sur l'écran d'accueil » : le feu s'ouvrira en plein écran.",
+ "fermer_aria": "Fermer"
 };

@@ -188,5 +188,10 @@
  "micro_aria": "Falar com o fogo",
  "micro_ecoute": "O fogo está te ouvindo…",
  "micro_refuse": "O microfone não está autorizado. Autorize no seu navegador ou escreva sua pergunta ao fogo.",
- "micro_info": "Fale com o fogo: o serviço do seu navegador transforma sua voz em texto."
+ "micro_info": "Fale com o fogo: o serviço do seu navegador transforma sua voz em texto.",
+ "installer_aria": "Instalar Typ-1",
+ "installer_texte": "Guarde o fogo na sua tela inicial: um ícone, em tela cheia.",
+ "installer_bouton": "Instalar",
+ "installer_ios": "No iPhone, toque em Compartilhar na parte de baixo do Safari e depois em “Adicionar à Tela de Início”: o fogo abrirá em tela cheia.",
+ "fermer_aria": "Fechar"
 };

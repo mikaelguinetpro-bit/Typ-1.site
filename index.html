@@ -10,6 +10,12 @@
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="assets/icone-192.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<!-- installable comme une application (credentials : le site est protégé par Vercel, le manifeste doit passer avec la connexion) -->
+<link rel="manifest" href="manifest.webmanifest" crossorigin="use-credentials">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Typ-1">
 <meta property="og:title" content="Typ-1 — Le feu t'attend">
 <meta property="og:description" content="Créateur, entre dans le tipi.">
 <meta property="og:image" content="assets/typ1_poster.jpg">
@@ -117,6 +123,26 @@
     display: none;
   }
   .avec-son .son { display: block; }
+
+  /* --- garder le feu sur son écran d'accueil (installer le site comme une application) --- */
+  .installer {
+    position: fixed; left: 50%; top: calc(max(1.1rem, env(safe-area-inset-top)) + 3.4rem); z-index: 6;   /* sous le bouton son, loin de « Toucher pour entrer » */
+    transform: translateX(-50%); width: min(30rem, calc(100vw - 2rem));
+    display: flex; align-items: center; gap: .8rem; padding: .8rem .9rem .8rem 1rem;
+    border: 1px solid rgba(243, 210, 154, .45); border-radius: 1.2rem;
+    background: rgba(18, 6, 4, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    color: #ffe9cc; box-shadow: 0 10px 40px rgba(0, 0, 0, .5), 0 0 30px rgba(255, 80, 20, .18);
+    animation: monte .8s cubic-bezier(.2, .8, .25, 1);
+  }
+  .installer[hidden], .dedans .installer { display: none; }
+  .installer img { position: static; inset: auto; width: 2.6rem; height: 2.6rem; flex: none; object-fit: contain; opacity: 1; filter: none; transform: none; }
+  .installer p { margin: 0; flex: 1; font-size: 1.05rem; line-height: 1.3; font-style: italic; }
+  .installer button { font: inherit; cursor: pointer; border: 0; flex: none; }
+  .installer .oui { padding: .45rem 1rem; border-radius: 99px; color: #2a0c02; font-size: 1.05rem; background: linear-gradient(180deg, #ffe6c2, #ffb36a); box-shadow: 0 0 14px rgba(255, 90, 20, .45); }
+  .installer .non { width: 2rem; height: 2rem; border-radius: 50%; background: transparent; color: rgba(255, 233, 204, .7); font-size: 1rem; }
+  .installer button:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
+  @keyframes monte { from { opacity: 0; transform: translate(-50%, -1.2rem); } }
+  @media (prefers-reduced-motion: reduce) { .installer { animation: none; } }
 
   /* --- sortir du tipi : revenir à l'accueil --- */
   .sortir {
@@ -370,6 +396,12 @@
 <body>
   <main class="scene" id="scene">
     <img id="accueil" src="assets/typ1_poster.jpg" alt="Un tipi blanc et bleu sur un promontoire, sous un ciel doré" data-i18n-alt="alt_accueil">
+    <div class="installer" id="installer" role="region" aria-label="Installer Typ-1" data-i18n-aria="installer_aria" hidden>
+      <img src="assets/icone-192.png" alt="">
+      <p id="installer-texte" data-i18n="installer_texte">Garde le feu sur ton écran d'accueil : une icône, en plein écran.</p>
+      <button type="button" class="oui" id="installer-oui" data-i18n="installer_bouton">Installer</button>
+      <button type="button" class="non" id="installer-non" aria-label="Fermer" data-i18n-aria="fermer_aria">✕</button>
+    </div>
     <video id="intro" playsinline muted preload="auto" aria-hidden="true"></video>
     <video id="boucle" playsinline muted loop preload="auto" aria-hidden="true"></video>
     <canvas id="etincelles" aria-hidden="true"></canvas>
@@ -1083,6 +1115,43 @@ function TYP1_demarrer(codeDepart) {
   }
   majMoment(); setInterval(majMoment, 10 * 60 * 1000);
   afficherBraises();
+  // --- Installer le site comme une application (comme Nebula, Atlas.sea et BNM1) ---
+  // Chrome, Edge et Android proposent l'installation ; sur iPhone, on explique le geste dans Safari.
+  // Le refus est gardé 30 jours. Rien ne s'affiche dans un aperçu (iframe) ni si le site est déjà installé.
+  const bandeau = document.getElementById("installer");
+  const DEJA_REFUSE = "typ1_installer_refuse";
+  let invitation = null;
+  const dansCadre = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+  const installe = () => matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches || navigator.standalone === true;
+  const surIPhone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const refuseRecemment = () => { try { return Date.now() - +(localStorage.getItem(DEJA_REFUSE) || 0) < 30 * 864e5; } catch (e) { return false; } };
+  function montrerBandeau(iphone) {
+    if (installe() || refuseRecemment() || dansCadre) return;
+    document.getElementById("installer-texte").dataset.i18n = iphone ? "installer_ios" : "installer_texte";
+    document.getElementById("installer-texte").textContent = T(iphone ? "installer_ios" : "installer_texte");
+    document.getElementById("installer-oui").hidden = iphone;
+    bandeau.hidden = false;
+  }
+  window.addEventListener("beforeinstallprompt", e => {
+    e.preventDefault(); invitation = e;
+    setTimeout(() => montrerBandeau(false), 3500);
+  });
+  if (surIPhone && !installe()) setTimeout(() => montrerBandeau(true), 6000);
+  window.addEventListener("appinstalled", () => { bandeau.hidden = true; invitation = null; });
+  document.getElementById("installer-oui").addEventListener("click", async () => {
+    if (!invitation) return;
+    son.souffle(.4);
+    invitation.prompt();
+    try { await invitation.userChoice; } catch (e) {}
+    invitation = null; bandeau.hidden = true;
+  });
+  document.getElementById("installer-non").addEventListener("click", () => {
+    try { localStorage.setItem(DEJA_REFUSE, String(Date.now())); } catch (e) {}
+    bandeau.hidden = true;
+  });
+  if ("serviceWorker" in navigator && !dansCadre && location.protocol !== "file:")
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+
   // ---------------------------------------------------------------------------
   function entrer() {
     if (entre) return;
