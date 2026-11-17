@@ -141,6 +141,10 @@
   .installer .oui img { position: static; inset: auto; width: 1.5rem; height: 1.5rem; flex: none; object-fit: contain; opacity: 1; filter: none; transform: none; }
   .installer .non { width: 1.6rem; height: 1.6rem; border-radius: 50%; font-size: .8rem; color: rgba(255, 233, 204, .6); }
   .installer button:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
+  /* réduite : il ne reste que le petit logo rond ; un clic la rouvre */
+  .installer.reduit .oui span, .installer.reduit .non, .installer.reduit p { display: none; }
+  .installer.reduit .oui { padding: .15rem; opacity: .75; }
+  .installer.reduit .ligne { padding: .15rem; }
   .installer p { margin: 0; padding: .55rem .8rem; border-radius: .9rem; font-size: .95rem; line-height: 1.3; font-style: italic;
     color: #ffe9cc; background: rgba(18, 6, 4, .8); border: 1px solid rgba(243, 210, 154, .35); }
   [dir="rtl"] .installer { right: auto; left: max(.9rem, env(safe-area-inset-left)); align-items: flex-start; }
@@ -403,7 +407,7 @@
       <p id="installer-texte" data-i18n="installer_ios" hidden>Sur iPhone, touche Partager en bas de Safari, puis « Sur l'écran d'accueil » : le feu s'ouvrira en plein écran.</p>
       <div class="ligne">
         <button type="button" class="oui" id="installer-oui"><img src="assets/icone-192.png" alt=""><span data-i18n="installer_bouton">Installer</span></button>
-        <button type="button" class="non" id="installer-non" aria-label="Fermer" data-i18n-aria="fermer_aria">✕</button>
+        <button type="button" class="non" id="installer-non" aria-label="Réduire" data-i18n-aria="reduire_aria">✕</button>
       </div>
     </div>
     <video id="intro" playsinline muted preload="auto" aria-hidden="true"></video>
@@ -1112,7 +1116,7 @@ function TYP1_demarrer(codeDepart) {
     appliquerTextes();
     choixLangue.value = L.code;
     ordreParoles = []; ordreNuit = [];
-    majBoutonSon(); majMicro(); btnInstaller.title = T("installer_texte");
+    majBoutonSon(); majMicro(); btnInstaller.title = T("installer_texte"); btnInstaller.setAttribute("aria-label", T("installer_bouton"));
     if ("speechSynthesis" in window) chercherVoix();
     majMoment();
     afficherBraises();
@@ -1121,18 +1125,26 @@ function TYP1_demarrer(codeDepart) {
   afficherBraises();
   // --- Installer le site comme une application (comme Nebula, Atlas.sea et BNM1) ---
   // Chrome, Edge et Android proposent l'installation ; sur iPhone, on explique le geste dans Safari.
-  // Le refus est gardé 30 jours. Rien ne s'affiche dans un aperçu (iframe) ni si le site est déjà installé.
+  // La croix ne fait que réduire la pastille au petit logo rond ; un clic sur le logo la rouvre (choix gardé sur l'appareil).
+  // Rien ne s'affiche dans un aperçu (iframe) ni si le site est déjà installé.
   const bandeau = document.getElementById("installer");
-  const DEJA_REFUSE = "typ1_installer_refuse";
+  const REDUIT = "typ1_installer_reduit";
   let invitation = null;
   const dansCadre = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
   const installe = () => matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches || navigator.standalone === true;
   const surIPhone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  const refuseRecemment = () => { try { return Date.now() - +(localStorage.getItem(DEJA_REFUSE) || 0) < 30 * 864e5; } catch (e) { return false; } };
+  function reduire(oui) {
+    bandeau.classList.toggle("reduit", oui);
+    if (oui) document.getElementById("installer-texte").hidden = true;
+    try { localStorage.setItem(REDUIT, oui ? "1" : "0"); } catch (e) {}
+  }
   const btnInstaller = document.getElementById("installer-oui");
   function montrerBandeau() {
-    if (installe() || refuseRecemment() || dansCadre) return;
-    btnInstaller.title = T("installer_texte");
+    if (installe() || dansCadre) return;
+    btnInstaller.title = T("installer_texte"); btnInstaller.setAttribute("aria-label", T("installer_bouton"));
+    let dejaReduit = false;
+    try { dejaReduit = localStorage.getItem(REDUIT) === "1"; } catch (e) {}
+    bandeau.classList.toggle("reduit", dejaReduit);
     bandeau.hidden = false;
   }
   window.addEventListener("beforeinstallprompt", e => {
@@ -1142,6 +1154,7 @@ function TYP1_demarrer(codeDepart) {
   if (surIPhone && !installe()) setTimeout(montrerBandeau, 6000);
   window.addEventListener("appinstalled", () => { bandeau.hidden = true; invitation = null; });
   btnInstaller.addEventListener("click", async () => {
+    if (bandeau.classList.contains("reduit")) { reduire(false); return; }   // le logo seul : on rouvre la pastille
     if (!invitation) {                   // iPhone : le geste se fait dans Safari, on l'explique
       const aide = document.getElementById("installer-texte");
       aide.hidden = !aide.hidden; return;
@@ -1151,10 +1164,7 @@ function TYP1_demarrer(codeDepart) {
     try { await invitation.userChoice; } catch (e) {}
     invitation = null; bandeau.hidden = true;
   });
-  document.getElementById("installer-non").addEventListener("click", () => {
-    try { localStorage.setItem(DEJA_REFUSE, String(Date.now())); } catch (e) {}
-    bandeau.hidden = true;
-  });
+  document.getElementById("installer-non").addEventListener("click", () => reduire(true));
   if ("serviceWorker" in navigator && !dansCadre && location.protocol !== "file:")
     navigator.serviceWorker.register("/sw.js").catch(() => {});
 

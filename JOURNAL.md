@@ -4,6 +4,7 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
 
 ## 2026-11-17 — Claude — claude/installer-discret
 - Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
+- La croix réduit la pastille au petit logo rond (au lieu de la cacher 30 jours) ; un clic sur le logo la rouvre. Le choix reste sur l'appareil.
 - Pourquoi : demandé par Ritukah (« on dirait qu'on est obligé »). La #13 était déjà fusionnée, d'où cette branche.
 
 ## 2026-11-17 — Claude — claude/installable
