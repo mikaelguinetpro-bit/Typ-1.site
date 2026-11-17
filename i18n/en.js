@@ -193,5 +193,6 @@
  "installer_texte": "Keep the fire on your home screen: one icon, full screen.",
  "installer_bouton": "Install",
  "installer_ios": "On iPhone, tap Share at the bottom of Safari, then “Add to Home Screen”: the fire will open full screen.",
- "fermer_aria": "Close"
+ "fermer_aria": "Close",
+ "reduire_aria": "Minimize"
 };

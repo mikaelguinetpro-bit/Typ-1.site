@@ -193,5 +193,6 @@
  "installer_texte": "把火留在你的主屏幕上：一个图标，全屏打开。",
  "installer_bouton": "安装",
  "installer_ios": "在 iPhone 上，轻点 Safari 底部的“分享”，再选“添加到主屏幕”：火会全屏打开。",
- "fermer_aria": "关闭"
+ "fermer_aria": "关闭",
+ "reduire_aria": "收起"
 };

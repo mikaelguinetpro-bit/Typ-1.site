@@ -193,5 +193,6 @@
  "installer_texte": "Guarde o fogo na sua tela inicial: um ícone, em tela cheia.",
  "installer_bouton": "Instalar",
  "installer_ios": "No iPhone, toque em Compartilhar na parte de baixo do Safari e depois em “Adicionar à Tela de Início”: o fogo abrirá em tela cheia.",
- "fermer_aria": "Fechar"
+ "fermer_aria": "Fechar",
+ "reduire_aria": "Reduzir"
 };

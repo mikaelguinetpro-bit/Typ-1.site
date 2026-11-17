@@ -193,5 +193,6 @@
  "installer_texte": "Garde le feu sur ton écran d'accueil : une icône, en plein écran.",
  "installer_bouton": "Installer",
  "installer_ios": "Sur iPhone, touche Partager en bas de Safari, puis « Sur l'écran d'accueil » : le feu s'ouvrira en plein écran.",
- "fermer_aria": "Fermer"
+ "fermer_aria": "Fermer",
+ "reduire_aria": "Réduire"
 };
