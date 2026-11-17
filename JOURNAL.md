@@ -2,6 +2,13 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-17 — Claude — claude/installable
+- Typ-1 s'installe comme une application, comme Nebula, Atlas.sea et BNM1 : manifeste, icônes 512 et « masquables » (le rond du tipi sur la nuit chaude), service worker.
+- Bandeau « Garde le feu sur ton écran d'accueil » sur l'image d'accueil (en haut, pour ne pas cacher « Toucher pour entrer ») ; sur iPhone, il explique le geste dans Safari. Traduit dans les 9 langues.
+- Sans réseau, le tipi s'ouvre quand même (la recherche du feu, elle, a besoin du réseau).
+- Testé dans Chrome : manifeste sans erreur, service worker actif, hors ligne, bandeau, iPhone, refus gardé.
+- Pourquoi : demandé par Ritukah.
+
 ## 2026-11-16 — Claude — claude/sons-et-voix
 - Les sons choisis par Ritukah : un souffle quand le feu prend dans la vidéo d'entrée, le crépitement en boucle sans couture ensuite, un petit souffle (6 variantes) à chaque embrasement. Web Audio ; le bouton son reste coupé si on l'a coupé.
 - Parler au feu : bouton micro (reconnaissance vocale du navigateur, dans la langue du site) ; la question dite est envoyée au feu, et sert aussi à répondre à sa question.

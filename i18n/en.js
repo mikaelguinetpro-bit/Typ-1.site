@@ -188,5 +188,10 @@
  "micro_aria": "Speak to the fire",
  "micro_ecoute": "The fire is listening…",
  "micro_refuse": "The microphone isn't allowed. Allow it in your browser, or write your question to the fire.",
- "micro_info": "Speak to the fire: your browser's service turns your voice into text."
+ "micro_info": "Speak to the fire: your browser's service turns your voice into text.",
+ "installer_aria": "Install Typ-1",
+ "installer_texte": "Keep the fire on your home screen: one icon, full screen.",
+ "installer_bouton": "Install",
+ "installer_ios": "On iPhone, tap Share at the bottom of Safari, then “Add to Home Screen”: the fire will open full screen.",
+ "fermer_aria": "Close"
 };

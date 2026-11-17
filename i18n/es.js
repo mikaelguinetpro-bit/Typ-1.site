@@ -188,5 +188,10 @@
  "micro_aria": "Hablar al fuego",
  "micro_ecoute": "El fuego te escucha…",
  "micro_refuse": "El micrófono no está autorizado. Autorízalo en tu navegador o escribe tu pregunta al fuego.",
- "micro_info": "Habla al fuego: el servicio de tu navegador convierte tu voz en texto."
+ "micro_info": "Habla al fuego: el servicio de tu navegador convierte tu voz en texto.",
+ "installer_aria": "Instalar Typ-1",
+ "installer_texte": "Guarda el fuego en tu pantalla de inicio: un icono, a pantalla completa.",
+ "installer_bouton": "Instalar",
+ "installer_ios": "En iPhone, toca Compartir abajo en Safari y luego «Añadir a pantalla de inicio»: el fuego se abrirá a pantalla completa.",
+ "fermer_aria": "Cerrar"
 };

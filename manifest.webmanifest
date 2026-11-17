@@ -1,0 +1,23 @@
+{
+  "name": "Typ-1 — Le feu sacré",
+  "short_name": "Typ-1",
+  "description": "Créateur, entre dans le tipi : pose ta question au feu, et les pages sortent du feu.",
+  "id": "/?source=pwa",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#120604",
+  "theme_color": "#120604",
+  "lang": "fr",
+  "dir": "auto",
+  "categories": ["search", "lifestyle", "education"],
+  "icons": [
+    { "src": "/assets/icone-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icone-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icone-masquable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/icone-masquable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "prefer_related_applications": false
+}
