@@ -2,13 +2,33 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-18 — Claude — claude/elan-et-sceau
+- L'élan messager : parfois, après « Surprends-moi », un élan doré traverse le fond du tipi et laisse une 4e carte « Message de l'élan » qui mène vers un autre site du Sceau (chacun son tour, l'Éther en premier).
+- Mon Sceau (emblème + roue) est retiré à la demande de Ritukah : le Lotus de l'Éther (#16, fusionné dans cette branche) fait ce travail sur tous les sites. Un bouton « Le Lotus » sous le champ l'ouvre depuis le tipi ; Échap ferme le Lotus sans sortir du tipi.
+- Textes dans les 9 langues. Testé ordinateur, téléphone, arabe.
+- Pourquoi : marketing « beau, drôle et utile » voulu par Ritukah, inspiré de son rêve d'élan.
+
+## 2026-11-18 — Claude — claude/lotus-ether
+- **Le Lotus de l'Éther** : un médaillon flottant en bas à gauche, qui s'ouvre sur la fleur des quatre sites offerts et ramène au cœur, BNM1. Même objet, même geste, sur les quatre sites — c'est la plaque tournante de l'Empire, et chaque site cesse d'être une impasse.
+  - le pétale du **Feu** porte « tu es ici » et ne mène nulle part : on y est ;
+  - les trois autres pétales mènent à Atlas.Sea, Nebula et Hasta La Vista ; le cœur d'or mène à BNM1 ;
+  - le Créateur le **ferme d'un seul clic** (la croix) ; un petit ▲ le rappelle, et son choix reste sur son appareil ;
+  - il **s'efface quand le Créateur est dans le tipi** (`body.dedans`) : le feu doit rester seul ;
+  - la pastille « Installer » garde le bas à droite ; en arabe, le médaillon passe tout seul de l'autre côté ;
+  - Échap ou un clic à côté referme la fleur.
+- Tout tient dans `assets/lotus/` : `lotus-medaillon.js` et son style `lotus-medaillon.css`, sans dépendance, avec ses propres traductions dans les 9 langues (il ne touche pas à `i18n/`), la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`. Les mêmes fichiers sont posés à l'identique sur Atlas.Sea, Nebula et Hasta La Vista. Le style est dans son propre fichier (et non injecté) parce que Nebula interdit les styles en ligne ; les quatre sites en profitent.
+- Le Lotus **relit la langue** à chaque ouverture, et il n'impose pas de police : il parle avec la typographie de Typ-1.
+- **L'aperçu du lien réparé.** `og:image` pointait vers `assets/typ1_poster.jpg`, un chemin relatif : les messageries et les réseaux ne le suivent pas, et la vignette restait vide. L'adresse est maintenant entière, avec `og:url`, `og:type`, les dimensions, le texte de remplacement et les balises Twitter. (Tant que Vercel protège le site, les robots ne verront rien : ce sera prêt au réveil.)
+- `sw.js` : `VERSION` montée à `typ1-v3-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
+- **La graine de ce site : « Sieste »**. Quand le Créateur ouvre le Lotus, la fleur lui donne la graine d'ici et l'invite à la porter au cœur, sur BNM1. Quatre graines rapportées et la fleur s'ouvre entièrement. Les quatre mots ont été choisis par Ritukah le 18/11/2026, sans accent : ils seront tapés sur neuf claviers différents.
+- La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
+
 ## 2026-11-17 — Claude — claude/surprends-moi
 - Deux petits boutons sous le champ : « Surprends-moi » et « Braise du jour » (cachés quand on choisit Apaiser).
 - Surprends-moi : 3 pages, une drôle, une utile, une belle, avec une étiquette de couleur. Le serveur tire un thème au hasard pour chacune (72 thèmes), Claude cherche de vraies pages ; une page rendue au feu est remplacée par une de rechange.
 - Braise du jour : une seule page exceptionnelle, même thème pour tous, plus grande et plus lumineuse. Une seule recherche par jour et par langue (gardée par Vercel et par l'appareil).
 - Aperçus d'exemple dans les 9 langues quand il n'y a pas de serveur ; tests du feu complétés ; testé ordinateur, téléphone, arabe, sans serveur.
 - Pourquoi : idée de Ritukah ; braise du jour demandée « exceptionnellement belle, drôle ou utile ».
-
 ## 2026-11-17 — Claude — claude/installer-discret
 - Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
 - La croix réduit la pastille au petit logo rond (au lieu de la cacher 30 jours) ; un clic sur le logo la rouvre. Le choix reste sur l'appareil.

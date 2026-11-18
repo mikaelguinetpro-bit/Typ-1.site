@@ -203,5 +203,16 @@
  "genre_utile": "Útil",
  "genre_belle": "Bella",
  "exemples_surprise": [["drole", "El museo de los inventos fallidos", "Sitio · visita en línea", "Cientos de objetos que nunca debieron existir, del paraguas para dos a la tostadora parlanchina.", "porque reírse de los errores ya es inventar."], ["utile", "Reparar tus cosas tú mismo", "Guía · paso a paso", "Tutoriales ilustrados para devolver la vida a un teléfono, una lámpara o una cremallera.", "porque un objeto reparado conserva su historia."], ["belle", "La Tierra vista desde la Estación Espacial", "Imágenes · en directo", "Nubes, auroras y ciudades de noche, filmadas a 400 km por encima de ti.", "porque vista desde allá arriba, la Tierra no tiene fronteras."]],
- "exemples_braise": [["belle", "El mapa de los vientos del mundo", "Mapa animado · en directo", "Los vientos de todo el planeta dibujados en líneas que se mueven, actualizados cada tres horas.", "porque en él se ve respirar la Tierra entera."]]
+ "exemples_braise": [["belle", "El mapa de los vientos del mundo", "Mapa animado · en directo", "Los vientos de todo el planeta dibujados en líneas que se mueven, actualizados cada tres horas.", "porque en él se ve respirar la Tierra entera."]],
+ "lotus_court": "El Loto",
+ "el_terre": "Tierra",
+ "el_air": "Aire",
+ "el_eau": "Agua",
+ "el_ether": "Éter",
+ "site_terre": "Un mundo imaginario donde se ofrecen botellas al mar: tus palabras viajan hasta otro marinero.",
+ "site_air": "El santuario del don: fichas NbL regaladas, ligeras como el aire, y la filosofía del Triángulo Último.",
+ "site_eau": "Deja tu idea y juntos la hacemos posible, en el idioma de medio planeta.",
+ "site_ether": "Lo que une todos los elementos: el corazón del Sello del Imperio, de donde parten todos los caminos.",
+ "elan_etiquette": "Mensaje del alce",
+ "elan_pourquoi": "el alce salió del bosque para mostrarte otro elemento del Sello."
 };

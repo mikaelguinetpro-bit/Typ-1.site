@@ -203,5 +203,16 @@
  "genre_utile": "Utile",
  "genre_belle": "Belle",
  "exemples_surprise": [["drole", "Le musée des inventions ratées", "Site · visite en ligne", "Des centaines d'objets qui n'auraient jamais dû exister, du parapluie à deux places au grille-pain bavard.", "parce que rire de nos erreurs, c'est déjà inventer."], ["utile", "Réparer ses objets soi-même", "Guide · pas à pas", "Des tutoriels illustrés pour redonner vie à un téléphone, une lampe ou une fermeture éclair.", "parce qu'un objet réparé garde son histoire."], ["belle", "La Terre vue de la Station spatiale", "Images · en direct", "Les nuages, les aurores et les villes la nuit, filmés à 400 km au-dessus de toi.", "parce que vue de là-haut, la Terre n'a pas de frontières."]],
- "exemples_braise": [["belle", "La carte des vents du monde", "Carte animée · en direct", "Les vents de toute la planète dessinés en lignes qui bougent, mis à jour toutes les trois heures.", "parce qu'on y voit respirer la Terre entière."]]
+ "exemples_braise": [["belle", "La carte des vents du monde", "Carte animée · en direct", "Les vents de toute la planète dessinés en lignes qui bougent, mis à jour toutes les trois heures.", "parce qu'on y voit respirer la Terre entière."]],
+ "lotus_court": "Le Lotus",
+ "el_terre": "Terre",
+ "el_air": "Air",
+ "el_eau": "Eau",
+ "el_ether": "Éther",
+ "site_terre": "Un monde imaginaire où l'on offre des bouteilles à la mer : tes mots voyagent jusqu'à un autre marin.",
+ "site_air": "Le sanctuaire du don : des jetons NbL offerts, légers comme l'air, et la philosophie du Triangle Ultime.",
+ "site_eau": "Dépose ton idée, et ensemble on la rend possible, dans la langue de la moitié de la planète.",
+ "site_ether": "Ce qui relie tous les éléments : le cœur du Sceau de l'Empire, d'où partent tous les chemins.",
+ "elan_etiquette": "Message de l'élan",
+ "elan_pourquoi": "l'élan est sorti de la forêt pour te montrer un autre élément du Sceau."
 };

@@ -16,9 +16,23 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Typ-1">
+<!-- L'aperçu du lien, quand Typ-1 circule dans une messagerie ou sur un réseau.
+     Les adresses doivent être entières : un chemin relatif n'est pas suivi. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Typ-1">
+<meta property="og:url" content="https://typ-1site.vercel.app/">
 <meta property="og:title" content="Typ-1 — Le feu t'attend">
-<meta property="og:description" content="Créateur, entre dans le tipi.">
-<meta property="og:image" content="assets/typ1_poster.jpg">
+<meta property="og:description" content="Créateur, entre dans le tipi. Parle au feu : des pages en sortent.">
+<meta property="og:image" content="https://typ-1site.vercel.app/assets/typ1_poster.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1920">
+<meta property="og:image:height" content="1080">
+<meta property="og:image:alt" content="Un tipi au crépuscule, un feu à l'intérieur.">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Typ-1 — Le feu t'attend">
+<meta name="twitter:description" content="Créateur, entre dans le tipi. Parle au feu : des pages en sortent.">
+<meta name="twitter:image" content="https://typ-1site.vercel.app/assets/typ1_poster.jpg">
 <link rel="preload" as="image" href="assets/typ1_poster.jpg">
 <link rel="preload" as="font" type="font/woff2" href="assets/polices/cormorant-garamond-latin-500-normal.woff2" crossorigin>
 <style>
@@ -370,6 +384,23 @@
     color: #fff4e2; border-radius: 99px; padding: .08rem .6rem; background: var(--g, #b4400c);
   }
   .page .genre.drole { --g: #c7471a; } .page .genre.utile { --g: #7a5a12; } .page .genre.belle { --g: #8a3a6a; } .page .genre.jour { --g: #a8280a; }
+  /* --- l'élan messager : il traverse le tipi et laisse une carte d'un autre élément du Sceau --- */
+  .elan {
+    position: fixed; z-index: 1; bottom: 16vh; left: 0; width: clamp(150px, 22vw, 260px); pointer-events: none;   /* derrière les pages et le champ : il passe au fond du tipi */
+    filter: drop-shadow(0 0 10px rgba(243, 201, 106, .55)); opacity: 0;
+    animation: elan-passe 5.5s ease-in-out forwards;
+  }
+  .elan svg { display: block; width: 100%; height: auto; animation: elan-pas .55s ease-in-out infinite alternate; }
+  @keyframes elan-passe {
+    0% { transform: translateX(-30vw); opacity: 0; } 12% { opacity: .95; } 85% { opacity: .95; } 100% { transform: translateX(110vw); opacity: 0; }
+  }
+  @keyframes elan-pas { to { transform: translateY(-4px) rotate(-1deg); } }
+  [dir="rtl"] .elan { left: auto; right: 0; } [dir="rtl"] .elan svg { transform: scaleX(-1); }
+  [dir="rtl"] .elan { animation-name: elan-passe-rtl; } @keyframes elan-passe-rtl { 0% { transform: translateX(30vw); opacity: 0; } 12% { opacity: .95; } 85% { opacity: .95; } 100% { transform: translateX(-110vw); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .elan { display: none; } }
+  .page.message-elan { border: 1px solid #d9a441; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 34px rgba(243, 201, 106, .55), inset 0 0 22px rgba(160, 90, 20, .22); }
+  .page .genre.messager { --g: #8a6312; }
+
   .page.braise-du-jour { max-width: 340px; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 46px rgba(255, 120, 30, .6), inset 0 0 22px rgba(160, 90, 20, .22); }
   .champ {
     display: flex; align-items: center; gap: .4rem; padding: .3rem .3rem .3rem 1.2rem; border-radius: 99px;
@@ -456,6 +487,7 @@
       <div class="hasard" id="hasard">
         <button type="button" id="surprise"><span class="icone" aria-hidden="true">✦</span><span data-i18n="surprise">Surprends-moi</span></button>
         <button type="button" id="braiseJour"><span class="icone" aria-hidden="true">●</span><span data-i18n="braise_jour">Braise du jour</span></button>
+        <button type="button" id="lotusFoyer" hidden><span class="icone" aria-hidden="true">✧</span><span data-i18n="lotus_court">Le Lotus</span></button>
       </div>
       <div class="apaiser" id="apaiser" hidden>
         <div class="rangee">
@@ -477,7 +509,8 @@
   </aside>
   <button class="son" id="son" type="button" aria-label="Couper le son" data-i18n-aria="son_couper">🔊</button>
 
-<script src="i18n/fr.js"></script>
+  <template id="modeleElan"><div class="elan"><svg viewBox="0 0 240 180" aria-hidden="true"><g fill="#140402" stroke="#f3c96a" stroke-width="1.6" stroke-linejoin="round"><path d="M28 70 C28 60 36 54 48 52 C72 50 96 46 112 40 C120 30 136 28 146 34 C156 38 164 42 172 46 C178 44 184 44 188 48 C196 56 206 68 214 80 C218 86 216 92 210 92 C204 92 198 88 192 84 C188 82 184 82 182 84 C178 90 176 96 172 98 C170 104 168 108 166 110 L168 134 L170 162 L164 162 L160 134 L156 112 C150 114 146 114 142 114 L144 136 L146 162 L140 162 L136 136 L132 114 C110 116 88 116 70 114 L68 136 L70 162 L64 162 L60 136 L56 112 C52 110 48 108 46 104 L44 134 L46 162 L40 162 L36 134 L34 102 C28 94 26 82 28 70 Z"/><path d="M178 86 C182 96 180 108 174 112 C175 104 174 96 172 90 Z"/><path d="M176 48 C170 40 160 36 150 36 C144 30 140 22 144 16 C148 20 150 22 152 18 C152 12 156 8 160 10 C160 16 162 18 166 14 C168 8 174 8 176 12 C174 18 176 22 180 20 C182 26 180 34 182 42 Z"/><path d="M186 46 C190 38 198 32 208 30 C212 26 214 18 220 16 C220 22 222 24 226 20 C230 18 232 24 228 28 C232 30 234 36 228 38 C224 42 214 44 204 46 C198 48 192 50 188 50 Z"/></g><circle cx="194" cy="58" r="1.8" fill="#f3c96a"/></svg></div></template>
+  <script src="i18n/fr.js"></script>
 <script>
   // --- Les langues du site (les textes sont dans i18n/<code>.js) ---------------
   const TYP1_CODES = ["fr", "es", "en", "pt", "ru", "ar", "hi", "bn", "zh"];
@@ -889,7 +922,8 @@ function TYP1_demarrer(codeDepart) {
     const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
     const vraie = !p.exemple && lienSur(p.url);
     if (!vraie) el("span", "etiquette", T("exemple"));
-    if (p.braiseJour) { a.classList.add("braise-du-jour"); el("span", "genre jour", T("braise_jour") + (p.dateJour ? " · " + p.dateJour : "")); }
+    if (p.elan) { a.classList.add("message-elan"); el("span", "genre messager", T("elan_etiquette") + " · " + T("el_" + p.elan)); }
+    else if (p.braiseJour) { a.classList.add("braise-du-jour"); el("span", "genre jour", T("braise_jour") + (p.dateJour ? " · " + p.dateJour : "")); }
     else if (["drole", "utile", "belle"].includes(p.genre)) el("span", "genre " + p.genre, T("genre_" + p.genre));
     const h = el("h2", "", vraie ? "" : p.titre);
     if (vraie) {
@@ -1028,9 +1062,59 @@ function TYP1_demarrer(codeDepart) {
     });
     poserEnArc();
     [...zonePages.querySelectorAll(".page")].forEach((c, i) => etincelles.accompagner(c, i * .3));
+    if (mode === "surprise") {
+      surprisesSansElan++;
+      if (Math.random() < .25 || surprisesSansElan >= 5 || /[?&]elan\b/.test(location.search)) { surprisesSansElan = 0; elanPasse(); }
+    }
   }
   document.getElementById("surprise").addEventListener("click", () => decouvrir("surprise"));
   document.getElementById("braiseJour").addEventListener("click", () => decouvrir("braise"));
+
+  // --- Les éléments du Sceau : Feu (Typ-1), Terre (Atlas.sea), Air (Nebula), Eau (Hasta La Vista), et l'Éther (BNM1) qui relie tout.
+  // L'élan messager les montre ouvertement : ils ne sont jamais glissés dans les résultats de recherche du feu.
+  const SCEAU = [
+    { id: "feu", site: "Typ-1", url: "", c: "#ff5a1e", x: 50, y: 14 },
+    { id: "terre", site: "Atlas.sea", url: "https://atlassea.me/", c: "#9cc46a", x: 86, y: 50 },
+    { id: "air", site: "Nebula", url: "https://nebulatkn.foundation/", c: "#d6ecff", x: 50, y: 86 },
+    { id: "eau", site: "Hasta La Vista", url: "https://hasta-la-vista.org/", c: "#3ea8ff", x: 14, y: 50 },
+    { id: "ether", site: "Brand New Meta One", url: "https://brand-new-meta-1.agency/", c: "#f3c96a", x: 50, y: 50 }
+  ];
+  // Dans le tipi, le Lotus de l'Éther (le médaillon commun aux cinq sites) se cache ;
+  // le petit bouton « Le Lotus » sous le champ l'ouvre quand même. Sans Lotus sur la page, le bouton reste caché.
+  const btnLotus = document.getElementById("lotusFoyer");
+  const lotusBouton = () => document.querySelector('[data-testid="lotus-ouvrir"]');
+  function verifierLotus() { btnLotus.hidden = !document.querySelector('[data-testid="lotus-medaillon"]'); }
+  window.addEventListener("load", verifierLotus); setTimeout(verifierLotus, 0);
+  btnLotus.addEventListener("click", () => {
+    if (!lotusBouton()) { const rappel = document.querySelector('[data-testid="lotus-rappel"]'); if (rappel) rappel.click(); }
+    const b = lotusBouton();
+    if (b) { son.souffle(.25); b.click(); }
+  });
+
+  // --- L'élan messager : parfois, après « Surprends-moi », il traverse le tipi et laisse une carte
+  // d'un autre élément du Sceau (chacun son tour). Rare : une fois sur quatre, mais jamais plus de 5 surprises sans lui.
+  let surprisesSansElan = 0;
+  function elanPasse() {
+    const autres = SCEAU.filter(e => e.url);
+    let n = 0;
+    // la toute première fois, l'élan apporte l'Éther (BNM1), qui relie tout ; ensuite chacun son tour
+    try { n = (+(localStorage.getItem("typ1_elan") ?? 2) + 1) % autres.length; localStorage.setItem("typ1_elan", String(n)); } catch (e) {}
+    const e = autres[n];
+    const monTour = tour;
+    const bete = document.getElementById("modeleElan").content.firstElementChild.cloneNode(true);
+    document.body.append(bete);
+    setTimeout(() => bete.remove(), 6000);
+    plus_tard(() => {
+      if (monTour !== tour || !entre) return;
+      let hote = ""; try { hote = new URL(e.url).hostname; } catch (x) {}
+      const c = fabriquerPage({ titre: e.site, url: e.url, source: hote, meta: T("el_" + e.id), resume: T("site_" + e.id), pourquoi: T("elan_pourquoi"), elan: e.id }, "");
+      c.style.setProperty("--d", "0s");
+      zonePages.append(c);
+      poserEnArc();
+      etincelles.accompagner(c, 0);
+      son.souffle(.35);
+    }, 2600);
+  }
 
   async function repondre(q, suite) {
     modeDecouverte = "";
@@ -1307,10 +1391,21 @@ function TYP1_demarrer(codeDepart) {
   btnSortir.addEventListener("click", sortir);
   document.addEventListener("keydown", e => {
     if (e.key !== "Escape") return;
+    if (document.querySelector('[data-testid="lotus-voile"]')) return;   // Échap ferme d'abord le Lotus, sans sortir du tipi
     if (!panneau.hidden) { fermerReserve(); btnBraises.focus(); } else sortir();
   });
 }
 TYP1_charger(TYP1_langueDepart(), () => TYP1_demarrer(TYP1_langueDepart()));
 </script>
+
+<!-- Le Lotus de l'Éther : le médaillon qui relie les quatre sites offerts et ramène
+     au cœur, BNM1. En bas à gauche (la pastille « Installer » tient le bas à droite),
+     et retourné tout seul en arabe. Il s'efface quand le Créateur est dans le tipi. -->
+<script src="/assets/lotus/lotus-medaillon.js"
+        data-lotus-ici="feu"
+        data-lotus-coin="bas-gauche"
+        data-lotus-masque-classe="dedans"
+        data-lotus-image="/assets/lotus/lotus-ether.webp"
+        data-lotus-rond="/assets/lotus/lotus-medaillon.webp"></script>
 </body>
 </html>
