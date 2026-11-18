@@ -14,6 +14,18 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
 - Braise du jour : une seule page exceptionnelle, même thème pour tous, plus grande et plus lumineuse. Une seule recherche par jour et par langue (gardée par Vercel et par l'appareil).
 - Aperçus d'exemple dans les 9 langues quand il n'y a pas de serveur ; tests du feu complétés ; testé ordinateur, téléphone, arabe, sans serveur.
 - Pourquoi : idée de Ritukah ; braise du jour demandée « exceptionnellement belle, drôle ou utile ».
+## 2026-11-18 — Claude — claude/lotus-ether
+- **Le Lotus de l'Éther** : un médaillon flottant en bas à gauche, qui s'ouvre sur la fleur des quatre sites offerts et ramène au cœur, BNM1. Même objet, même geste, sur les quatre sites — c'est la plaque tournante de l'Empire, et chaque site cesse d'être une impasse.
+  - le pétale du **Feu** porte « tu es ici » et ne mène nulle part : on y est ;
+  - les trois autres pétales mènent à Atlas.Sea, Nebula et Hasta La Vista ; le cœur d'or mène à BNM1 ;
+  - le Créateur le **ferme d'un seul clic** (la croix) ; un petit ▲ le rappelle, et son choix reste sur son appareil ;
+  - il **s'efface quand le Créateur est dans le tipi** (`body.dedans`) : le feu doit rester seul ;
+  - la pastille « Installer » garde le bas à droite ; en arabe, le médaillon passe tout seul de l'autre côté ;
+  - Échap ou un clic à côté referme la fleur.
+- Tout tient dans `assets/lotus/` : `lotus-medaillon.js` et son style `lotus-medaillon.css`, sans dépendance, avec ses propres traductions dans les 9 langues (il ne touche pas à `i18n/`), la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`. Les mêmes fichiers sont posés à l'identique sur Atlas.Sea, Nebula et Hasta La Vista. Le style est dans son propre fichier (et non injecté) parce que Nebula interdit les styles en ligne ; les quatre sites en profitent.
+- Le Lotus **relit la langue** à chaque ouverture, et il n'impose pas de police : il parle avec la typographie de Typ-1.
+- `sw.js` : `VERSION` montée à `typ1-v2-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
+- La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
 
 ## 2026-11-17 — Claude — claude/installer-discret
 - Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
