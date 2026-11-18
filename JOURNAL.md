@@ -2,6 +2,12 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-18 — Claude — claude/elan-et-sceau
+- L'élan messager : parfois, après « Surprends-moi », un élan doré traverse le fond du tipi et laisse une 4e carte « Message de l'élan » qui mène vers un autre site du Sceau (chacun son tour, l'Éther en premier).
+- Le Sceau de l'Empire : emblème en bas à gauche de l'accueil et bouton « Le Sceau » dans le tipi ; roue Feu, Terre, Air, Eau autour de l'Éther doré (BNM1) ; toucher un élément le présente, avec un lien.
+- Textes dans les 9 langues. Testé ordinateur, téléphone, arabe ; corrigé au passage un bug qui empêchait le Sceau de s'ouvrir en français (fenêtre placée après le script).
+- Pourquoi : marketing « beau, drôle et utile » voulu par Ritukah, inspiré de son rêve d'élan ; les éléments et l'Éther doré au centre sont ses choix.
+
 ## 2026-11-17 — Claude — claude/surprends-moi
 - Deux petits boutons sous le champ : « Surprends-moi » et « Braise du jour » (cachés quand on choisit Apaiser).
 - Surprends-moi : 3 pages, une drôle, une utile, une belle, avec une étiquette de couleur. Le serveur tire un thème au hasard pour chacune (72 thèmes), Claude cherche de vraies pages ; une page rendue au feu est remplacée par une de rechange.
