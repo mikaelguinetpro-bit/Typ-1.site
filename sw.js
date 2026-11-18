@@ -2,7 +2,7 @@
    - Les pages, les textes (i18n) et le code : réseau d'abord (toujours la dernière version), sinon la copie gardée.
    - Les polices, les icônes, l'image d'accueil et les sons : copie gardée d'abord (ils ne changent presque jamais).
    - Jamais touchés : la recherche du feu (/api/), les vidéos (le navigateur les lit par morceaux), les autres sites. */
-const VERSION = "typ1-v1-2026-11-17";
+const VERSION = "typ1-v2-2026-11-17";
 const CACHE = "typ1-" + VERSION;
 const A_GARDER = [
   "/", "/index.html", "/manifest.webmanifest", "/favicon.ico",

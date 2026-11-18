@@ -194,5 +194,14 @@
  "installer_bouton": "Installer",
  "installer_ios": "Sur iPhone, touche Partager en bas de Safari, puis « Sur l'écran d'accueil » : le feu s'ouvrira en plein écran.",
  "fermer_aria": "Fermer",
- "reduire_aria": "Réduire"
+ "reduire_aria": "Réduire",
+ "surprise": "Surprends-moi",
+ "braise_jour": "Braise du jour",
+ "attente_surprise": "Le feu fouille ses braises…",
+ "attente_braise": "Le feu cherche la braise du jour…",
+ "genre_drole": "Drôle",
+ "genre_utile": "Utile",
+ "genre_belle": "Belle",
+ "exemples_surprise": [["drole", "Le musée des inventions ratées", "Site · visite en ligne", "Des centaines d'objets qui n'auraient jamais dû exister, du parapluie à deux places au grille-pain bavard.", "parce que rire de nos erreurs, c'est déjà inventer."], ["utile", "Réparer ses objets soi-même", "Guide · pas à pas", "Des tutoriels illustrés pour redonner vie à un téléphone, une lampe ou une fermeture éclair.", "parce qu'un objet réparé garde son histoire."], ["belle", "La Terre vue de la Station spatiale", "Images · en direct", "Les nuages, les aurores et les villes la nuit, filmés à 400 km au-dessus de toi.", "parce que vue de là-haut, la Terre n'a pas de frontières."]],
+ "exemples_braise": [["belle", "La carte des vents du monde", "Carte animée · en direct", "Les vents de toute la planète dessinés en lignes qui bougent, mis à jour toutes les trois heures.", "parce qu'on y voit respirer la Terre entière."]]
 };

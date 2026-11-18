@@ -194,5 +194,14 @@
  "installer_bouton": "Instalar",
  "installer_ios": "No iPhone, toque em Compartilhar na parte de baixo do Safari e depois em “Adicionar à Tela de Início”: o fogo abrirá em tela cheia.",
  "fermer_aria": "Fechar",
- "reduire_aria": "Reduzir"
+ "reduire_aria": "Reduzir",
+ "surprise": "Surpreenda-me",
+ "braise_jour": "Brasa do dia",
+ "attente_surprise": "O fogo remexe suas brasas…",
+ "attente_braise": "O fogo procura a brasa do dia…",
+ "genre_drole": "Engraçada",
+ "genre_utile": "Útil",
+ "genre_belle": "Bela",
+ "exemples_surprise": [["drole", "O museu das invenções fracassadas", "Site · visita online", "Centenas de objetos que nunca deveriam ter existido, do guarda-chuva para dois à torradeira tagarela.", "porque rir dos nossos erros já é inventar."], ["utile", "Consertar suas coisas sozinho", "Guia · passo a passo", "Tutoriais ilustrados para dar nova vida a um celular, uma lâmpada ou um zíper.", "porque um objeto consertado guarda sua história."], ["belle", "A Terra vista da Estação Espacial", "Imagens · ao vivo", "Nuvens, auroras e cidades à noite, filmadas a 400 km acima de você.", "porque vista lá de cima, a Terra não tem fronteiras."]],
+ "exemples_braise": [["belle", "O mapa dos ventos do mundo", "Mapa animado · ao vivo", "Os ventos do planeta inteiro desenhados em linhas que se movem, atualizados a cada três horas.", "porque nele se vê a Terra inteira respirar."]]
 };

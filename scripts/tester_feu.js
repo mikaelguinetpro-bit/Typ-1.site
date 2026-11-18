@@ -81,6 +81,30 @@ function faux(res) { const r = { code: 0, corps: null, headers: {} };
   await original("jaguar", "chercher", "fr", { precision: "L'animal", questionFeu: "?" }, capture);
   assert.ok(/ne pose plus aucune question/.test(corpsEnvoye.system) && /L'animal/.test(corpsEnvoye.messages[0].content), "après : il cherche avec la précision");
 
+  // « Surprends-moi » : 3 pages au plus, avec leur genre, sans question en retour
+  let vuS = null;
+  feu.appelerClaude = (q, f, l, x) => { vuS = { q, f }; return original(q, f, l, x, async (u, o) => { vuS.system = JSON.parse(o.body).system; vuS.outils = JSON.parse(o.body).tools[0].max_uses;
+    return fausseReponse({ question: "?", pages: [{ genre: "drole", titre: "A", url: vraies[0] }, { genre: "utile", titre: "B", url: vraies[1] }, { genre: "belle", titre: "C", url: vraies[2] }, { genre: "bizarre", titre: "D", url: vraies[3] }] }, vraies); }); };
+  r = faux(); await feu({ method: "POST", body: { mode: "surprise", langue: "fr" } }, r);
+  assert.equal(r.code, 200);
+  assert.deepEqual(r.corps.pages.map(p => p.genre), ["drole", "utile", "belle"], "trois genres, dans l'ordre");
+  assert.equal(r.corps.question, undefined, "la surprise ne pose pas de question");
+  assert.equal(vuS.f, "surprise"); assert.ok(/drôle : .+\n- utile : .+\n- belle : .+/.test(vuS.q), "un thème tiré pour chaque genre");
+  assert.ok(/exactement 3 pages/.test(vuS.system) && vuS.outils === 4);
+
+  // la braise du jour : une seule page, gardée par le réseau jusqu'au lendemain ; même thème toute la journée
+  const auj = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Paris" }).format(new Date());
+  r = faux(); await feu({ method: "GET", url: `/api/feu?braise=${auj}&langue=en` }, r);
+  assert.equal(r.code, 200); assert.equal(r.corps.pages.length, 1); assert.equal(r.corps.jour, auj);
+  assert.ok(/s-maxage/.test(r.headers["Cache-Control"]), "gardée par le réseau");
+  assert.equal(vuS.f, "braise"); assert.ok(/exceptionnellement/.test(vuS.system));
+  assert.equal(feu.demandeBraise("2026-11-17"), feu.demandeBraise("2026-11-17"));
+  r = faux(); await feu({ method: "GET", url: "/api/feu?braise=2020-01-01" }, r);
+  assert.equal(r.code, 400, "pas de braise d'un autre jour");
+  feu.appelerClaude = (q, f, l, x) => original(q, f, l, x, async () => fausseReponse({ pages: [{ titre: "X", url: "https://invente.com" }] }, vraies));
+  r = faux(); await feu({ method: "GET", url: `/api/feu?braise=${auj}` }, r);
+  assert.equal(r.corps.pages.length, 0); assert.equal(r.headers["Cache-Control"], "no-store", "une braise vide n'est pas gardée");
+
   delete process.env.ANTHROPIC_API_KEY;
   r = faux(); await feu({ method: "POST", body: { q: "x" } }, r);
   assert.equal(r.code, 503, "sans clé : 503");
