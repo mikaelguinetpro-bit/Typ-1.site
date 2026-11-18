@@ -387,57 +387,6 @@
   .page.message-elan { border: 1px solid #d9a441; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 34px rgba(243, 201, 106, .55), inset 0 0 22px rgba(160, 90, 20, .22); }
   .page .genre.messager { --g: #8a6312; }
 
-  /* --- le Sceau de l'Empire : les cinq éléments, l'Éther doré au milieu --- */
-  .sceau-btn {
-    position: fixed; z-index: 6; left: max(.9rem, env(safe-area-inset-left)); bottom: max(.7rem, env(safe-area-inset-bottom));
-    width: 2.6rem; height: 2.6rem; border-radius: 50%; cursor: pointer; padding: 0;
-    border: 1px solid rgba(243, 201, 106, .6); background: rgba(18, 6, 4, .55);
-    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 16px rgba(243, 201, 106, .35);
-    animation: apparait 1.2s ease-out 3s backwards;
-  }
-  .sceau-btn svg { width: 100%; height: 100%; }
-  .sceau-btn:focus-visible { outline: 2px solid var(--or); outline-offset: 2px; }
-  .dedans .sceau-btn { display: none; }
-  [dir="rtl"] .sceau-btn { left: auto; right: max(.9rem, env(safe-area-inset-right)); }
-  .sceau {
-    position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 1rem;
-    background: radial-gradient(circle at 50% 45%, rgba(40, 14, 4, .92), rgba(8, 2, 1, .97) 70%);
-    color: #ffe9cc; animation: apparait .6s ease-out;
-  }
-  .sceau[hidden] { display: none; }
-  .sceau-contenu { width: min(26rem, 100%); text-align: center; }
-  .sceau h2 { font-weight: 500; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: .08em; color: #f3d29a; }
-  .sceau .sous { font-style: italic; opacity: .8; margin: .2rem 0 1rem; }
-  .roue { position: relative; width: min(19rem, 78vw); aspect-ratio: 1; margin: 0 auto; }
-  .roue svg.liens { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .orbe {
-    position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
-    width: 4.2rem; height: 4.2rem; border-radius: 50%; border: 0; cursor: pointer; padding: 0;
-    background: radial-gradient(circle at 40% 35%, #fff8, var(--c) 45%, color-mix(in srgb, var(--c) 40%, #000) 100%);
-    box-shadow: 0 0 22px 2px var(--c); color: #1a0702; font: inherit; font-size: .82rem; letter-spacing: .04em;
-    animation: orbe-souffle 3.2s ease-in-out infinite; animation-delay: var(--dl, 0s); transition: transform .2s;
-  }
-  .orbe.ether { width: 5.2rem; height: 5.2rem; font-size: .9rem; box-shadow: 0 0 34px 6px var(--c); }
-  .orbe[aria-pressed="true"] { outline: 2px solid #fff3dc; outline-offset: 4px; }
-  .orbe:focus-visible { outline: 2px solid #fff3dc; outline-offset: 4px; }
-  .orbe:hover { transform: translate(-50%, -50%) scale(1.07); }
-  @keyframes orbe-souffle { 50% { box-shadow: 0 0 34px 8px var(--c); } }
-  @media (prefers-reduced-motion: reduce) { .orbe { animation: none; } }
-  .fiche { min-height: 8.5rem; margin-top: 1.2rem; }
-  .fiche h3 { font-weight: 500; font-size: 1.35rem; color: #fff3dc; }
-  .fiche .element { font-style: italic; color: var(--c, #f3d29a); }
-  .fiche p { margin: .4rem 0 .8rem; line-height: 1.35; font-size: 1.08rem; }
-  .fiche a, .fiche .ici {
-    display: inline-block; padding: .4rem 1.2rem; border-radius: 99px; font-size: 1.05rem; text-decoration: none;
-    color: #2a0c02; background: linear-gradient(180deg, #ffe6c2, #f3c96a); box-shadow: 0 0 14px rgba(243, 201, 106, .45);
-  }
-  .fiche .ici { background: none; color: #ffb36a; box-shadow: none; font-style: italic; }
-  .sceau .fermer-sceau {
-    position: absolute; top: max(1rem, env(safe-area-inset-top)); right: 1rem; width: 2.6rem; height: 2.6rem; border-radius: 50%;
-    border: 1px solid rgba(243, 210, 154, .45); background: rgba(18, 6, 4, .6); color: #ffe9cc; font-size: 1.1rem; cursor: pointer;
-  }
-  [dir="rtl"] .sceau .fermer-sceau { right: auto; left: 1rem; }
-
   .page.braise-du-jour { max-width: 340px; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 46px rgba(255, 120, 30, .6), inset 0 0 22px rgba(160, 90, 20, .22); }
   .champ {
     display: flex; align-items: center; gap: .4rem; padding: .3rem .3rem .3rem 1.2rem; border-radius: 99px;
@@ -489,10 +438,6 @@
 <body>
   <main class="scene" id="scene">
     <img id="accueil" src="assets/typ1_poster.jpg" alt="Un tipi blanc et bleu sur un promontoire, sous un ciel doré" data-i18n-alt="alt_accueil">
-    <button class="sceau-btn" id="sceauAccueil" type="button" aria-label="Le Sceau de l'Empire" data-i18n-aria="sceau_titre">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><g stroke="#f3c96a" stroke-width=".8" opacity=".7"><path d="M20 20L20 8M20 20L32 20M20 20L20 32M20 20L8 20"/></g>
-        <circle cx="20" cy="8" r="3" fill="#ff5a1e"/><circle cx="32" cy="20" r="3" fill="#9cc46a"/><circle cx="20" cy="32" r="3" fill="#d6ecff"/><circle cx="8" cy="20" r="3" fill="#3ea8ff"/><circle cx="20" cy="20" r="4.2" fill="#f3c96a"/></svg>
-    </button>
     <div class="installer" id="installer" role="region" aria-label="Installer Typ-1" data-i18n-aria="installer_aria" hidden>
       <p id="installer-texte" data-i18n="installer_ios" hidden>Sur iPhone, touche Partager en bas de Safari, puis « Sur l'écran d'accueil » : le feu s'ouvrira en plein écran.</p>
       <div class="ligne">
@@ -528,7 +473,7 @@
       <div class="hasard" id="hasard">
         <button type="button" id="surprise"><span class="icone" aria-hidden="true">✦</span><span data-i18n="surprise">Surprends-moi</span></button>
         <button type="button" id="braiseJour"><span class="icone" aria-hidden="true">●</span><span data-i18n="braise_jour">Braise du jour</span></button>
-        <button type="button" id="sceauFoyer"><span class="icone" aria-hidden="true">✧</span><span data-i18n="sceau_court">Le Sceau</span></button>
+        <button type="button" id="lotusFoyer" hidden><span class="icone" aria-hidden="true">✧</span><span data-i18n="lotus_court">Le Lotus</span></button>
       </div>
       <div class="apaiser" id="apaiser" hidden>
         <div class="rangee">
@@ -550,18 +495,6 @@
   </aside>
   <button class="son" id="son" type="button" aria-label="Couper le son" data-i18n-aria="son_couper">🔊</button>
 
-<div class="sceau" id="sceau" role="dialog" aria-modal="true" aria-labelledby="sceau-titre" hidden>
-    <button type="button" class="fermer-sceau" id="fermerSceau" aria-label="Fermer" data-i18n-aria="fermer_aria">✕</button>
-    <div class="sceau-contenu">
-      <h2 id="sceau-titre" data-i18n="sceau_titre">Le Sceau de l'Empire</h2>
-      <p class="sous" data-i18n="sceau_sous">Cinq éléments, cinq sites. L'Éther, au milieu, les relie tous.</p>
-      <div class="roue" id="roue">
-        <svg class="liens" viewBox="0 0 100 100" aria-hidden="true"><g fill="none" stroke="#f3c96a" stroke-width=".5" opacity=".55">
-          <circle cx="50" cy="50" r="36"/><path d="M50 50L50 14M50 50L86 50M50 50L50 86M50 50L14 50"/></g></svg>
-      </div>
-      <div class="fiche" id="fiche" aria-live="polite"></div>
-    </div>
-  </div>
   <template id="modeleElan"><div class="elan"><svg viewBox="0 0 240 180" aria-hidden="true"><g fill="#140402" stroke="#f3c96a" stroke-width="1.6" stroke-linejoin="round"><path d="M28 70 C28 60 36 54 48 52 C72 50 96 46 112 40 C120 30 136 28 146 34 C156 38 164 42 172 46 C178 44 184 44 188 48 C196 56 206 68 214 80 C218 86 216 92 210 92 C204 92 198 88 192 84 C188 82 184 82 182 84 C178 90 176 96 172 98 C170 104 168 108 166 110 L168 134 L170 162 L164 162 L160 134 L156 112 C150 114 146 114 142 114 L144 136 L146 162 L140 162 L136 136 L132 114 C110 116 88 116 70 114 L68 136 L70 162 L64 162 L60 136 L56 112 C52 110 48 108 46 104 L44 134 L46 162 L40 162 L36 134 L34 102 C28 94 26 82 28 70 Z"/><path d="M178 86 C182 96 180 108 174 112 C175 104 174 96 172 90 Z"/><path d="M176 48 C170 40 160 36 150 36 C144 30 140 22 144 16 C148 20 150 22 152 18 C152 12 156 8 160 10 C160 16 162 18 166 14 C168 8 174 8 176 12 C174 18 176 22 180 20 C182 26 180 34 182 42 Z"/><path d="M186 46 C190 38 198 32 208 30 C212 26 214 18 220 16 C220 22 222 24 226 20 C230 18 232 24 228 28 C232 30 234 36 228 38 C224 42 214 44 204 46 C198 48 192 50 188 50 Z"/></g><circle cx="194" cy="58" r="1.8" fill="#f3c96a"/></svg></div></template>
   <script src="i18n/fr.js"></script>
 <script>
@@ -1123,9 +1056,8 @@ function TYP1_demarrer(codeDepart) {
   document.getElementById("surprise").addEventListener("click", () => decouvrir("surprise"));
   document.getElementById("braiseJour").addEventListener("click", () => decouvrir("braise"));
 
-  // --- Le Sceau de l'Empire : Feu (Typ-1), Terre (Atlas.sea), Air (Nebula), Eau (Hasta La Vista), et l'Éther (BNM1) au milieu ---
-  // Dans l'ordre de l'astrologie : Feu, Terre, Air, Eau. Ce sont les autres sites de Ritukah, montrés ouvertement :
-  // jamais glissés dans les résultats de recherche du feu.
+  // --- Les éléments du Sceau : Feu (Typ-1), Terre (Atlas.sea), Air (Nebula), Eau (Hasta La Vista), et l'Éther (BNM1) qui relie tout.
+  // L'élan messager les montre ouvertement : ils ne sont jamais glissés dans les résultats de recherche du feu.
   const SCEAU = [
     { id: "feu", site: "Typ-1", url: "", c: "#ff5a1e", x: 50, y: 14 },
     { id: "terre", site: "Atlas.sea", url: "https://atlassea.me/", c: "#9cc46a", x: 86, y: 50 },
@@ -1133,48 +1065,17 @@ function TYP1_demarrer(codeDepart) {
     { id: "eau", site: "Hasta La Vista", url: "https://hasta-la-vista.org/", c: "#3ea8ff", x: 14, y: 50 },
     { id: "ether", site: "Brand New Meta One", url: "https://brand-new-meta-1.agency/", c: "#f3c96a", x: 50, y: 50 }
   ];
-  const fenetreSceau = document.getElementById("sceau"), roue = document.getElementById("roue"), fiche = document.getElementById("fiche");
-  let retourSceau = null;
-  function montrerFiche(e) {
-    roue.querySelectorAll(".orbe").forEach(o => o.setAttribute("aria-pressed", String(o.dataset.id === e.id)));
-    fiche.style.setProperty("--c", e.c);
-    fiche.replaceChildren();
-    const h = document.createElement("h3"); h.textContent = e.site + " ";
-    const el = document.createElement("span"); el.className = "element"; el.textContent = "· " + T("el_" + e.id); h.append(el);
-    const p = document.createElement("p"); p.textContent = T("site_" + e.id);
-    fiche.append(h, p);
-    if (e.url) {
-      const a = document.createElement("a"); a.href = e.url; a.target = "_blank"; a.rel = "noopener"; a.textContent = T("y_aller");
-      fiche.append(a);
-    } else {
-      const ici = document.createElement("span"); ici.className = "ici"; ici.textContent = T("tu_es_ici"); fiche.append(ici);
-    }
-  }
-  function dessinerSceau() {
-    roue.querySelectorAll(".orbe").forEach(o => o.remove());
-    SCEAU.forEach((e, i) => {
-      const b = document.createElement("button"); b.type = "button"; b.className = "orbe " + e.id; b.dataset.id = e.id;
-      b.style.cssText = `--x:${e.x}%;--y:${e.y}%;--c:${e.c};--dl:${i * .5}s`;
-      b.textContent = T("el_" + e.id); b.setAttribute("aria-label", T("el_" + e.id) + " — " + e.site);
-      b.addEventListener("click", () => montrerFiche(e));
-      roue.append(b);
-    });
-  }
-  function ouvrirSceau(e) {
-    retourSceau = document.activeElement;
-    dessinerSceau(); montrerFiche(SCEAU[4]);
-    fenetreSceau.hidden = false; son.souffle(.25);
-    roue.querySelector(".orbe.ether").focus();
-  }
-  function fermerSceau() {
-    fenetreSceau.hidden = true;
-    if (retourSceau && retourSceau.focus) retourSceau.focus();
-  }
-  document.getElementById("sceauAccueil").addEventListener("click", e => { e.stopPropagation(); ouvrirSceau(); });
-  document.getElementById("sceauFoyer").addEventListener("click", ouvrirSceau);
-  document.getElementById("fermerSceau").addEventListener("click", fermerSceau);
-  fenetreSceau.addEventListener("click", e => { if (e.target === fenetreSceau) fermerSceau(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && !fenetreSceau.hidden) fermerSceau(); });
+  // Dans le tipi, le Lotus de l'Éther (le médaillon commun aux cinq sites) se cache ;
+  // le petit bouton « Le Lotus » sous le champ l'ouvre quand même. Sans Lotus sur la page, le bouton reste caché.
+  const btnLotus = document.getElementById("lotusFoyer");
+  const lotusBouton = () => document.querySelector('[data-testid="lotus-ouvrir"]');
+  function verifierLotus() { btnLotus.hidden = !document.querySelector('[data-testid="lotus-medaillon"]'); }
+  window.addEventListener("load", verifierLotus); setTimeout(verifierLotus, 0);
+  btnLotus.addEventListener("click", () => {
+    if (!lotusBouton()) { const rappel = document.querySelector('[data-testid="lotus-rappel"]'); if (rappel) rappel.click(); }
+    const b = lotusBouton();
+    if (b) { son.souffle(.25); b.click(); }
+  });
 
   // --- L'élan messager : parfois, après « Surprends-moi », il traverse le tipi et laisse une carte
   // d'un autre élément du Sceau (chacun son tour). Rare : une fois sur quatre, mais jamais plus de 5 surprises sans lui.
@@ -1364,7 +1265,6 @@ function TYP1_demarrer(codeDepart) {
     vider(); question.value = "";
     etincelles.vider();
     fermerReserve(); taire(); arreterEcoute();
-    if (!fenetreSceau.hidden) fermerSceau();
     choisirFlamme("chercher");
   }
   question.addEventListener("input", () => etincelles.respire());
@@ -1373,8 +1273,7 @@ function TYP1_demarrer(codeDepart) {
     appliquerTextes();
     choixLangue.value = L.code;
     ordreParoles = []; ordreNuit = [];
-    majBoutonSon(); majMicro();
-    if (!fenetreSceau.hidden) { const actif = roue.querySelector('.orbe[aria-pressed="true"]'); dessinerSceau(); montrerFiche(SCEAU.find(e => e.id === (actif ? actif.dataset.id : "ether"))); } btnInstaller.title = T("installer_texte"); btnInstaller.setAttribute("aria-label", T("installer_bouton"));
+    majBoutonSon(); majMicro(); btnInstaller.title = T("installer_texte"); btnInstaller.setAttribute("aria-label", T("installer_bouton"));
     if ("speechSynthesis" in window) chercherVoix();
     majMoment();
     afficherBraises();
@@ -1478,6 +1377,7 @@ function TYP1_demarrer(codeDepart) {
   btnSortir.addEventListener("click", sortir);
   document.addEventListener("keydown", e => {
     if (e.key !== "Escape") return;
+    if (document.querySelector('[data-testid="lotus-voile"]')) return;   // Échap ferme d'abord le Lotus, sans sortir du tipi
     if (!panneau.hidden) { fermerReserve(); btnBraises.focus(); } else sortir();
   });
 }

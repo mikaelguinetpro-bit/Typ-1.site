@@ -4,16 +4,10 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
 
 ## 2026-11-18 — Claude — claude/elan-et-sceau
 - L'élan messager : parfois, après « Surprends-moi », un élan doré traverse le fond du tipi et laisse une 4e carte « Message de l'élan » qui mène vers un autre site du Sceau (chacun son tour, l'Éther en premier).
-- Le Sceau de l'Empire : emblème en bas à gauche de l'accueil et bouton « Le Sceau » dans le tipi ; roue Feu, Terre, Air, Eau autour de l'Éther doré (BNM1) ; toucher un élément le présente, avec un lien.
-- Textes dans les 9 langues. Testé ordinateur, téléphone, arabe ; corrigé au passage un bug qui empêchait le Sceau de s'ouvrir en français (fenêtre placée après le script).
-- Pourquoi : marketing « beau, drôle et utile » voulu par Ritukah, inspiré de son rêve d'élan ; les éléments et l'Éther doré au centre sont ses choix.
+- Mon Sceau (emblème + roue) est retiré à la demande de Ritukah : le Lotus de l'Éther (#16, fusionné dans cette branche) fait ce travail sur tous les sites. Un bouton « Le Lotus » sous le champ l'ouvre depuis le tipi ; Échap ferme le Lotus sans sortir du tipi.
+- Textes dans les 9 langues. Testé ordinateur, téléphone, arabe.
+- Pourquoi : marketing « beau, drôle et utile » voulu par Ritukah, inspiré de son rêve d'élan.
 
-## 2026-11-17 — Claude — claude/surprends-moi
-- Deux petits boutons sous le champ : « Surprends-moi » et « Braise du jour » (cachés quand on choisit Apaiser).
-- Surprends-moi : 3 pages, une drôle, une utile, une belle, avec une étiquette de couleur. Le serveur tire un thème au hasard pour chacune (72 thèmes), Claude cherche de vraies pages ; une page rendue au feu est remplacée par une de rechange.
-- Braise du jour : une seule page exceptionnelle, même thème pour tous, plus grande et plus lumineuse. Une seule recherche par jour et par langue (gardée par Vercel et par l'appareil).
-- Aperçus d'exemple dans les 9 langues quand il n'y a pas de serveur ; tests du feu complétés ; testé ordinateur, téléphone, arabe, sans serveur.
-- Pourquoi : idée de Ritukah ; braise du jour demandée « exceptionnellement belle, drôle ou utile ».
 ## 2026-11-18 — Claude — claude/lotus-ether
 - **Le Lotus de l'Éther** : un médaillon flottant en bas à gauche, qui s'ouvre sur la fleur des quatre sites offerts et ramène au cœur, BNM1. Même objet, même geste, sur les quatre sites — c'est la plaque tournante de l'Empire, et chaque site cesse d'être une impasse.
   - le pétale du **Feu** porte « tu es ici » et ne mène nulle part : on y est ;
@@ -27,6 +21,12 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
 - `sw.js` : `VERSION` montée à `typ1-v2-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
 - La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
 
+## 2026-11-17 — Claude — claude/surprends-moi
+- Deux petits boutons sous le champ : « Surprends-moi » et « Braise du jour » (cachés quand on choisit Apaiser).
+- Surprends-moi : 3 pages, une drôle, une utile, une belle, avec une étiquette de couleur. Le serveur tire un thème au hasard pour chacune (72 thèmes), Claude cherche de vraies pages ; une page rendue au feu est remplacée par une de rechange.
+- Braise du jour : une seule page exceptionnelle, même thème pour tous, plus grande et plus lumineuse. Une seule recherche par jour et par langue (gardée par Vercel et par l'appareil).
+- Aperçus d'exemple dans les 9 langues quand il n'y a pas de serveur ; tests du feu complétés ; testé ordinateur, téléphone, arabe, sans serveur.
+- Pourquoi : idée de Ritukah ; braise du jour demandée « exceptionnellement belle, drôle ou utile ».
 ## 2026-11-17 — Claude — claude/installer-discret
 - Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
 - La croix réduit la pastille au petit logo rond (au lieu de la cacher 30 jours) ; un clic sur le logo la rouvre. Le choix reste sur l'appareil.
