@@ -2,6 +2,18 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-18 — Claude — claude/lotus-ether
+- **Le Lotus de l'Éther** : un médaillon flottant en bas à gauche, qui s'ouvre sur la fleur des quatre sites offerts et ramène au cœur, BNM1. Même objet, même geste, sur les quatre sites — c'est la plaque tournante de l'Empire, et chaque site cesse d'être une impasse.
+  - le pétale du **Feu** porte « tu es ici » et ne mène nulle part : on y est ;
+  - les trois autres pétales mènent à Atlas.Sea, Nebula et Hasta La Vista ; le cœur d'or mène à BNM1 ;
+  - le Créateur le **ferme d'un seul clic** (la croix) ; un petit ▲ le rappelle, et son choix reste sur son appareil ;
+  - il **s'efface quand le Créateur est dans le tipi** (`body.dedans`) : le feu doit rester seul ;
+  - la pastille « Installer » garde le bas à droite ; en arabe, le médaillon passe tout seul de l'autre côté ;
+  - Échap ou un clic à côté referme la fleur.
+- Tout tient dans `assets/lotus/` : un seul fichier `lotus-medaillon.js`, sans dépendance, avec ses propres traductions dans les 9 langues (il ne touche pas à `i18n/`), la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`. Le même fichier sera posé à l'identique sur Atlas.Sea, Nebula et Hasta La Vista.
+- `sw.js` : `VERSION` montée à `typ1-v2-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
+- La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
+
 ## 2026-11-17 — Claude — claude/installer-discret
 - Le bandeau d'installation devient une petite pastille discrète en bas à droite : installer reste un choix, rien ne cache l'accueil.
 - La croix réduit la pastille au petit logo rond (au lieu de la cacher 30 jours) ; un clic sur le logo la rouvre. Le choix reste sur l'appareil.

@@ -2,7 +2,7 @@
    - Les pages, les textes (i18n) et le code : réseau d'abord (toujours la dernière version), sinon la copie gardée.
    - Les polices, les icônes, l'image d'accueil et les sons : copie gardée d'abord (ils ne changent presque jamais).
    - Jamais touchés : la recherche du feu (/api/), les vidéos (le navigateur les lit par morceaux), les autres sites. */
-const VERSION = "typ1-v1-2026-11-17";
+const VERSION = "typ1-v2-2026-11-18";
 const CACHE = "typ1-" + VERSION;
 const A_GARDER = [
   "/", "/index.html", "/manifest.webmanifest", "/favicon.ico",
@@ -13,7 +13,8 @@ const A_GARDER = [
   "/assets/polices/cormorant-garamond-latin-ext-500-normal.woff2", "/assets/polices/cormorant-garamond-latin-ext-400-italic.woff2",
   "/assets/polices/cormorant-garamond-cyrillic-500-normal.woff2", "/assets/polices/cormorant-garamond-cyrillic-400-italic.woff2",
   "/assets/son_feu.mp3", "/assets/son_souffle_1.mp3", "/assets/son_souffle_2.mp3", "/assets/son_souffle_3.mp3",
-  "/assets/son_souffle_4.mp3", "/assets/son_souffle_5.mp3", "/assets/son_souffle_6.mp3"
+  "/assets/son_souffle_4.mp3", "/assets/son_souffle_5.mp3", "/assets/son_souffle_6.mp3",
+  "/assets/lotus/lotus-medaillon.js", "/assets/lotus/lotus-medaillon.webp", "/assets/lotus/lotus-ether.webp"
 ];
 
 self.addEventListener("install", e => {
