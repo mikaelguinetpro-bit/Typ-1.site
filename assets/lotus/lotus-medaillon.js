@@ -22,6 +22,13 @@
  *                       retourné tout seul, pour ne pas tomber sur le reste.
  *   data-lotus-masque-classe : si <body> porte cette classe, le médaillon
  *                       s'efface (ex. quand le Créateur est entré dans le tipi).
+ *   data-lotus-ecart  : éloigne le médaillon du bord (ex. « 5.5rem »), pour
+ *                       passer au-dessus d'un bouton déjà posé dans ce coin.
+ *   data-lotus-style  : chemin du fichier de style. Déduit du script lui-même
+ *                       si on ne le donne pas (même nom, extension .css).
+ *
+ * Le fichier lotus-medaillon.css doit rester à côté du script : le style ne
+ * peut pas être injecté, les politiques de sécurité strictes le refusent.
  *   data-lotus-image  : chemin de la fleur entière (le panneau ouvert).
  *   data-lotus-rond   : chemin de la version carrée (le médaillon). Déduit du
  *                       précédent si on ne le donne pas.
@@ -45,6 +52,9 @@
     // Le médaillon rond utilise une version carrée, où la fleur remplit le cercle.
     var ROND = (script && script.dataset.lotusRond) || IMAGE.replace(/lotus-ether\.webp$/, 'lotus-medaillon.webp');
     var MASQUE_CLASSE = (script && script.dataset.lotusMasqueClasse) || '';
+    var ECART = (script && script.dataset.lotusEcart) || '';
+    var STYLE = (script && script.dataset.lotusStyle) ||
+        ((script && script.src ? script.src : '').replace(/\.js(\?.*)?$/, '.css') || '/lotus/lotus-medaillon.css');
     var CLE = 'lotus_ether_cache';
     var DEVISE = 'Here, marketing is the offering.';
 
@@ -65,8 +75,10 @@
         var l = (document.documentElement.getAttribute('lang') || 'fr').toLowerCase().split('-')[0];
         return MOTS[l] ? l : 'fr';
     }
-    var M = MOTS[langue()];
-    var RTL = langue() === 'ar';
+    // Certains sites changent la langue après le chargement (Nebula le fait) :
+    // on la relit à chaque fois plutôt que de la figer au démarrage.
+    function mots() { return MOTS[langue()]; }
+    function rtl() { return langue() === 'ar'; }
 
     // ------------------------------------------------- les pétales et le cœur
     // Le Feu fait la sieste : son pétale mène à sa page de présentation sur BNM1,
@@ -81,12 +93,6 @@
     var COEUR = { cle: 'coeur', nom: 'BNM1.agency', url: BNM1, lueur: 'rgba(212,175,55,0.6)', zone: [43.5, 48.5, 17, 24] };
 
     // -------------------------------------------------------------- le style
-    var COINS = {
-        'bas-droite': 'bottom:1.5rem;right:1.5rem;',
-        'bas-gauche': 'bottom:1.5rem;left:1.5rem;',
-        'haut-droite': 'top:1.5rem;right:1.5rem;',
-        'haut-gauche': 'top:1.5rem;left:1.5rem;'
-    };
     // En arabe (et tout dir="rtl"), on retourne le coin : le reste de la page
     // a déjà migré de l'autre côté.
     if ((document.documentElement.getAttribute('dir') || '').toLowerCase() === 'rtl' ||
@@ -94,47 +100,17 @@
         COIN = COIN.indexOf('droite') > -1 ? COIN.replace('droite', 'gauche') : COIN.replace('gauche', 'droite');
     }
 
-    var style = document.createElement('style');
-    style.textContent = [
-        '.lotus-flottant{position:fixed;' + (COINS[COIN] || COINS['bas-droite']) + 'z-index:2147483000;font-family:Georgia,"Times New Roman",serif;}',
-        '.lotus-bouton{position:relative;display:block;width:88px;height:88px;border-radius:50%;border:0;padding:0;cursor:pointer;transition:transform .35s ease;background:radial-gradient(circle at 50% 42%, rgba(30,24,44,.97) 0%, rgba(8,8,12,.97) 72%);box-shadow:0 0 22px rgba(0,0,0,.5);}',
-        '@media(min-width:768px){.lotus-bouton{width:104px;height:104px;}}',
-        '.lotus-bouton:hover,.lotus-bouton:focus-visible{transform:scale(1.08);}',
-        '.lotus-bouton img{position:absolute;inset:7%;width:86%;height:86%;object-fit:contain;border-radius:50%;display:block;filter:drop-shadow(0 0 9px rgba(212,175,55,.6));user-select:none;}',
-        '.lotus-cercle{position:absolute;inset:0;border-radius:50%;border:2px solid rgba(212,175,55,.5);pointer-events:none;}',
-        '.lotus-onde{position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(212,175,55,.5);pointer-events:none;animation:lotus-onde 6.28s ease-out infinite;}',
-        '@keyframes lotus-onde{0%{transform:scale(.72);opacity:.75}100%{transform:scale(1.25);opacity:0}}',
-        '.lotus-fermer{position:absolute;top:-2px;right:-2px;width:22px;height:22px;border-radius:50%;background:rgba(10,10,12,.92);border:1px solid rgba(212,175,55,.55);color:rgba(240,214,140,.95);font-size:12px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;opacity:0;transition:opacity .25s;}',
-        '.lotus-flottant:hover .lotus-fermer,.lotus-flottant:focus-within .lotus-fermer{opacity:1;}',
-        '.lotus-rappel{width:28px;height:28px;border-radius:50%;background:rgba(10,10,12,.78);border:1px solid rgba(212,175,55,.5);color:rgba(240,214,140,.95);font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;}',
-        '.lotus-voile{position:fixed;inset:0;z-index:2147483100;background:rgba(5,5,8,.88);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:1.25rem;opacity:0;transition:opacity .4s ease;overflow-y:auto;}',
-        '.lotus-voile.ouvert{opacity:1;}',
-        '.lotus-panneau{position:relative;width:100%;max-width:560px;text-align:center;color:#EDEAE2;}',
-        '.lotus-titre{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:#D4AF37;font-family:ui-monospace,Menlo,Consolas,monospace;}',
-        '.lotus-sous{margin:.6rem 0 0;font-style:italic;color:rgba(237,234,226,.72);font-size:15px;}',
-        '.lotus-fleur{position:relative;margin:1rem auto 0;width:100%;max-width:420px;}',
-        '.lotus-fleur img{width:100%;display:block;user-select:none;}',
-        '.lotus-zone{position:absolute;border-radius:50%;transition:box-shadow .3s,background .3s;display:block;outline:none;}',
-        '.lotus-zone:focus-visible{box-shadow:0 0 0 2px rgba(212,175,55,.9);}',
-        '.lotus-legende{min-height:76px;margin-top:.5rem;}',
-        '.lotus-elem{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#D4AF37;font-family:ui-monospace,Menlo,Consolas,monospace;}',
-        '.lotus-nom{font-size:26px;margin-top:.35rem;}',
-        '.lotus-etat{font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:rgba(237,234,226,.45);font-family:ui-monospace,Menlo,Consolas,monospace;margin-top:.35rem;}',
-        '.lotus-portes{display:flex;flex-wrap:wrap;gap:1px;background:rgba(212,175,55,.18);border:1px solid rgba(212,175,55,.22);margin-top:1rem;}',
-        '.lotus-porte{flex:1 1 140px;background:rgba(10,10,12,.92);padding:.7rem .5rem;color:inherit;text-decoration:none;transition:background .25s;}',
-        '.lotus-porte:hover{background:rgba(26,24,32,.96);}',
-        '.lotus-porte[aria-disabled="true"]{cursor:default;opacity:.62;}',
-        '.lotus-porte b{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#D4AF37;font-weight:400;font-family:ui-monospace,Menlo,Consolas,monospace;}',
-        '.lotus-porte span{display:block;font-size:16px;margin-top:.25rem;}',
-        '.lotus-devise{margin-top:1.1rem;font-style:italic;font-size:19px;color:#D4AF37;text-shadow:0 0 18px rgba(212,175,55,.35);}',
-        '.lotus-quitter{margin-top:1rem;background:transparent;border:1px solid rgba(212,175,55,.35);color:rgba(240,214,140,.9);font-size:10px;letter-spacing:.26em;text-transform:uppercase;padding:.5rem 1.4rem;cursor:pointer;font-family:ui-monospace,Menlo,Consolas,monospace;}',
-        '@media(prefers-reduced-motion:reduce){.lotus-onde{animation:none;opacity:0;}.lotus-bouton,.lotus-voile,.lotus-zone{transition:none;}}'
-    ].join('\n');
-    document.head.appendChild(style);
+    // Le style vit dans son propre fichier, à côté de ce script : un <style>
+    // injecté serait refusé par les politiques de sécurité strictes (Nebula).
+    var feuille = document.createElement('link');
+    feuille.rel = 'stylesheet';
+    feuille.href = STYLE;
+    document.head.appendChild(feuille);
 
     // ------------------------------------------------------------- le médaillon
     var hote = document.createElement('div');
-    hote.className = 'lotus-flottant';
+    hote.className = 'lotus-flottant lotus-coin-' + (['bas-droite','bas-gauche','haut-droite','haut-gauche'].indexOf(COIN) > -1 ? COIN : 'bas-droite');
+    if (ECART) hote.style.setProperty('--lotus-ecart', ECART);
     hote.setAttribute('data-testid', 'lotus-medaillon');
     document.body.appendChild(hote);
 
@@ -148,8 +124,8 @@
             rappel.type = 'button';
             rappel.className = 'lotus-rappel';
             rappel.setAttribute('data-testid', 'lotus-rappel');
-            rappel.setAttribute('aria-label', M.rappeler);
-            rappel.title = M.rappeler;
+            rappel.setAttribute('aria-label', mots().rappeler);
+            rappel.title = mots().rappeler;
             rappel.textContent = '▲';
             rappel.addEventListener('click', function () { noteCache(false); dessine(); });
             hote.appendChild(rappel);
@@ -159,11 +135,11 @@
         bouton.type = 'button';
         bouton.className = 'lotus-bouton';
         bouton.setAttribute('data-testid', 'lotus-ouvrir');
-        bouton.setAttribute('aria-label', M.ouvrir);
-        bouton.title = M.titre;
+        bouton.setAttribute('aria-label', mots().ouvrir);
+        bouton.title = mots().titre;
         bouton.innerHTML =
             '<span class="lotus-onde"></span>' +
-            '<span class="lotus-onde" style="animation-delay:3.14s"></span>' +
+            '<span class="lotus-onde lotus-onde-2"></span>' +
             '<img src="' + ROND + '" alt="" loading="lazy" decoding="async" draggable="false">' +
             '<span class="lotus-cercle"></span>';
         bouton.addEventListener('click', ouvre);
@@ -173,8 +149,8 @@
         fermer.type = 'button';
         fermer.className = 'lotus-fermer';
         fermer.setAttribute('data-testid', 'lotus-cacher');
-        fermer.setAttribute('aria-label', M.cacher);
-        fermer.title = M.cacher;
+        fermer.setAttribute('aria-label', mots().cacher);
+        fermer.title = mots().cacher;
         fermer.textContent = '×';
         fermer.addEventListener('click', function (e) { e.stopPropagation(); noteCache(true); dessine(); });
         hote.appendChild(fermer);
@@ -189,9 +165,9 @@
         if (!p) { rendu.innerHTML = ''; return; }
         var ici = p.cle === ICI;
         rendu.innerHTML =
-            '<div class="lotus-elem">· ' + (M[p.cle] || M.coeur) + ' ·</div>' +
+            '<div class="lotus-elem">· ' + (mots()[p.cle] || mots().coeur) + ' ·</div>' +
             '<div class="lotus-nom">' + p.nom + '</div>' +
-            (ici || p.cle === 'coeur' ? '<div class="lotus-etat">' + M.ici + '</div>' : '');
+            (ici || p.cle === 'coeur' ? '<div class="lotus-etat">' + mots().ici + '</div>' : '');
     }
 
     function zone(p) {
@@ -205,7 +181,7 @@
         el.style.height = p.zone[3] + '%';
         if (!ici) {
             el.href = p.url;
-            el.setAttribute('aria-label', (M[p.cle] || '') + ' · ' + p.nom);
+            el.setAttribute('aria-label', (mots()[p.cle] || '') + ' · ' + p.nom);
         } else {
             el.setAttribute('aria-hidden', 'true');
         }
@@ -233,20 +209,20 @@
         voile.setAttribute('data-testid', 'lotus-voile');
         voile.setAttribute('role', 'dialog');
         voile.setAttribute('aria-modal', 'true');
-        voile.setAttribute('aria-label', M.titre);
-        if (RTL) voile.setAttribute('dir', 'rtl');
+        voile.setAttribute('aria-label', mots().titre);
+        if (rtl()) voile.setAttribute('dir', 'rtl');
 
         var panneau = document.createElement('div');
         panneau.className = 'lotus-panneau';
         panneau.innerHTML =
-            '<div class="lotus-titre">· ' + M.titre + ' ·</div>' +
-            '<p class="lotus-sous">' + M.sous + '</p>';
+            '<div class="lotus-titre">· ' + mots().titre + ' ·</div>' +
+            '<p class="lotus-sous">' + mots().sous + '</p>';
 
         var fleur = document.createElement('div');
         fleur.className = 'lotus-fleur';
         var img = document.createElement('img');
         img.src = IMAGE;
-        img.alt = M.titre;
+        img.alt = mots().titre;
         img.draggable = false;
         fleur.appendChild(img);
         PETALES.forEach(function (p) { fleur.appendChild(zone(p)); });
@@ -269,8 +245,8 @@
             a.setAttribute('data-testid', 'lotus-porte-' + p.cle);
             if (ici) a.setAttribute('aria-disabled', 'true');
             else a.href = p.url;
-            a.innerHTML = '<b>' + (M[p.cle] || M.coeur) + '</b><span>' + p.nom + '</span>' +
-                (ici ? '<b style="color:rgba(237,234,226,.45);margin-top:.3rem">' + M.ici + '</b>' : '');
+            a.innerHTML = '<b>' + (mots()[p.cle] || mots().coeur) + '</b><span>' + p.nom + '</span>' +
+                (ici ? '<b style="color:rgba(237,234,226,.45);margin-top:.3rem">' + mots().ici + '</b>' : '');
             a.addEventListener('mouseenter', function () { legende(p); });
             a.addEventListener('mouseleave', function () { legende(null); });
             portes.appendChild(a);
@@ -287,7 +263,7 @@
         quitter.type = 'button';
         quitter.className = 'lotus-quitter';
         quitter.setAttribute('data-testid', 'lotus-quitter');
-        quitter.textContent = M.fermer;
+        quitter.textContent = mots().fermer;
         quitter.addEventListener('click', ferme);
         panneau.appendChild(quitter);
 
@@ -315,11 +291,19 @@
 
     dessine();
 
+    // Si la page change de langue, les mots du médaillon suivent.
+    if (typeof MutationObserver !== 'undefined') {
+        new MutationObserver(function () { if (!voile) dessine(); }).observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['lang']
+        });
+    }
+
     // Le médaillon s'efface quand la page le demande (ex. body.dedans sur Typ-1).
     if (MASQUE_CLASSE) {
         var regarde = function () {
             var dedans = document.body.classList.contains(MASQUE_CLASSE);
-            hote.style.display = dedans ? 'none' : '';
+            hote.classList.toggle('lotus-efface', dedans);
             if (dedans) ferme();
         };
         regarde();

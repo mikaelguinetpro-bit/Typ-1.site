@@ -10,7 +10,8 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
   - il **s'efface quand le Créateur est dans le tipi** (`body.dedans`) : le feu doit rester seul ;
   - la pastille « Installer » garde le bas à droite ; en arabe, le médaillon passe tout seul de l'autre côté ;
   - Échap ou un clic à côté referme la fleur.
-- Tout tient dans `assets/lotus/` : un seul fichier `lotus-medaillon.js`, sans dépendance, avec ses propres traductions dans les 9 langues (il ne touche pas à `i18n/`), la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`. Le même fichier sera posé à l'identique sur Atlas.Sea, Nebula et Hasta La Vista.
+- Tout tient dans `assets/lotus/` : `lotus-medaillon.js` et son style `lotus-medaillon.css`, sans dépendance, avec ses propres traductions dans les 9 langues (il ne touche pas à `i18n/`), la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`. Les mêmes fichiers sont posés à l'identique sur Atlas.Sea, Nebula et Hasta La Vista. Le style est dans son propre fichier (et non injecté) parce que Nebula interdit les styles en ligne ; les quatre sites en profitent.
+- Le Lotus **relit la langue** à chaque ouverture, et il n'impose pas de police : il parle avec la typographie de Typ-1.
 - `sw.js` : `VERSION` montée à `typ1-v2-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
 - La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
 

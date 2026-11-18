@@ -14,7 +14,7 @@ const A_GARDER = [
   "/assets/polices/cormorant-garamond-cyrillic-500-normal.woff2", "/assets/polices/cormorant-garamond-cyrillic-400-italic.woff2",
   "/assets/son_feu.mp3", "/assets/son_souffle_1.mp3", "/assets/son_souffle_2.mp3", "/assets/son_souffle_3.mp3",
   "/assets/son_souffle_4.mp3", "/assets/son_souffle_5.mp3", "/assets/son_souffle_6.mp3",
-  "/assets/lotus/lotus-medaillon.js", "/assets/lotus/lotus-medaillon.webp", "/assets/lotus/lotus-ether.webp"
+  "/assets/lotus/lotus-medaillon.js", "/assets/lotus/lotus-medaillon.css", "/assets/lotus/lotus-medaillon.webp", "/assets/lotus/lotus-ether.webp"
 ];
 
 self.addEventListener("install", e => {
