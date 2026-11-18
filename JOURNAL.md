@@ -12,7 +12,8 @@ Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.m
   - Échap ou un clic à côté referme la fleur.
 - Tout tient dans `assets/lotus/` : `lotus-medaillon.js` et son style `lotus-medaillon.css`, sans dépendance, avec ses propres traductions dans les 9 langues (il ne touche pas à `i18n/`), la fleur `lotus-ether.webp` et sa version ronde `lotus-medaillon.webp`. Les mêmes fichiers sont posés à l'identique sur Atlas.Sea, Nebula et Hasta La Vista. Le style est dans son propre fichier (et non injecté) parce que Nebula interdit les styles en ligne ; les quatre sites en profitent.
 - Le Lotus **relit la langue** à chaque ouverture, et il n'impose pas de police : il parle avec la typographie de Typ-1.
-- `sw.js` : `VERSION` montée à `typ1-v2-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
+- **L'aperçu du lien réparé.** `og:image` pointait vers `assets/typ1_poster.jpg`, un chemin relatif : les messageries et les réseaux ne le suivent pas, et la vignette restait vide. L'adresse est maintenant entière, avec `og:url`, `og:type`, les dimensions, le texte de remplacement et les balises Twitter. (Tant que Vercel protège le site, les robots ne verront rien : ce sera prêt au réveil.)
+- `sw.js` : `VERSION` montée à `typ1-v3-2026-11-18`, et les trois fichiers du Lotus ajoutés à la liste gardée.
 - **La graine de ce site : « Sieste »**. Quand le Créateur ouvre le Lotus, la fleur lui donne la graine d'ici et l'invite à la porter au cœur, sur BNM1. Quatre graines rapportées et la fleur s'ouvre entièrement. Les quatre mots ont été choisis par Ritukah le 18/11/2026, sans accent : ils seront tapés sur neuf claviers différents.
 - La fleur a été créée par Ritukah ; elle vient de BNM1, où elle a remplacé la grille des quatre cartes.
 
