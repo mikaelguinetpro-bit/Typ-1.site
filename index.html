@@ -401,6 +401,33 @@
   .page.message-elan { border: 1px solid #d9a441; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 34px rgba(243, 201, 106, .55), inset 0 0 22px rgba(160, 90, 20, .22); }
   .page .genre.messager { --g: #8a6312; }
 
+  /* --- les secrets du feu : un mot seul, et le feu répond autrement --- */
+  .teinte {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; mix-blend-mode: color;
+    background: radial-gradient(circle at 50% 72%, var(--t) 0%, color-mix(in srgb, var(--t) 55%, transparent) 40%, transparent 75%);
+    animation: teinte 7s ease-in-out forwards;
+  }
+  @keyframes teinte { 0% { opacity: 0; } 18% { opacity: .85; } 75% { opacity: .85; } 100% { opacity: 0; } }
+  .objet-secret {
+    position: fixed; z-index: 2; left: 50%; bottom: 17vh; width: clamp(54px, 7vw, 90px); pointer-events: none;
+    filter: drop-shadow(0 0 14px rgba(255, 200, 120, .7)); animation: sort-du-feu-secret 6s ease-out forwards;
+  }
+  .objet-secret.coeur { width: clamp(100px, 13vw, 160px); filter: drop-shadow(0 0 6px #ffcf7a) drop-shadow(0 0 18px #ff6a2a); }
+  .objet-secret svg { display: block; width: 100%; height: auto; }
+  @keyframes sort-du-feu-secret {
+    0% { transform: translate(-50%, 40px) rotate(-25deg) scale(.4); opacity: 0; }
+    25% { transform: translate(-50%, -3vh) rotate(8deg) scale(1); opacity: 1; }
+    75% { transform: translate(-50%, -6vh) rotate(-4deg) scale(1); opacity: 1; }
+    100% { transform: translate(-50%, -12vh) rotate(0deg) scale(1.05); opacity: 0; }
+  }
+  .elan.arret { animation: elan-arret 8.5s ease-in-out forwards; }
+  @keyframes elan-arret {
+    0% { transform: translateX(-30vw); opacity: 0; } 10% { opacity: .95; } 35% { transform: translateX(calc(50vw - 50%)); }
+    68% { transform: translateX(calc(50vw - 50%)); opacity: .95; } 100% { transform: translateX(110vw); opacity: 0; }
+  }
+  [dir="rtl"] .elan.arret { animation-name: elan-arret; }
+  @media (prefers-reduced-motion: reduce) { .teinte, .objet-secret { display: none; } }
+
   .page.braise-du-jour { max-width: 340px; box-shadow: 0 10px 30px rgba(20, 4, 0, .55), 0 0 46px rgba(255, 120, 30, .6), inset 0 0 22px rgba(160, 90, 20, .22); }
   .champ {
     display: flex; align-items: center; gap: .4rem; padding: .3rem .3rem .3rem 1.2rem; border-radius: 99px;
@@ -509,6 +536,8 @@
   </aside>
   <button class="son" id="son" type="button" aria-label="Couper le son" data-i18n-aria="son_couper">🔊</button>
 
+  <template id="modeleBouteille"><div class="objet-secret"><svg viewBox="0 0 60 120" aria-hidden="true"><g stroke="#e9f3d0" stroke-width="2" fill="rgba(160,210,170,.35)"><path d="M24 6h12v8c0 6 14 12 14 26v66c0 6-4 8-10 8H20c-6 0-10-2-10-8V40c0-14 14-20 14-26z"/></g><rect x="23" y="1" width="14" height="9" rx="2" fill="#a0672e"/><path d="M20 52h20v40H20z" fill="#f6e8c8" opacity=".95"/><path d="M24 60h12M24 67h12M24 74h9" stroke="#9a7442" stroke-width="1.6"/></svg></div></template>
+  <template id="modeleCoeur"><div class="objet-secret coeur"><svg viewBox="0 0 100 90" aria-hidden="true"><path d="M50 84C20 62 4 46 4 26 4 12 15 4 27 4c10 0 18 6 23 15C55 10 63 4 73 4c12 0 23 8 23 22 0 20-16 36-46 58z" fill="none" stroke="#fff0d0" stroke-width="7" stroke-dasharray="1 9" stroke-linecap="round"/></svg></div></template>
   <template id="modeleElan"><div class="elan"><svg viewBox="0 0 240 180" aria-hidden="true"><g fill="#140402" stroke="#f3c96a" stroke-width="1.6" stroke-linejoin="round"><path d="M28 70 C28 60 36 54 48 52 C72 50 96 46 112 40 C120 30 136 28 146 34 C156 38 164 42 172 46 C178 44 184 44 188 48 C196 56 206 68 214 80 C218 86 216 92 210 92 C204 92 198 88 192 84 C188 82 184 82 182 84 C178 90 176 96 172 98 C170 104 168 108 166 110 L168 134 L170 162 L164 162 L160 134 L156 112 C150 114 146 114 142 114 L144 136 L146 162 L140 162 L136 136 L132 114 C110 116 88 116 70 114 L68 136 L70 162 L64 162 L60 136 L56 112 C52 110 48 108 46 104 L44 134 L46 162 L40 162 L36 134 L34 102 C28 94 26 82 28 70 Z"/><path d="M178 86 C182 96 180 108 174 112 C175 104 174 96 172 90 Z"/><path d="M176 48 C170 40 160 36 150 36 C144 30 140 22 144 16 C148 20 150 22 152 18 C152 12 156 8 160 10 C160 16 162 18 166 14 C168 8 174 8 176 12 C174 18 176 22 180 20 C182 26 180 34 182 42 Z"/><path d="M186 46 C190 38 198 32 208 30 C212 26 214 18 220 16 C220 22 222 24 226 20 C230 18 232 24 228 28 C232 30 234 36 228 38 C224 42 214 44 204 46 C198 48 192 50 188 50 Z"/></g><circle cx="194" cy="58" r="1.8" fill="#f3c96a"/></svg></div></template>
   <script src="i18n/fr.js"></script>
 <script>
@@ -922,7 +951,8 @@ function TYP1_demarrer(codeDepart) {
     const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; e.textContent = txt; a.append(e); return e; };
     const vraie = !p.exemple && lienSur(p.url);
     if (!vraie) el("span", "etiquette", T("exemple"));
-    if (p.elan) { a.classList.add("message-elan"); el("span", "genre messager", T("elan_etiquette") + " · " + T("el_" + p.elan)); }
+    if (p.secret) { a.classList.add("message-elan"); el("span", "genre messager", T("secret_etiquette") + " · " + T("el_" + p.secret)); }
+    else if (p.elan) { a.classList.add("message-elan"); el("span", "genre messager", T("elan_etiquette") + " · " + T("el_" + p.elan)); }
     else if (p.braiseJour) { a.classList.add("braise-du-jour"); el("span", "genre jour", T("braise_jour") + (p.dateJour ? " · " + p.dateJour : "")); }
     else if (["drole", "utile", "belle"].includes(p.genre)) el("span", "genre " + p.genre, T("genre_" + p.genre));
     const h = el("h2", "", vraie ? "" : p.titre);
@@ -1085,11 +1115,12 @@ function TYP1_demarrer(codeDepart) {
   const lotusBouton = () => document.querySelector('[data-testid="lotus-ouvrir"]');
   function verifierLotus() { btnLotus.hidden = !document.querySelector('[data-testid="lotus-medaillon"]'); }
   window.addEventListener("load", verifierLotus); setTimeout(verifierLotus, 0);
-  btnLotus.addEventListener("click", () => {
+  function ouvrirLotus() {
     if (!lotusBouton()) { const rappel = document.querySelector('[data-testid="lotus-rappel"]'); if (rappel) rappel.click(); }
     const b = lotusBouton();
     if (b) { son.souffle(.25); b.click(); }
-  });
+  }
+  btnLotus.addEventListener("click", ouvrirLotus);
 
   // --- L'élan messager : parfois, après « Surprends-moi », il traverse le tipi et laisse une carte
   // d'un autre élément du Sceau (chacun son tour). Rare : une fois sur quatre, mais jamais plus de 5 surprises sans lui.
@@ -1114,6 +1145,92 @@ function TYP1_demarrer(codeDepart) {
       etincelles.accompagner(c, 0);
       son.souffle(.35);
     }, 2600);
+  }
+
+  // --- Les secrets du feu ---------------------------------------------------------
+  // Un mot SEUL (élan, Atlas, Nebula, Hasta La Vista, BNM1 / Lotus, Typ-1 / tipi, Ritukah, merci, je t'aime) :
+  // le feu répond par un petit moment, sans recherche (gratuit, ne compte pas dans la limite).
+  // Dès qu'on ajoute un mot (« nebula galaxie »), c'est une recherche normale. Et après chaque secret,
+  // le bouton « Cherche aussi … sur le web » lance la vraie recherche : personne n'est bloqué.
+  const motCle = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}\p{M}]+/gu, "");
+  const SECRETS = {
+    elan: ["élan", "elan", "moose", "elk", "alce", "orignal", "лось", "الموظ", "موظ", "मूस", "মুস", "驼鹿"],
+    atlas: ["atlas", "atlas.sea", "atlassea", "atlassea.me", "atlas sea"],
+    nebula: ["nebula", "nebulatkn", "nebula token", "nebulatkn.foundation", "nbl", "nbl token"],
+    hasta: ["hasta la vista", "hasta-la-vista", "hasta-la-vista.org", "hlv"],
+    ether: ["bnm1", "bnmo", "brand new meta one", "brand new meta 1", "brand-new-meta-1.agency", "lotus", "lotus de l'éther", "le lotus"],
+    tipi: ["typ-1", "typ1", "typ-1.help", "typ-1.site", "tipi", "tepee", "teepee", "типи"],
+    ritukah: ["ritukah"],
+    merci: ["merci", "merci beaucoup", "thanks", "thank you", "gracias", "obrigado", "obrigada", "спасибо", "شكرا", "धन्यवाद", "ধন্যবাদ", "谢谢"],
+    aime: ["je t'aime", "jtm", "i love you", "te quiero", "te amo", "eu te amo", "я тебя люблю", "أحبك", "मैं तुमसे प्यार करता हूँ", "আমি তোমাকে ভালোবাসি", "我爱你"]
+  };
+  const INDEX_SECRETS = new Map();
+  for (const [id, mots] of Object.entries(SECRETS)) for (const m of mots) INDEX_SECRETS.set(motCle(m), id);
+  const secretDe = q => INDEX_SECRETS.get(motCle(q)) || null;
+  const ELEMENT_SECRET = { atlas: "terre", nebula: "air", hasta: "eau", ether: "ether", elan: "ether" };
+  const TEINTES = { terre: "#5f9a3a", air: "#bfe3ff", eau: "#1f7fe0", ether: "#e8b33a" };
+
+  function teinter(element) {
+    const d = document.createElement("div"); d.className = "teinte"; d.style.setProperty("--t", TEINTES[element]);
+    document.body.append(d); setTimeout(() => d.remove(), 7200);
+  }
+  function objet(modele) {
+    const o = document.getElementById(modele).content.firstElementChild.cloneNode(true);
+    document.body.append(o); setTimeout(() => o.remove(), 6200);
+  }
+  function carteSecrete(element) {
+    const e = SCEAU.find(x => x.id === element);
+    let hote = ""; try { hote = new URL(e.url).hostname; } catch (x) {}
+    const c = fabriquerPage({ titre: e.site, url: e.url, source: hote, meta: T("el_" + e.id), resume: T("site_" + e.id), pourquoi: T("secret_pourquoi"), secret: e.id }, "");
+    c.style.setProperty("--d", "0s");
+    zonePages.append(c); poserEnArc(); etincelles.accompagner(c, 0); son.souffle(.35);
+  }
+  function boutonChercherAussi(q, bloc) {
+    const rangee = document.createElement("div"); rangee.className = "choix";
+    const b = document.createElement("button"); b.type = "button"; b.className = "quand-meme";
+    b.textContent = T("secret_chercher").replaceAll("{q}", q);
+    b.addEventListener("click", () => repondre(q));
+    rangee.append(b); (bloc && bloc.isConnected ? bloc : zonePages).append(rangee);
+  }
+  // « élan » est ambigu : l'animal, ou le secret ? Le feu demande.
+  function demanderElan(q) {
+    modeDecouverte = ""; vider(); embraser();
+    const bloc = document.createElement("div"); bloc.className = "demande-feu";
+    const p = document.createElement("p"); p.className = "parole"; p.textContent = T("elan_question");
+    const rangee = document.createElement("div"); rangee.className = "choix";
+    const animal = document.createElement("button"); animal.type = "button"; animal.textContent = T("elan_animal");
+    animal.addEventListener("click", () => repondre(q, { precision: T("elan_animal"), questionFeu: T("elan_question") }));
+    const laisse = document.createElement("button"); laisse.type = "button"; laisse.textContent = T("elan_laisse");
+    laisse.addEventListener("click", () => secret("elan", q));
+    rangee.append(animal, laisse); bloc.append(p, rangee); zonePages.append(bloc);
+    question.value = "";
+  }
+  function secret(id, q) {
+    modeDecouverte = ""; vider(); embraser();
+    question.value = "";
+    const monTour = tour;
+    const element = ELEMENT_SECRET[id];
+    if (element) teinter(element);
+    if (id === "atlas") objet("modeleBouteille");
+    if (id === "aime") objet("modeleCoeur");
+    if (id === "nebula" || id === "tipi" || id === "merci") { [0, 700, 1400].forEach(ms => plus_tard(() => etincelles.gerbe(id === "tipi" ? 90 : 60), ms)); }
+    if (id === "elan") {
+      const bete = document.getElementById("modeleElan").content.firstElementChild.cloneNode(true);
+      bete.classList.add("arret"); document.body.append(bete); setTimeout(() => bete.remove(), 9000);
+    }
+    const bloc = document.createElement("div"); bloc.className = "demande-feu";
+    plus_tard(() => {
+      if (monTour !== tour || !entre) return;
+      const p = document.createElement("p"); p.className = "parole"; p.textContent = T("secret_" + id);
+      bloc.append(p); zonePages.append(bloc); son.souffle(.3);
+    }, id === "elan" ? 3000 : 900);
+    const avecCarte = { atlas: "terre", nebula: "air", hasta: "eau", elan: "ether" }[id];
+    plus_tard(() => {
+      if (monTour !== tour || !entre) return;
+      if (avecCarte) carteSecrete(avecCarte);
+      if (id === "ether") ouvrirLotus();
+      boutonChercherAussi(q, bloc);
+    }, id === "elan" ? 6000 : 2600);
   }
 
   async function repondre(q, suite) {
@@ -1261,6 +1378,9 @@ function TYP1_demarrer(codeDepart) {
       question.value = q0;
       return repondre(q0, { precision: q.slice(0, 120), questionFeu: texte });
     }
+    const s = secretDe(q);
+    if (s === "elan") return demanderElan(q);
+    if (s) return secret(s, q);
     repondre(q);
   });
   let attenteFoyer = 0;

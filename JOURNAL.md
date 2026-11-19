@@ -2,6 +2,12 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-19 — Claude — claude/secrets-du-feu
+- Les secrets du feu : un mot seul déclenche un moment (élan qui s'arrête devant le feu, bouteille d'Atlas, étincelles au vent pour Nebula, feu bleu et « Adieu ne veut pas dire jamais » pour Hasta La Vista, feu doré et Lotus qui s'ouvre pour BNM1, grande gerbe pour Typ-1, un mot sur Ritukah, merci, un cœur d'étincelles pour « je t'aime »).
+- Toujours une vraie recherche possible : le secret ne joue que sur le mot seul, et un bouton « Cherche aussi … sur le web » suit chaque secret. « Élan » : le feu demande l'animal ou le secret.
+- Phrases dans les 9 langues. Testé dans Chrome sans erreur (secrets, recherche normale avec un mot de plus, bouton de recherche, Échap avec le Lotus).
+- Pourquoi : idée validée par Ritukah, avec sa condition : qu'on puisse toujours faire une vraie recherche sur ces mots.
+
 ## 2026-11-18 — Claude — claude/elan-et-sceau
 - L'élan messager : parfois, après « Surprends-moi », un élan doré traverse le fond du tipi et laisse une 4e carte « Message de l'élan » qui mène vers un autre site du Sceau (chacun son tour, l'Éther en premier).
 - Mon Sceau (emblème + roue) est retiré à la demande de Ritukah : le Lotus de l'Éther (#16, fusionné dans cette branche) fait ce travail sur tous les sites. Un bouton « Le Lotus » sous le champ l'ouvre depuis le tipi ; Échap ferme le Lotus sans sortir du tipi.
