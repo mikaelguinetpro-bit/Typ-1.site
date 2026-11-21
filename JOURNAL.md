@@ -2,6 +2,11 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-21 — Claude — claude/sens-revelation
+- **Les cinq sens de l'association**, choisis par Ritukah le 21/11/2026, sous le décompte : chaque pétale du Lotus en allume un le jour de son lancement (date de Paris). **Résilience** le 1er décembre (Eau · Hasta La Vista), **Intelligence** le 8 (Air · Nebula), **Sagesse** le 15 (Terre · Atlas.Sea), **Salut** le 21 (Feu · Typ-1). La **Force** arrive avec le nom, à 12h21. Avant leur jour, les mots restent en gris, avec « Un sens s'allume à chaque pétale du Lotus ». Traduit dans les 9 langues.
+- Aperçu à une autre date : ajouter `?calendrier=2026-12-08` à l'adresse.
+- Dans `lotus/revelation.js` et `revelation.css`, identiques sur les quatre sites offerts. Service worker : version montée.
+
 ## 2026-11-21 — Claude — claude/revelation
 - **Décidé par Ritukah** : l'association qui porte les quatre sites offerts révèle son nom le **21 décembre 2026 à 12h21, heure de Paris**, au cœur du Lotus, sur BNM1. D'ici là, un décompte sur les quatre sites.
 - **Le bandeau de la Révélation**, tout en haut de l'accueil, devant le tipi : l'annonce, le décompte (jours · heures · minutes · secondes), les mots de Ritukah (« Soyez prêts… Pour votre salut. ») et un lien « Au cœur du Lotus → » vers BNM1. À 12h21, il dit : « Le nom est révélé. Il vous attend au cœur du Lotus. » On peut le fermer : il revient à la visite suivante.
