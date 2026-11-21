@@ -2,6 +2,14 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-21 — Claude — claude/revelation
+- **Décidé par Ritukah** : l'association qui porte les quatre sites offerts révèle son nom le **21 décembre 2026 à 12h21, heure de Paris**, au cœur du Lotus, sur BNM1. D'ici là, un décompte sur les quatre sites.
+- **Le bandeau de la Révélation**, tout en haut de l'accueil, devant le tipi : l'annonce, le décompte (jours · heures · minutes · secondes), les mots de Ritukah (« Soyez prêts… Pour votre salut. ») et un lien « Au cœur du Lotus → » vers BNM1. À 12h21, il dit : « Le nom est révélé. Il vous attend au cœur du Lotus. » On peut le fermer : il revient à la visite suivante.
+- `lotus/revelation.js` et `revelation.css` : **les mêmes fichiers, à l'identique, sur les quatre sites offerts** (comme le médaillon du Lotus). Traduits dans les 9 langues ; le bandeau suit la langue quand elle change sans rechargement.
+- **Le nom n'est écrit nulle part** dans ce dépôt ni sur le site : ce code est lisible par tous. Il ne vit que sur le serveur de BNM1.
+- Il **s'efface dans le tipi** (`data-revelation-masque-classe="dedans"`, comme le Lotus) et laisse le coin haut-droit au bouton du son (`data-revelation-coin-occupe`, sa croix passe à gauche).
+- Service worker : version montée, les deux fichiers ajoutés à la liste gardée.
+
 ## 2026-11-19 — Claude — claude/secrets-du-feu
 - Les secrets du feu : un mot seul déclenche un moment (élan qui s'arrête devant le feu, bouteille d'Atlas, étincelles au vent pour Nebula, feu bleu et « Adieu ne veut pas dire jamais » pour Hasta La Vista, feu doré et Lotus qui s'ouvre pour BNM1, grande gerbe pour Typ-1, un mot sur Ritukah, merci, un cœur d'étincelles pour « je t'aime »).
 - Toujours une vraie recherche possible : le secret ne joue que sur le mot seul, et un bouton « Cherche aussi … sur le web » suit chaque secret. « Élan » : le feu demande l'animal ou le secret.
