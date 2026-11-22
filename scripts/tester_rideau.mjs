@@ -9,7 +9,7 @@ writeFileSync(join(dossier, 'm.mjs'), readFileSync(new URL('../middleware.js', i
 const { gate, OPEN_AT } = await import(join(dossier, 'm.mjs'));
 
 const avant = OPEN_AT - 1000, apres = OPEN_AT;
-const req = (chemin, cookie) => new Request('https://typ-1site.vercel.app' + chemin, { headers: cookie ? { cookie } : {} });
+const req = (chemin, cookie) => new Request('https://www.typ-1.site' + chemin, { headers: cookie ? { cookie } : {} });
 const passe = (r) => r.headers.get('x-middleware-next') === '1';
 const rideau = (r) => (r.headers.get('x-middleware-rewrite') || '').endsWith('/bientot.html');
 
@@ -25,7 +25,7 @@ for (const p of ['/bientot.html', '/bientot.css', '/bientot.js', '/assets/typ1_p
 assert.ok(rideau(await gate(req('/?cle=mauvaise%20cle'), avant)), 'mauvaise clé : rideau');
 
 r = await gate(req('/?cle=' + encodeURIComponent(process.env.TYP1_PREVIEW_KEY)), avant);
-assert.equal(r.status, 303); assert.equal(r.headers.get('location'), 'https://typ-1site.vercel.app/', 'la clé disparaît de l\'adresse');
+assert.equal(r.status, 303); assert.equal(r.headers.get('location'), 'https://www.typ-1.site/', 'la clé disparaît de l\'adresse');
 const cookie = r.headers.get('set-cookie').split(';')[0];
 assert.ok(!cookie.includes('phrase'), 'le cookie ne contient pas la clé en clair');
 assert.ok(passe(await gate(req('/', cookie), avant)), 'avec le cookie : Ritukah entre');
