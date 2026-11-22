@@ -184,11 +184,12 @@
         rendu.innerHTML =
             '<div class="lotus-elem">· ' + (mots()[p.cle] || mots().coeur) + ' ·</div>' +
             '<div class="lotus-nom">' + p.nom + '</div>' +
-            (ici || p.cle === 'coeur' ? '<div class="lotus-etat">' + mots().ici + '</div>' : '');
+            (ici ? '<div class="lotus-etat">' + mots().ici + '</div>' : '');
     }
 
     function zone(p) {
-        var ici = p.cle === ICI || p.cle === 'coeur';
+        // Le cœur mène toujours à BNM1 : sur les quatre sites, on n'y est jamais.
+        var ici = p.cle === ICI;
         var el = document.createElement(ici ? 'span' : 'a');
         el.className = 'lotus-zone';
         el.setAttribute('data-testid', 'lotus-zone-' + p.cle);
