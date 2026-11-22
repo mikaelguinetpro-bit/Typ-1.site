@@ -45,6 +45,13 @@ Ce fichier s'adresse à toutes les IA qui travaillent sur ce dépôt (Claude, Ch
 - **Le son** (fichiers choisis par Ritukah, 16 novembre 2026) : un souffle quand le feu prend dans la vidéo d'entrée (vers 8,35 s), puis le crépitement en boucle ; un petit souffle chaque fois que le feu s'embrase. Tout passe par Web Audio (boucle sans trou). Le bouton 🔊 coupe tout, et ce choix reste sur l'appareil. Origine et licences : `assets/SOURCES.md`.
 - **Parler au feu** (accord de Ritukah le 16 novembre 2026) : bouton micro dans le champ, seulement si le navigateur sait faire. La voix est transformée en texte **par le service du navigateur** (Google pour Chrome, Apple pour Safari) : le site le dit dans l'info-bulle du bouton. La question dite est envoyée au feu toute seule.
 
+## Rideau d'ouverture (jusqu'au 21 décembre 2026)
+
+- Décidé par Ritukah le 21 novembre 2026, comme sur Nebula, Atlas.sea et Hasta La Vista : Typ-1 reste **caché jusqu'au lundi 21 décembre 2026 à 00:00, heure de Paris** (nuit du 20 au 21, le jour du solstice d'hiver). Les visiteurs voient `bientot.html` (décompte, 9 langues, `noindex`) ; `/api/*` répond 503, donc la recherche du feu ne coûte rien avant l'ouverture.
+- C'est `middleware.js` (Vercel Routing Middleware, à la racine) qui fait le tri, **sans bibliothèque ni package.json** (pour ne pas toucher à `api/feu.js`). Le rideau se lève **tout seul** : ne pas changer `OPEN_AT` sans son accord.
+- Accès de Ritukah : variable Vercel `TYP1_PREVIEW_KEY` (16 caractères au moins, jamais dans le dépôt ni dans une conversation), puis une fois `/?cle=<clé>` → cookie 60 jours. Ouverture anticipée : `TYP1_OPEN_NOW=1` puis redéployer.
+- Après l'ouverture, `middleware.js`, `bientot.*` et `scripts/tester_rideau.mjs` pourront être retirés.
+
 ## Ce qui reste à décider par Ritukah
 
 Ne rien construire sur ces points sans son accord :

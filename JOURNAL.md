@@ -2,6 +2,12 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-21 — Claude — claude/rideau-ouverture
+- Rideau d'ouverture, comme sur Nebula, Atlas.sea et Hasta La Vista : jusqu'au lundi 21 décembre 2026 à 00:00 (Paris), les visiteurs voient seulement le décompte (`bientot.html`, le feu en fond, 9 langues) ; la recherche du feu est fermée.
+- Ritukah entre avec sa clé secrète (`TYP1_PREVIEW_KEY` sur Vercel, puis `/?cle=…` une fois par appareil). Le rideau se lève tout seul à minuit.
+- `middleware.js` sans bibliothèque (en-têtes Vercel) pour ne pas changer `api/feu.js` ; tests `scripts/tester_rideau.mjs`.
+- Pourquoi : demandé par Ritukah, ouverture officielle de Typ-1 au monde entier le 21 décembre.
+
 ## 2026-11-21 — Claude — claude/sens-revelation
 - **La phrase sous le décompte**, changée par Ritukah : « Soyez prêts, car son nom sera un don. Tout cela pour le salut. Pour votre salut. » Elle ne nomme plus les sens. Et avant leur jour, les sens restent secrets : « · · · » à la place du mot. Ils se découvrent vraiment, un par pétale.
 - **Les cinq sens de l'association**, choisis par Ritukah le 21/11/2026, sous le décompte : chaque pétale du Lotus en allume un le jour de son lancement (date de Paris). **Résilience** le 1er décembre (Eau · Hasta La Vista), **Intelligence** le 8 (Air · Nebula), **Sagesse** le 15 (Terre · Atlas.Sea), **Salut** le 21 (Feu · Typ-1). La **Force** arrive avec le nom, à 12h21. Avant leur jour, les mots restent en gris, avec « Un sens s'allume à chaque pétale du Lotus ». Traduit dans les 9 langues.
