@@ -2,6 +2,11 @@
 
 Chaque IA ajoute une entrée **en haut**, à chaque intervention (voir `AGENTS.md`).
 
+## 2026-11-22 — Claude — claude/adresse-typ-1-site — www.typ-1.site
+- Typ-1 a son nom de domaine : **www.typ-1.site** (typ-1.site redirige vers www). Aperçu du lien de `index.html`, clé d'aperçu (`middleware.js`, README) et `scripts/tester_rideau.mjs` passent à la nouvelle adresse.
+- `bientot.html` reçoit ses balises d'aperçu (poster du feu, déjà public) : un lien partagé avant le 21 décembre s'affiche avec son image.
+- `sw.js` : `typ1-v11-2026-11-22`.
+
 ## 2026-11-21 — Claude — claude/rideau-ouverture
 - Rideau d'ouverture, comme sur Nebula, Atlas.sea et Hasta La Vista : jusqu'au lundi 21 décembre 2026 à 00:00 (Paris), les visiteurs voient seulement le décompte (`bientot.html`, le feu en fond, 9 langues) ; la recherche du feu est fermée.
 - Ritukah entre avec sa clé secrète (`TYP1_PREVIEW_KEY` sur Vercel, puis `/?cle=…` une fois par appareil). Le rideau se lève tout seul à minuit.
