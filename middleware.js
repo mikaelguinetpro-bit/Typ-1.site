@@ -14,9 +14,14 @@
 
 export const OPEN_AT = Date.UTC(2026, 11, 20, 23, 0, 0); // 21 déc. 2026 00:00 à Paris
 const COOKIE = 'typ1_preview';
+// Seulement ce dont la page d'attente a besoin (et l'image d'aperçu des liens).
+// Tout le reste de /assets/ — les sons, la voix, les vidéos d'introduction — reste derrière le rideau.
 const ALWAYS_PUBLIC = [
   /^\/bientot\.(html|css|js)$/,
-  /^\/assets\//,
+  /^\/assets\/(apple-touch-icon|favicon-32|icone-192)\.png$/,
+  /^\/assets\/typ1_feu_boucle\.mp4$/,
+  /^\/assets\/typ1_poster\.jpg$/,
+  /^\/assets\/polices\/[\w-]+\.woff2$/,
   /^\/favicon[^/]*$/,
   /^\/robots\.txt$/,
 ];
