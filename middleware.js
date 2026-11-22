@@ -4,7 +4,7 @@
 // les visiteurs voient seulement /bientot.html, avec le décompte. La recherche du feu (/api/) est fermée.
 // Ritukah garde l'accès complet grâce à une clé secrète :
 //   1. sur Vercel, variable d'environnement TYP1_PREVIEW_KEY = une longue phrase secrète (16 caractères au moins) ;
-//   2. il ouvre une fois https://typ-1site.vercel.app/?cle=<la phrase> ;
+//   2. il ouvre une fois https://www.typ-1.site/?cle=<la phrase> ;
 //   3. un cookie retient la clé 60 jours sur cet appareil.
 // À l'heure dite, le rideau se lève tout seul pour tout le monde : rien à faire.
 // Pour ouvrir plus tôt : TYP1_OPEN_NOW=1 sur Vercel, puis redéployer.

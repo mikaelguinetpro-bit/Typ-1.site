@@ -37,7 +37,7 @@ Mise en place chez Vercel :
 
 Pour que Ritukah entre avant :
 1. *Settings → Environment Variables* : ajouter `TYP1_PREVIEW_KEY` = une longue phrase secrète (16 caractères au moins), puis redéployer.
-2. Ouvrir une fois `https://typ-1site.vercel.app/?cle=<la phrase>` : un cookie garde l'accès 60 jours sur cet appareil (à refaire sur chaque appareil).
+2. Ouvrir une fois `https://www.typ-1.site/?cle=<la phrase>` : un cookie garde l'accès 60 jours sur cet appareil (à refaire sur chaque appareil).
 3. *Settings → Deployment Protection* : repasser *Vercel Authentication* sur **Standard Protection**, pour que le public voie le décompte.
 
 Ouvrir plus tôt : `TYP1_OPEN_NOW=1`, puis redéployer. Tester : `node scripts/tester_rideau.mjs`.
